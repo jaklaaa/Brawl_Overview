@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRAWL STATS SSS — Squad Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f1a;
+  --panel: #131629;
+  --border: #1e2540;
+  --accent: #f7c948;
+  --accent2: #3bf0c4;
+  --text: #e8eaf6;
+  --muted: #5c6bc0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+.header {
+  background: linear-gradient(135deg, #1a1f3a 0%, #0d1020 100%);
+  border-bottom: 2px solid var(--accent);
+  padding: 14px 24px;
+  display: flex; align-items: center; gap: 20px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 4px 30px rgba(247,201,72,0.15);
+}
+.logo { font-size: 26px; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-shadow: 0 0 20px rgba(247,201,72,0.5); }
+.logo span { color: var(--accent2); }
+.last-updated {
+  margin-left: auto; font-family: 'Share Tech Mono', monospace;
+  font-size: 11px; color: var(--muted);
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: 4px; padding: 4px 10px;
+}
+.last-updated span { color: var(--accent2); }
+
+.top-nav {
+  display: flex; background: #080a12;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px; overflow-x: auto;
+}
+.top-tab {
+  padding: 10px 22px; cursor: pointer; font-family: 'Rajdhani', sans-serif;
+  font-weight: 700; font-size: 14px; letter-spacing: 1.5px;
+  color: var(--muted); border-bottom: 2px solid transparent;
+  transition: all 0.2s; white-space: nowrap;
+}
+.top-tab:hover { color: var(--text); }
+.top-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.top-tab[data-page="jasper"].active  { color: #ff6ec7; border-bottom-color: #ff6ec7; }
+.top-tab[data-page="daniel"].active  { color: #64b5f6; border-bottom-color: #64b5f6; }
+.top-tab[data-page="wolf"].active    { color: #ffb74d; border-bottom-color: #ffb74d; }
+.top-tab[data-page="tykoro"].active  { color: #81c784; border-bottom-color: #81c784; }
+.top-tab[data-page="sirito"].active  { color: #ce93d8; border-bottom-color: #ce93d8; }
+
+.page { display: none; padding: 24px; }
+.page.active { display: block; }
+
+/* TIER LIST */
+.tier-row {
+  display: flex; align-items: stretch; margin-bottom: 6px;
+  border-radius: 8px; border: 1px solid var(--border); min-height: 80px;
+}
+.tier-label {
+  width: 64px; min-width: 64px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Rajdhani', sans-serif; font-size: 32px; font-weight: 700;
+  letter-spacing: 2px; color: #000; flex-shrink: 0; border-radius: 7px 0 0 7px;
+}
+.tier-S { background: #ff4e50; }
+.tier-A { background: #ff9800; }
+.tier-B { background: #ffeb3b; }
+.tier-C { background: #8bc34a; }
+.tier-D { background: #29b6f6; }
+.tier-F { background: #9e9e9e; }
+.tier-unranked { background: #1a1a2e; color: var(--muted); font-size: 10px; letter-spacing: 1px; text-align: center; padding: 4px; line-height: 1.4; }
+.tier-brawlers {
+  flex: 1; display: flex; flex-wrap: wrap; align-items: center;
+  gap: 6px; padding: 8px 12px;
+  background: rgba(255,255,255,0.02); border-radius: 0 7px 7px 0;
+}
+.empty-tier { color: var(--border); font-size: 13px; font-style: italic; padding: 4px 8px; }
+
+/* BRAWLER CARD */
+.brawler-card {
+  display: flex; flex-direction: column; align-items: center;
+  width: 70px; cursor: default; transition: transform 0.15s;
+  position: relative;
+}
+.brawler-card:hover { transform: translateY(-4px); }
+.brawler-card img {
+  width: 60px; height: 60px; object-fit: cover; border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.1); background: #1a1f3a;
+}
+.brawler-card .bc-name {
+  font-size: 9px; font-family: 'Share Tech Mono', monospace;
+  color: var(--muted); text-align: center; margin-top: 3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
+}
+.brawler-card .bc-score {
+  font-size: 8px; font-family: 'Share Tech Mono', monospace; color: var(--accent2); text-align: center;
+}
+.brawler-card:hover .bc-tooltip { display: block; }
+.bc-tooltip {
+  display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: #1a1f3a; border: 1px solid var(--accent);
+  border-radius: 6px; padding: 8px 12px; white-space: nowrap;
+  font-size: 11px; font-family: 'Share Tech Mono', monospace;
+  color: var(--text); z-index: 9999; pointer-events: none; min-width: 180px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+.bc-tooltip .tt-name { color: var(--accent); font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+.bc-tooltip .tt-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2px; }
+.bc-tooltip .tt-label { color: var(--muted); }
+.bc-tooltip .tt-val { color: var(--accent2); }
+
+/* PLAYER HEADER */
+.player-header {
+  border-radius: 10px; padding: 18px 22px; margin-bottom: 22px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid var(--border);
+}
+.player-header h2 { font-size: 26px; font-weight: 700; letter-spacing: 2px; margin-bottom: 12px; }
+.player-stats-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.pstat {
+  background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 16px; text-align: center; min-width: 80px;
+}
+.pstat .ps-val { font-size: 20px; font-weight: 700; font-family: 'Share Tech Mono', monospace; color: var(--accent2); }
+.pstat .ps-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+/* SECTION HEADER */
+.section-header {
+  font-size: 11px; letter-spacing: 2px; color: var(--muted);
+  text-transform: uppercase; margin: 28px 0 14px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+
+/* GAMEMODE ACCORDION */
+.gm-accordion { margin-bottom: 6px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.gm-accordion-header {
+  display: flex; align-items: center; gap: 12px; padding: 11px 16px;
+  background: rgba(255,255,255,0.03); cursor: pointer;
+  user-select: none; transition: background 0.15s;
+}
+.gm-accordion-header:hover { background: rgba(255,255,255,0.06); }
+.gm-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+.gm-acc-title { font-size: 15px; font-weight: 700; letter-spacing: 1px; flex: 1; }
+.gm-acc-meta { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--muted); display: flex; gap: 14px; }
+.gm-acc-wr {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px; font-weight: 700;
+  padding: 2px 8px; border-radius: 4px; background: rgba(0,0,0,0.3); min-width: 42px; text-align: center;
+}
+.gm-acc-arrow { font-size: 11px; color: var(--muted); transition: transform 0.2s; margin-left: 6px; }
+.gm-accordion.open .gm-acc-arrow { transform: rotate(90deg); }
+.gm-accordion-body { display: none; border-top: 1px solid var(--border); }
+.gm-accordion.open .gm-accordion-body { display: block; }
+
+/* MAP GROUPS */
+.map-group { border-bottom: 1px solid rgba(255,255,255,0.04); }
+.map-group:last-child { border-bottom: none; }
+.map-group-header {
+  display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 38px;
+  background: rgba(0,0,0,0.2); cursor: pointer; user-select: none;
+  transition: background 0.15s;
+}
+.map-group-header:hover { background: rgba(255,255,255,0.04); }
+.map-group-name { flex: 1; color: var(--text); font-size: 13px; font-weight: 600; }
+.map-group-record { font-family: 'Share Tech Mono', monospace; font-size: 11px; display: flex; gap: 6px; align-items: center; }
+.map-group-arrow { font-size: 10px; color: var(--muted); transition: transform 0.2s; margin-left: 8px; }
+.map-group.open .map-group-arrow { transform: rotate(90deg); }
+.map-group-body { display: none; }
+.map-group.open .map-group-body { display: block; }
+
+/* BRAWLER ROWS */
+.brawler-result-row {
+  display: flex; align-items: center; gap: 10px; padding: 7px 16px 7px 52px;
+  border-top: 1px solid rgba(255,255,255,0.03); font-size: 13px;
+  transition: background 0.1s;
+}
+.brawler-result-row:hover { background: rgba(255,255,255,0.03); }
+.brr-img { width: 26px; height: 26px; border-radius: 4px; object-fit: cover; background: #1a1f3a; flex-shrink: 0; }
+.brr-name { font-weight: 700; flex: 1; }
+.brr-record { font-family: 'Share Tech Mono', monospace; font-size: 12px; }
+.brr-win { color: #4caf50; }
+.brr-loss { color: #ef5350; }
+.brr-wr { font-family: 'Share Tech Mono', monospace; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(0,0,0,0.3); min-width: 42px; text-align: center; }
+.wr-high { color: #4caf50; }
+.wr-mid  { color: var(--accent); }
+.wr-low  { color: #ef5350; }
+
+/* empty game state */
+.gm-empty { padding: 10px 16px; font-size: 12px; color: var(--muted); font-family: 'Share Tech Mono', monospace; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">BRAWL<span>STATS</span></div>
+  <div class="last-updated">LAST UPDATED <span id="last-updated-date">—</span></div>
+</div>
+
+<div class="top-nav">
+  <div class="top-tab active" data-page="pro" onclick="switchPage('pro')">⚡ PRO META</div>
+  <div class="top-tab" data-page="jasper" onclick="switchPage('jasper')">JASPER</div>
+  <div class="top-tab" data-page="daniel" onclick="switchPage('daniel')">DANIEL</div>
+  <div class="top-tab" data-page="wolf" onclick="switchPage('wolf')">WOLF</div>
+  <div class="top-tab" data-page="tykoro" onclick="switchPage('tykoro')">TYKORO</div>
+  <div class="top-tab" data-page="sirito" onclick="switchPage('sirito')">SIRITO</div>
+</div>
+
+<div class="page active" id="page-pro"><div id="pro-tier-list"></div></div>
+<div class="page" id="page-jasper"><div id="jasper-content"></div></div>
+<div class="page" id="page-daniel"><div id="daniel-content"></div></div>
+<div class="page" id="page-wolf"><div id="wolf-content"></div></div>
+<div class="page" id="page-tykoro"><div id="tykoro-content"></div></div>
+<div class="page" id="page-sirito"><div id="sirito-content"></div></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  CONFIG — edit these
+// ══════════════════════════════════════════════════════════════
+const LAST_UPDATED = '2026-03-26'; // ← change whenever you add data
+
+// ══════════════════════════════════════════════════════════════
+//  PRO META DATA
+// ══════════════════════════════════════════════════════════════
+const PRO_DATA = [
+  { brawler: '8-BIT',          bounty:[4,3],   brawlBall:null,   gemGrab:[3,2],   heist:[7,3],   hotZone:null,    knockout:null },
+  { brawler: 'ALLI',           bounty:[5,2],   brawlBall:[6,3],  gemGrab:[7,2],   heist:[1,0],   hotZone:[4,3],   knockout:[3,1] },
+  { brawler: 'AMBER',          bounty:null,    brawlBall:[3,1],  gemGrab:[5,3],   heist:[13,5],  hotZone:[5,1],   knockout:null },
+  { brawler: 'ANGELO',         bounty:[13,8],  brawlBall:null,   gemGrab:null,    heist:[4,4],   hotZone:null,    knockout:[15,10] },
+  { brawler: 'ASH',            bounty:null,    brawlBall:null,   gemGrab:[1,1],   heist:null,    hotZone:null,    knockout:null },
+  { brawler: 'BARLEY',         bounty:[1,0],   brawlBall:[2,2],  gemGrab:null,    heist:[1,1],   hotZone:[5,2],   knockout:null },
+  { brawler: 'BEA',            bounty:null,    brawlBall:[1,0],  gemGrab:null,    heist:[1,1],   hotZone:[3,1],   knockout:null },
+  { brawler: 'BELLE',          bounty:[33,22], brawlBall:null,   gemGrab:null,    heist:[1,0],   hotZone:[2,2],   knockout:[3,2] },
+  { brawler: 'BERRY',          bounty:[1,0],   brawlBall:null,   gemGrab:[1,1],   heist:[5,1],   hotZone:[3,1],   knockout:null },
+  { brawler: 'BIBI',           bounty:[3,0],   brawlBall:[25,15],gemGrab:[16,10], heist:[30,13], hotZone:[16,6],  knockout:null },
+  { brawler: 'BO',             bounty:[3,2],   brawlBall:[3,2],  gemGrab:[12,6],  heist:[2,0],   hotZone:[7,2],   knockout:[14,7] },
+  { brawler: 'BONNIE',         bounty:null,    brawlBall:null,   gemGrab:null,    heist:[1,0],   hotZone:null,    knockout:null },
+  { brawler: 'BROCK',          bounty:[5,3],   brawlBall:null,   gemGrab:[1,0],   heist:[4,1],   hotZone:null,    knockout:[21,9] },
+  { brawler: 'BULL',           bounty:[7,5],   brawlBall:[33,17],gemGrab:[30,19], heist:[16,8],  hotZone:[22,17], knockout:[1,1] },
+  { brawler: 'BUSTER',         bounty:[3,1],   brawlBall:[1,0],  gemGrab:[2,2],   heist:null,    hotZone:[1,1],   knockout:null },
+  { brawler: 'BUZZ',           bounty:null,    brawlBall:[2,1],  gemGrab:[5,1],   heist:[2,1],   hotZone:null,    knockout:null },
+  { brawler: 'BYRON',          bounty:[39,15], brawlBall:[2,0],  gemGrab:[1,0],   heist:[1,1],   hotZone:[1,1],   knockout:[11,5] },
+  { brawler: 'CARL',           bounty:[5,0],   brawlBall:[1,1],  gemGrab:null,    heist:[7,3],   hotZone:[2,0],   knockout:null },
+  { brawler: 'CHARLIE',        bounty:[12,4],  brawlBall:[14,8], gemGrab:[12,5],  heist:[4,4],   hotZone:[5,1],   knockout:[4,0] },
+  { brawler: 'CHESTER',        bounty:[4,3],   brawlBall:[41,15],gemGrab:[49,25], heist:[5,2],   hotZone:[32,11], knockout:null },
+  { brawler: 'CHUCK',          bounty:[1,1],   brawlBall:null,   gemGrab:null,    heist:[4,2],   hotZone:null,    knockout:null },
+  { brawler: 'CLANCY',         bounty:null,    brawlBall:[1,0],  gemGrab:null,    heist:null,    hotZone:null,    knockout:null },
+  { brawler: 'COLETTE',        bounty:null,    brawlBall:null,   gemGrab:null,    heist:[1,0],   hotZone:null,    knockout:null },
+  { brawler: 'COLT',           bounty:[2,0],   brawlBall:[1,0],  gemGrab:null,    heist:[16,11], hotZone:null,    knockout:[1,1] },
+  { brawler: 'CORDELIUS',      bounty:[3,2],   brawlBall:[5,4],  gemGrab:[3,2],   heist:[21,14], hotZone:[1,0],   knockout:null },
+  { brawler: 'CROW',           bounty:[29,15], brawlBall:[5,2],  gemGrab:[9,7],   heist:[9,6],   hotZone:[3,3],   knockout:[9,7] },
+  { brawler: 'DARRYL',         bounty:null,    brawlBall:null,   gemGrab:null,    heist:[2,0],   hotZone:null,    knockout:[3,0] },
+  { brawler: 'DOUG',           bounty:[3,2],   brawlBall:null,   gemGrab:[2,1],   heist:null,    hotZone:[1,0],   knockout:[1,1] },
+  { brawler: 'DRACO',          bounty:null,    brawlBall:[2,1],  gemGrab:[2,0],   heist:null,    hotZone:[5,0],   knockout:null },
+  { brawler: 'DYNAMIKE',       bounty:null,    brawlBall:[3,1],  gemGrab:null,    heist:[1,0],   hotZone:null,    knockout:null },
+  { brawler: 'EDGAR',          bounty:null,    brawlBall:null,   gemGrab:null,    heist:[3,1],   hotZone:null,    knockout:null },
+  { brawler: 'EL PRIMO',       bounty:null,    brawlBall:[3,2],  gemGrab:null,    heist:null,    hotZone:null,    knockout:null },
+  { brawler: 'EMZ',            bounty:[1,0],   brawlBall:[37,18],gemGrab:[21,13], heist:[12,5],  hotZone:[26,17], knockout:null },
+  { brawler: 'EVE',            bounty:null,    brawlBall:null,   gemGrab:null,    heist:[2,1],   hotZone:null,    knockout:[16,7] },
+  { brawler: 'FANG',           bounty:[1,1],   brawlBall:null,   gemGrab:[1,1],   heist:null,    hotZone:null,    knockout:null },
+  { brawler: 'FINX',           bounty:[2,2],   brawlBall:null,   gemGrab:[2,2],   heist:null,    hotZone:[32,21], knockout:null },
+  { brawler: 'FRANK',          bounty:[1,1],   brawlBall:[4,0],  gemGrab:null,    heist:[1,0],   hotZone:[4,1],   knockout:[1,1] },
+  { brawler: 'GALE',           bounty:null,    brawlBall:[17,12],gemGrab:[5,2],   heist:[1,0],   hotZone:[8,2],   knockout:null },
+  { brawler: 'GENE',           bounty:[24,10], brawlBall:null,   gemGrab:[4,1],   heist:null,    hotZone:null,    knockout:[15,8] },
+  { brawler: 'GLOWBERT',       bounty:[9,2],   brawlBall:[10,5], gemGrab:[10,4],  heist:[4,1],   hotZone:[20,15], knockout:[2,2] },
+  { brawler: 'GRAY',           bounty:[14,9],  brawlBall:null,   gemGrab:[7,4],   heist:null,    hotZone:[11,6],  knockout:[7,4] },
+  { brawler: 'GRIFF',          bounty:null,    brawlBall:[1,0],  gemGrab:null,    heist:[5,2],   hotZone:[2,2],   knockout:[1,0] },
+  { brawler: 'GUS',            bounty:[16,8],  brawlBall:null,   gemGrab:[5,4],   heist:null,    hotZone:null,    knockout:[12,6] },
+  { brawler: 'HANK',           bounty:[1,0],   brawlBall:[1,0],  gemGrab:[1,1],   heist:[1,1],   hotZone:[1,0],   knockout:null },
+  { brawler: 'JACKY',          bounty:null,    brawlBall:[1,0],  gemGrab:[1,1],   heist:null,    hotZone:null,    knockout:null },
+  { brawler: 'JAE-YONG',       bounty:[20,12], brawlBall:[1,0],  gemGrab:null,    heist:null,    hotZone:[1,0],   knockout:[6,4] },
+  { brawler: 'JANET',          bounty:null,    brawlBall:null,   gemGrab:[21,9],  heist:null,    hotZone:null,    knockout:[1,0] },
+  { brawler: 'JESSIE',         bounty:null,    brawlBall:null,   gemGrab:null,    heist:null,    hotZone:[1,0],   knockout:null },
+  { brawler: 'JUJU',           bounty:null,    brawlBall:null,   gemGrab:null,    heist:[1,0],   hotZone:[1,1],   knockout:null },
+  { brawler: 'KAZE',           bounty:[36,14], brawlBall:null,   gemGrab:null,    heist:[22,11], hotZone:[7,4],   knockout:null },
+  { brawler: 'KENJI',          bounty:[4,4],   brawlBall:[14,7], gemGrab:[1,1],   heist:null,    hotZone:[17,7],  knockout:null },
+  { brawler: 'KIT',            bounty:[9,4],   brawlBall:null,   gemGrab:[13,3],  heist:[5,1],   hotZone:[3,2],   knockout:[6,4] },
+  { brawler: 'LARRY & LAWRIE', bounty:[1,0],   brawlBall:[1,0],  gemGrab:null,    heist:null,    hotZone:[1,1],   knockout:null },
+  { brawler: 'LEON',           bounty:[18,14], brawlBall:[25,10],gemGrab:[20,8],  heist:[2,1],   hotZone:[19,11], knockout:[19,12] },
+  { brawler: 'LILY',           bounty:[2,2],   brawlBall:null,   gemGrab:[21,10], heist:[8,4],   hotZone:null,    knockout:null },
+  { brawler: 'LOLA',           bounty:null,    brawlBall:null,   gemGrab:null,    heist:[2,1],   hotZone:null,    knockout:null },
+  { brawler: 'LOU',            bounty:null,    brawlBall:[3,2],  gemGrab:[4,3],   heist:null,    hotZone:[21,11], knockout:null },
+  { brawler: 'LUMI',           bounty:null,    brawlBall:[5,2],  gemGrab:[1,1],   heist:[6,4],   hotZone:[4,2],   knockout:null },
+  { brawler: 'MAISIE',         bounty:null,    brawlBall:null,   gemGrab:[1,0],   heist:null,    hotZone:null,    knockout:null },
+  { brawler: 'MAX',            bounty:[5,1],   brawlBall:[9,6],  gemGrab:[10,6],  heist:null,    hotZone:null,    knockout:[5,4] },
+  { brawler: 'MEEPLE',         bounty:[6,3],   brawlBall:[13,5], gemGrab:[7,3],   heist:[2,1],   hotZone:[3,1],   knockout:[4,2] },
+  { brawler: 'MEG',            bounty:null,    brawlBall:[6,2],  gemGrab:null,    heist:null,    hotZone:[7,3],   knockout:null },
+  { brawler: 'MELODIE',        bounty:[1,1],   brawlBall:null,   gemGrab:null,    heist:[12,7],  hotZone:null,    knockout:null },
+  { brawler: 'MICO',           bounty:[1,0],   brawlBall:null,   gemGrab:[1,1],   heist:[2,1],   hotZone:null,    knockout:null },
+  { brawler: 'MINA',           bounty:[11,6],  brawlBall:[2,1],  gemGrab:[5,4],   heist:null,    hotZone:[7,6],   knockout:[4,1] },
+  { brawler: 'MOE',            bounty:null,    brawlBall:[19,11],gemGrab:[15,7],  heist:null,    hotZone:null,    knockout:null },
+  { brawler: 'MORTIS',         bounty:[28,13], brawlBall:[15,8], gemGrab:[29,13], heist:null,    hotZone:[17,12], knockout:[5,2] },
+  { brawler: 'NANI',           bounty:[32,19], brawlBall:null,   gemGrab:null,    heist:[2,1],   hotZone:null,    knockout:[12,6] },
+  { brawler: 'NITA',           bounty:null,    brawlBall:[13,4], gemGrab:[17,9],  heist:[14,8],  hotZone:[6,1],   knockout:null },
+  { brawler: 'OLLIE',          bounty:[7,3],   brawlBall:[1,1],  gemGrab:null,    heist:null,    hotZone:null,    knockout:[8,3] },
+  { brawler: 'OTIS',           bounty:[4,2],   brawlBall:[29,13],gemGrab:[16,7],  heist:[19,11], hotZone:[11,5],  knockout:null },
+  { brawler: 'PAM',            bounty:null,    brawlBall:null,   gemGrab:[10,5],  heist:null,    hotZone:[9,5],   knockout:null },
+  { brawler: 'PEARL',          bounty:[7,1],   brawlBall:null,   gemGrab:[3,1],   heist:null,    hotZone:null,    knockout:[6,2] },
+  { brawler: 'PENNY',          bounty:[7,5],   brawlBall:null,   gemGrab:[5,2],   heist:[4,3],   hotZone:[3,1],   knockout:null },
+  { brawler: 'PIERCE',         bounty:[40,16], brawlBall:[15,9], gemGrab:[5,2],   heist:[10,3],  hotZone:[22,8],  knockout:[10,5] },
+  { brawler: 'PIPER',          bounty:[4,1],   brawlBall:null,   gemGrab:null,    heist:null,    hotZone:null,    knockout:[1,0] },
+  { brawler: 'POCO',           bounty:[1,1],   brawlBall:[6,3],  gemGrab:[2,1],   heist:null,    hotZone:[16,10], knockout:[1,0] },
+  { brawler: 'R-T',            bounty:[15,6],  brawlBall:[2,2],  gemGrab:[3,1],   heist:[2,1],   hotZone:[1,0],   knockout:[20,10] },
+  { brawler: 'RICO',           bounty:[1,0],   brawlBall:[17,7], gemGrab:[20,10], heist:[21,14], hotZone:null,    knockout:[5,1] },
+  { brawler: 'ROSA',           bounty:[1,1],   brawlBall:null,   gemGrab:[5,1],   heist:null,    hotZone:null,    knockout:[1,0] },
+  { brawler: 'RUFFS',          bounty:[10,8],  brawlBall:[8,4],  gemGrab:[25,13], heist:[12,4],  hotZone:[14,9],  knockout:[4,2] },
+  { brawler: 'SAM',            bounty:null,    brawlBall:null,   gemGrab:null,    heist:[2,0],   hotZone:null,    knockout:null },
+  { brawler: 'SANDY',          bounty:null,    brawlBall:[4,1],  gemGrab:[20,8],  heist:[1,0],   hotZone:null,    knockout:[1,0] },
+  { brawler: 'SHADE',          bounty:[1,1],   brawlBall:[12,8], gemGrab:[9,8],   heist:[9,4],   hotZone:[2,1],   knockout:null },
+  { brawler: 'SHELLY',         bounty:[1,1],   brawlBall:[7,4],  gemGrab:[6,1],   heist:[1,1],   hotZone:null,    knockout:null },
+  { brawler: 'SIRIUS',         bounty:[13,7],  brawlBall:[17,11],gemGrab:[19,9],  heist:[17,10], hotZone:[14,3],  knockout:[2,1] },
+  { brawler: 'SPIKE',          bounty:[13,6],  brawlBall:[29,14],gemGrab:[18,6],  heist:[14,5],  hotZone:[21,3],  knockout:[8,4] },
+  { brawler: 'SPROUT',         bounty:null,    brawlBall:null,   gemGrab:null,    heist:null,    hotZone:null,    knockout:[3,3] },
+  { brawler: 'SQUEAK',         bounty:null,    brawlBall:[4,2],  gemGrab:null,    heist:[1,0],   hotZone:null,    knockout:[2,0] },
+  { brawler: 'STU',            bounty:[3,2],   brawlBall:[13,8], gemGrab:[16,8],  heist:null,    hotZone:[9,3],   knockout:null },
+  { brawler: 'SURGE',          bounty:null,    brawlBall:null,   gemGrab:[5,4],   heist:null,    hotZone:null,    knockout:null },
+  { brawler: 'TARA',           bounty:null,    brawlBall:[1,0],  gemGrab:[15,7],  heist:[2,1],   hotZone:null,    knockout:null },
+  { brawler: 'TICK',           bounty:[3,0],   brawlBall:null,   gemGrab:null,    heist:null,    hotZone:null,    knockout:[3,2] },
+  { brawler: 'TRUNK',          bounty:[1,0],   brawlBall:[4,2],  gemGrab:[7,3],   heist:[1,0],   hotZone:[1,1],   knockout:null },
+  { brawler: 'WILLOW',         bounty:[3,2],   brawlBall:[7,3],  gemGrab:null,    heist:null,    hotZone:null,    knockout:null },
+  { brawler: 'ZIGGY',          bounty:[16,8],  brawlBall:[13,7], gemGrab:[7,2],   heist:[2,0],   hotZone:[14,10], knockout:[5,1] },
+];
+
+// ══════════════════════════════════════════════════════════════
+//  PLAYER DATA — fill in matches for each player
+// ══════════════════════════════════════════════════════════════
+const PLAYERS = {
+  jasper: {
+    name: 'JASPER', tag: '#JASPER', color: '#ff6ec7',
+    matches: [
+      { brawler:'ANGELO',    gamemode:'heist',     map:'Bridge Too Far',  wins:1, losses:0 },
+      { brawler:'BROCK',     gamemode:'brawlBall', map:'Pinball Dreams',  wins:1, losses:0 },
+      { brawler:'BROCK',     gamemode:'heist',     map:'Kaboom Canyon',   wins:0, losses:1 },
+      { brawler:'BROCK',     gamemode:'knockout',  map:'Out in the Open', wins:0, losses:1 },
+      { brawler:'BULL',      gamemode:'brawlBall', map:'Center Stage',    wins:0, losses:1 },
+      { brawler:'CHARLIE',   gamemode:'gemGrab',   map:'Hard Rock Mine',  wins:0, losses:1 },
+      { brawler:'CHARLIE',   gamemode:'hotZone',   map:'Dueling Beetles', wins:1, losses:0 },
+      { brawler:'COLT',      gamemode:'brawlBall', map:'Center Stage',    wins:0, losses:1 },
+      { brawler:'CORDELIUS', gamemode:'brawlBall', map:'Sneaky Fields',   wins:1, losses:0 },
+      { brawler:'CORDELIUS', gamemode:'knockout',  map:'Out in the Open', wins:0, losses:1 },
+      { brawler:'CROW',      gamemode:'gemGrab',   map:'Gem Fort',        wins:1, losses:0 },
+      { brawler:'CROW',      gamemode:'gemGrab',   map:'Hard Rock Mine',  wins:1, losses:1 },
+      { brawler:'CROW',      gamemode:'knockout',  map:'Flaring Phoenix', wins:1, losses:0 },
+      { brawler:'CROW',      gamemode:'knockout',  map:'Out in the Open', wins:1, losses:0 },
+      { brawler:'EMZ',       gamemode:'brawlBall', map:'Center Stage',    wins:0, losses:1 },
+      { brawler:'EMZ',       gamemode:'brawlBall', map:'Triple Dribble',  wins:0, losses:1 },
+      { brawler:'EMZ',       gamemode:'heist',     map:'Hot Potato',      wins:1, losses:0 },
+      { brawler:'GALE',      gamemode:'gemGrab',   map:'Gem Fort',        wins:1, losses:0 },
+      { brawler:'GRAY',      gamemode:'hotZone',   map:'Dueling Beetles', wins:0, losses:1 },
+      { brawler:'GRIFF',     gamemode:'brawlBall', map:'Beach Ball',      wins:1, losses:0 },
+      { brawler:'JANET',     gamemode:'gemGrab',   map:'Undermine',       wins:1, losses:0 },
+      { brawler:'JUJU',      gamemode:'hotZone',   map:'Parallel Plays',  wins:1, losses:0 },
+      { brawler:'LEON',      gamemode:'gemGrab',   map:'Hard Rock Mine',  wins:1, losses:1 },
+      { brawler:'MEEPLE',    gamemode:'bounty',    map:'Layer Cake',      wins:1, losses:1 },
+      { brawler:'MEEPLE',    gamemode:'hotZone',   map:'Parallel Plays',  wins:1, losses:0 },
+      { brawler:'MICO',      gamemode:'heist',     map:'Bridge Too Far',  wins:1, losses:0 },
+      { brawler:'RICO',      gamemode:'hotZone',   map:'Ring of Fire',    wins:0, losses:1 },
+      { brawler:'SHADE',     gamemode:'brawlBall', map:'Triple Dribble',  wins:0, losses:1 },
+      { brawler:'SHADE',     gamemode:'knockout',  map:'Out in the Open', wins:1, losses:0 },
+      { brawler:'SIRIUS',    gamemode:'brawlBall', map:'Beach Ball',      wins:0, losses:1 },
+      { brawler:'SIRIUS',    gamemode:'brawlBall', map:'Triple Dribble',  wins:1, losses:0 },
+      { brawler:'SIRIUS',    gamemode:'heist',     map:'Bridge Too Far',  wins:0, losses:1 },
+      { brawler:'SPIKE',     gamemode:'hotZone',   map:'Open Business',   wins:1, losses:0 },
+      { brawler:'SPROUT',    gamemode:'hotZone',   map:'Dueling Beetles', wins:0, losses:1 },
+      { brawler:'TARA',      gamemode:'knockout',  map:'Flaring Phoenix', wins:0, losses:1 },
+    ]
+  },
+  daniel: { name:'DANIEL', tag:'#DANIEL', color:'#64b5f6', matches:[] },
+  wolf:   { name:'WOLF',   tag:'#WOLF',   color:'#ffb74d', matches:[] },
+  tykoro: { name:'TYKORO', tag:'#TYKORO', color:'#81c784', matches:[] },
+  sirito: { name:'SIRITO', tag:'#SIRITO', color:'#ce93d8', matches:[] },
+};
+
+// ══════════════════════════════════════════════════════════════
+//  CONSTANTS
+// ══════════════════════════════════════════════════════════════
+const GM_COLORS  = { bounty:'#f44336', brawlBall:'#4caf50', gemGrab:'#9c27b0', heist:'#ff9800', hotZone:'#f06292', knockout:'#29b6f6' };
+const GM_LABELS  = { bounty:'Bounty', brawlBall:'Brawl Ball', gemGrab:'Gem Grab', heist:'Heist', hotZone:'Hot Zone', knockout:'Knockout' };
+const GM_ORDER   = ['bounty','brawlBall','gemGrab','heist','hotZone','knockout'];
+const PRO_TIERS = [
+  { key: 'S', pct: 0.10 },
+  { key: 'A', pct: 0.25 },
+  { key: 'B', pct: 0.50 },
+  { key: 'C', pct: 0.75 },
+  { key: 'D', pct: 0.90 },
+  { key: 'F', pct: 1.00 },
+];
+
+const PLAYER_TIERS = PRO_TIERS; // or copy if you want different later
+// ══════════════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════════════
+function portraitUrl(name) {
+  return 'portraits/' + name.toLowerCase()+ '_portrait.jpg';
+}
+function wrClass(r) { return r >= 0.55 ? 'wr-high' : r >= 0.45 ? 'wr-mid' : 'wr-low'; }
+function score(sets, wins) {
+  if (sets < 1 || wins === 0) return sets < 1 ? null : 0;
+  return Math.pow(sets, 0.7) * Math.pow(wins / sets, 0.3);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  TIER LIST RENDERER (always shows all tiers + unranked)
+// ══════════════════════════════════════════════════════════════
+function renderTierList(container, scored, unranked, tierDefs) {
+  const tierMap = {};
+  for (const t of tierDefs) tierMap[t.key] = [];
+
+  // ✅ SORT by score (highest first)
+  scored.sort((a, b) => b.score - a.score);
+
+  const total = scored.length;
+
+  // ✅ ASSIGN TIERS BASED ON PERCENTILE
+  scored.forEach((b, index) => {
+    const rankPct = (index + 1) / total;
+    const tier = tierDefs.find(t => rankPct <= t.pct);
+    tierMap[tier.key].push(b);
+  });
+
+  // ✅ RENDER
+  for (const t of tierDefs) {
+    const row = document.createElement('div');
+    row.className = 'tier-row';
+
+    const label = document.createElement('div');
+    label.className = `tier-label tier-${t.key}`;
+    label.textContent = t.key;
+    row.appendChild(label);
+
+    const inner = document.createElement('div');
+    inner.className = 'tier-brawlers';
+
+    const brawlers = tierMap[t.key];
+
+    if (!brawlers || brawlers.length === 0) {
+      inner.innerHTML = '<span class="empty-tier">—</span>';
+    } else {
+      for (const b of brawlers) {
+        const wr = (b.wins / b.sets * 100).toFixed(1);
+        inner.innerHTML += `<div class="brawler-card">
+          <img src="${portraitUrl(b.name)}" alt="${b.name}" onerror="this.style.background='#1a1f3a'">
+          <div class="bc-name">${b.name}</div>
+          <div class="bc-score">${b.score.toFixed(2)}</div>
+          <div class="bc-tooltip">
+            <div class="tt-name">${b.name}</div>
+            <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}%</span></div>
+            <div class="tt-row"><span class="tt-label">Sets Played</span><span class="tt-val">${b.sets}</span></div>
+            <div class="tt-row"><span class="tt-label">Score</span><span class="tt-val">${b.score.toFixed(2)}</span></div>
+          </div>
+        </div>`;
+      }
+    }
+
+    row.appendChild(inner);
+    container.appendChild(row);
+  }
+
+  // 🔽 UNCHANGED: Unranked section
+  const urow = document.createElement('div');
+  urow.className = 'tier-row';
+
+  const ulabel = document.createElement('div');
+  ulabel.className = 'tier-label tier-unranked';
+  ulabel.innerHTML = 'UNRANKED<br>/NO DATA';
+  urow.appendChild(ulabel);
+
+  const uinner = document.createElement('div');
+  uinner.className = 'tier-brawlers';
+
+  if (!unranked || unranked.length === 0) {
+    uinner.innerHTML = '<span class="empty-tier">—</span>';
+  } else {
+    for (const b of unranked) {
+      const wr = b.sets > 0 ? (b.wins / b.sets * 100).toFixed(1) + '%' : '—';
+      uinner.innerHTML += `<div class="brawler-card" style="opacity:0.45">
+        <img src="${portraitUrl(b.name)}" alt="${b.name}" onerror="this.style.background='#1a1f3a'">
+        <div class="bc-name">${b.name}</div>
+        <div class="bc-score">${b.sets > 0 ? b.sets+'s' : '—'}</div>
+        <div class="bc-tooltip">
+          <div class="tt-name">${b.name}</div>
+          <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}</span></div>
+          <div class="tt-row"><span class="tt-label">Sets</span><span class="tt-val">${b.sets} (min 3)</span></div>
+        </div>
+      </div>`;
+    }
+  }
+
+  urow.appendChild(uinner);
+  container.appendChild(urow);
+}
+// ══════════════════════════════════════════════════════════════
+//  PRO PAGE
+// ══════════════════════════════════════════════════════════════
+function buildProTierList() {
+  const scored = [], unranked = [];
+  for (const b of PRO_DATA) {
+    let sets = 0, wins = 0;
+    for (const gm of GM_ORDER) { if (b[gm]) { sets += b[gm][0]; wins += b[gm][1]; } }
+    const sc = sets >= 3 ? score(sets, wins) : null;
+    if (sc !== null) scored.push({ name: b.brawler, sets, wins, score: sc });
+    else unranked.push({ name: b.brawler, sets, wins, score: 0 });
+  }
+  scored.sort((a, b) => b.score - a.score);
+  const container = document.getElementById('pro-tier-list');
+  container.innerHTML = '';
+  renderTierList(container, scored, unranked, PRO_TIERS);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  PLAYER PAGES
+// ══════════════════════════════════════════════════════════════
+function buildPlayerPage(playerId) {
+  const p = PLAYERS[playerId];
+  const container = document.getElementById(playerId + '-content');
+  container.innerHTML = '';
+
+  const totalWins   = p.matches.reduce((s,m) => s + m.wins,   0);
+  const totalLosses = p.matches.reduce((s,m) => s + m.losses, 0);
+  const totalSets   = totalWins + totalLosses;
+  const overallWR   = totalSets > 0 ? (totalWins / totalSets * 100).toFixed(1) : '—';
+  const wrc         = totalSets > 0 ? wrClass(totalWins / totalSets) : '';
+
+  // Header
+  const hdr = document.createElement('div');
+  hdr.className = 'player-header';
+  hdr.style.borderColor = p.color + '44';
+  hdr.innerHTML = `
+    <h2 style="color:${p.color}">${p.name}</h2>
+    <div class="player-stats-row">
+      <div class="pstat"><div class="ps-val" style="color:${p.color}">${totalSets}</div><div class="ps-label">Total Sets</div></div>
+      <div class="pstat"><div class="ps-val">${totalWins}</div><div class="ps-label">Wins</div></div>
+      <div class="pstat"><div class="ps-val" style="color:#ef5350">${totalLosses}</div><div class="ps-label">Losses</div></div>
+      <div class="pstat"><div class="ps-val ${wrc}">${overallWR}${totalSets > 0 ? '%' : ''}</div><div class="ps-label">Win Rate</div></div>
+    </div>`;
+  container.appendChild(hdr);
+
+  // Game mode accordion
+  const gmHdr = document.createElement('div');
+  gmHdr.className = 'section-header';
+  gmHdr.textContent = 'Results by Game Mode & Map';
+  container.appendChild(gmHdr);
+
+  for (const gm of GM_ORDER) {
+    const gmMatches = p.matches.filter(m => m.gamemode === gm);
+    const gmW = gmMatches.reduce((s,m) => s + m.wins, 0);
+    const gmL = gmMatches.reduce((s,m) => s + m.losses, 0);
+    const gmS = gmW + gmL;
+    const gmR = gmS > 0 ? gmW / gmS : null;
+    const wrText = gmR !== null ? (gmR * 100).toFixed(0) + '%' : '—';
+    const wrc2 = gmR !== null ? wrClass(gmR) : '';
+
+    const acc = document.createElement('div');
+    acc.className = 'gm-accordion';
+    acc.innerHTML = `
+      <div class="gm-accordion-header" onclick="toggleAcc(this)">
+        <div class="gm-dot" style="background:${GM_COLORS[gm]}"></div>
+        <div class="gm-acc-title">${GM_LABELS[gm]}</div>
+        <div class="gm-acc-meta"><span>${gmS} sets</span><span>${gmW}W / ${gmL}L</span></div>
+        <div class="gm-acc-wr ${wrc2}">${wrText}</div>
+        <div class="gm-acc-arrow">▶</div>
+      </div>
+      <div class="gm-accordion-body"></div>`;
+
+    const body = acc.querySelector('.gm-accordion-body');
+
+    if (gmMatches.length === 0) {
+      body.innerHTML = '<div class="gm-empty">No games played in this mode yet.</div>';
+    } else {
+      // Group by map
+      const byMap = {};
+      for (const m of gmMatches) { (byMap[m.map] = byMap[m.map] || []).push(m); }
+      for (const [mapName, rows] of Object.entries(byMap)) {
+        const mW = rows.reduce((s,m) => s + m.wins, 0);
+        const mL = rows.reduce((s,m) => s + m.losses, 0);
+        const mS = mW + mL;
+        const mR = mS > 0 ? mW / mS : null;
+        const mWRClass = mR !== null ? wrClass(mR) : '';
+        const mWRText  = mR !== null ? (mR * 100).toFixed(0) + '%' : '—';
+
+        const mg = document.createElement('div');
+        mg.className = 'map-group';
+        mg.innerHTML = `
+          <div class="map-group-header" onclick="toggleMap(this)">
+            <div class="map-group-name">${mapName}</div>
+            <div class="map-group-record">
+              <span style="color:#4caf50">${mW}W</span>
+              <span style="color:#ef5350">${mL}L</span>
+              <span style="color:var(--border)">·</span>
+              <span class="${mWRClass}">${mWRText}</span>
+            </div>
+            <div class="map-group-arrow">▶</div>
+          </div>
+          <div class="map-group-body"></div>`;
+
+        const mgBody = mg.querySelector('.map-group-body');
+        for (const m of rows) {
+          const s2 = m.wins + m.losses;
+          const r2 = s2 > 0 ? m.wins / s2 : null;
+          const wrc3 = r2 !== null ? wrClass(r2) : '';
+          const wrt3 = r2 !== null ? (r2 * 100).toFixed(0) + '%' : '—';
+          mgBody.innerHTML += `
+            <div class="brawler-result-row">
+              <img class="brr-img" src="${portraitUrl(m.brawler)}" alt="${m.brawler}" onerror="this.style.background='#1a1f3a'">
+              <div class="brr-name">${m.brawler}</div>
+              <div class="brr-record"><span class="brr-win">${m.wins}W</span> <span class="brr-loss">${m.losses}L</span></div>
+              <div class="brr-wr ${wrc3}">${wrt3}</div>
+            </div>`;
+        }
+        body.appendChild(mg);
+      }
+    }
+    container.appendChild(acc);
+  }
+
+  // Brawler tier list
+  const tlHdr = document.createElement('div');
+  tlHdr.className = 'section-header';
+  tlHdr.textContent = 'Brawler Performance Tier List';
+  container.appendChild(tlHdr);
+
+  const bAgg = {};
+  for (const m of p.matches) {
+    if (!bAgg[m.brawler]) bAgg[m.brawler] = { wins:0, losses:0 };
+    bAgg[m.brawler].wins   += m.wins;
+    bAgg[m.brawler].losses += m.losses;
+  }
+  const scored = [], unranked = [];
+  for (const [name, d] of Object.entries(bAgg)) {
+    const sets = d.wins + d.losses;
+    const sc   = sets >= 2 ? score(sets, d.wins) : null;
+    if (sc !== null) scored.push({ name, sets, wins: d.wins, score: sc });
+    else unranked.push({ name, sets, wins: d.wins, score: 0 });
+  }
+  scored.sort((a, b) => b.score - a.score);
+
+  const tlWrap = document.createElement('div');
+  renderTierList(tlWrap, scored, unranked, PLAYER_TIERS);
+  container.appendChild(tlWrap);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  ACCORDION TOGGLES
+// ══════════════════════════════════════════════════════════════
+function toggleAcc(header) { header.closest('.gm-accordion').classList.toggle('open'); }
+function toggleMap(header) { header.closest('.map-group').classList.toggle('open'); }
+
+// ══════════════════════════════════════════════════════════════
+//  NAV
+// ══════════════════════════════════════════════════════════════
+function switchPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.top-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelector('[data-page="' + id + '"]').classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════════
+document.getElementById('last-updated-date').textContent = LAST_UPDATED;
+buildProTierList();
+for (const id of Object.keys(PLAYERS)) buildPlayerPage(id);
+</script>
+</body>
+</html>
