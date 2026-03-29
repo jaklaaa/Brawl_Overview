@@ -252,7 +252,6 @@ body {
 .meta-bar-wrap { background: var(--border); border-radius: 4px; height: 6px; overflow: hidden; margin-top: 10px; }
 .meta-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent2), var(--accent)); }
 .meta-bar-label { display: flex; justify-content: space-between; font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 4px; }
-
 .build-note {
   background: rgba(255, 200, 0, 0.08);
   border-left: 4px solid #ffc800;
@@ -311,7 +310,6 @@ body {
 .build-note.collapsed .build-note-content {
   display: none;
 }
-
 .gm-ratings-card {
   background: rgba(255,255,255,0.02); border: 1px solid var(--border);
   border-radius: 10px; padding: 18px;
@@ -355,8 +353,8 @@ body {
       <div class="ph-text">MODEL</div>
     </div>
     <div class="model-overlay">
-      <div class="model-brawler-name" id="brawler-name-overlay"><em>SHELLY</em></div>
-      <div class="model-class-badge" id="brawler-class-badge">DAMAGE DEALER</div>
+      <div class="model-brawler-name" id="brawler-name-overlay"><em>BULL</em></div>
+      <div class="model-class-badge" id="brawler-class-badge">TANK</div>
     </div>
   </div>
 
@@ -371,7 +369,6 @@ body {
     <div class="tab-pane active" id="tab-build">
       <div class="build-card">
         <div class="build-recommended-tag">★ RECOMMENDED BUILD</div>
-
 <div class="build-note" id="buildNote">
   <div class="build-note-header">
     <span class="note-title">⚠️ Note</span>
@@ -387,23 +384,22 @@ body {
     • If a brawler has buffies, they are assumed in the <b>Best Build</b> section
   </div>
 </div>
-
         <div class="build-row">
           <div class="build-type-label" style="color:var(--green)">● GADGET</div>
           <div class="build-items">
             <div class="item-chip selected gadget" onclick="toggleDetail('d-g1')">
-              <img src="Assets/Shelly/G1.png" alt="Fast Forward"
+              <img src="Assets/Bull/G2.png" alt="Fast Forward"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder gadget" style="display:none">⚡</div>
-              <div class="ic-name">Fast Forward</div>
+              <div class="ic-name">Stomper</div>
               <div class="ic-dot dot-gadget"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-g1">
           <div class="item-detail-panel">
-            <div class="idp-name">Fast Forward</div>
-           Mainly better because you get all your ammo back. The buffie invulnerable is very good for surviving quick burst damage. 
+            <div class="idp-name">Stomper</div>
+           A 3 seconds stun is absolutely broken, other gadget is also good, but this is just outright broken. 
           </div>
         </div>
 
@@ -411,18 +407,18 @@ body {
           <div class="build-type-label" style="color:var(--yellow)">● STAR POWER</div>
           <div class="build-items">
             <div class="item-chip selected starpower" onclick="toggleDetail('d-s2')">
-              <img src="Assets/Shelly/S2.png" alt="Band-Aid"
+              <img src="Assets/Bull/S2.png" alt="Band-Aid"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder starpower" style="display:none">⭐</div>
-              <div class="ic-name">Band-Aid</div>
+              <div class="ic-name">Tough Guy</div>
               <div class="ic-dot dot-starpower"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-s2">
           <div class="item-detail-panel">
-            <div class="idp-name">Band-Aid</div>
-            Both star powers of Shelly are a bit meh, neither one really outshines the other. If you use Shelly as counter pick then 'Shell Shock' is better, but this one is more consistant overall.
+            <div class="idp-name">Tough Guy</div>
+            This star power is way safer and more consistant than the other one, both being very good currently. 
           </div>
         </div>
 
@@ -448,13 +444,13 @@ body {
         <div class="collapsed-panel" id="d-gear1">
           <div class="item-detail-panel">
             <div class="idp-name">Damage Gear</div>
-                Shelly is an Damage Dealer, with as role being an 'anti-agro/tank', this means she should just win her 1v1's and let her teammates shine afterwards. The best way to increase your chances of winning a 1v1 is by having even more damage.
+                Bull wants to kill people quickly after using his super, this gear enables that even more.
           </div>
         </div>
         <div class="collapsed-panel" id="d-gear2">
           <div class="item-detail-panel">
             <div class="idp-name">Health Gear</div>
-              Shelly nearly always has a bad matchup, so 900 extra 'max' health is a must have.
+              Using the health gear on a Tank is in general really good, since they can abuse this gear more than other brawlers. But it's especially good on agressive tanks like Bull, so you can jump back into action faster.
           </div>
         </div>
 
@@ -463,18 +459,18 @@ body {
           <div class="build-type-label" style="color:var(--purple)">◆ HYPERCHARGE</div>
           <div class="build-items">
             <div class="item-chip selected hypercharge" onclick="toggleDetail('d-hyper')">
-              <img src="Assets/Shelly/HC.png" alt="Shell Overload"
+              <img src="Assets/Bull/HC.png" alt="Shell Overload"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder hypercharge" style="display:none">💜</div>
-              <div class="ic-name">Double Barrel</div>
+              <div class="ic-name">Jaws of Steel</div>
               <div class="ic-dot dot-hyper"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-hyper">
           <div class="item-detail-panel">
-            <div class="idp-name">Double Barrel</div>
-           Shelly's hypercharge and hypercharge buffie are both not very good, and definitely not needed to play this brawler. Nice to own, but don't buy for coins. </div>
+            <div class="idp-name">Jaws of Steel</div>
+           While not being a very strong hypercharge on its own, together with the buffies and star power buffies it becomes the most broken part about bull. Currently one of the best hypercahrges in the enitre game. </div>
         </div>
       </div>
     </div>
@@ -485,44 +481,44 @@ body {
       <div class="section-title" style="color:var(--green)">● GADGETS</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-g1')">
-          <img src="Assets/Shelly/G1.png" alt="Fast Forward" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Bull/G1.png" alt="Fast Forward" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(74,197,74,0.15)">⚡</div>
-          <div><div class="igc-name">Fast Forward</div><div class="igc-desc">Dash forward</div></div>
+          <div><div class="igc-name">T-Bone Missile</div><div class="igc-desc">Healing Projectile</div></div>
         </div>
         <div class="item-grid-chip" onclick="toggleDetail('all-g2')">
-          <img src="Assets/Shelly/G2.png" alt="Shell Shock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Bull/G2.png" alt="Shell Shock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(74,197,74,0.15)">🐢</div>
-          <div><div class="igc-name">Clay Pigeons</div><div class="igc-desc">Long narrow attack</div></div>
+          <div><div class="igc-name">Stomper</div><div class="igc-desc">Slowing Enemies</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-g1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Fast Forward</div>Shelly dashes to an aimed direction or forwards, fully reloading her ammo! Cooldown: 20 seconds.</div></div>
-      <div class="collapsed-panel" id="all-g2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Clay Pigeons</div>Shelly focuses her fire to a smaller area with an increased range. Can be used 3 times per activation. Cooldown: 18 seconds.</div></div>
+      <div class="collapsed-panel" id="all-g1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">T-Bone Missile</div>Bull throws a projectile at the target Brawler, dealing 1600 damage and healing for 1600 if he hits. Cooldown: 18 seconds.</div></div>
+      <div class="collapsed-panel" id="all-g2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Stomper</div>Bull's stomps the ground, slowing nearby enemies. If a target is already slowed, they are stunned! Cooldown: 20 seconds.</div></div>
 
       <div class="section-title" style="color:var(--yellow);margin-top:18px">● STAR POWERS</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-s1')">
-          <img src="Assets/Shelly/S1.png" alt="Shell Shock SP" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Bull/S1.png" alt="Shell Shock SP" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(247,201,72,0.15)">⭐</div>
-          <div><div class="igc-name">Shell Shock</div><div class="igc-desc">Super slows</div></div>
+          <div><div class="igc-name">Berserker</div><div class="igc-desc">Increased Reload Speed</div></div>
         </div>
         <div class="item-grid-chip" onclick="toggleDetail('all-s2')">
-          <img src="Assets/Shelly/S2.png" alt="Band-Aid" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Bull/S2.png" alt="Band-Aid" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(247,201,72,0.15)">🩹</div>
-          <div><div class="igc-name">Band-Aid</div><div class="igc-desc">Heal at low HP</div></div>
+          <div><div class="igc-name">Tough Guy</div><div class="igc-desc">Bull Gains A Shield</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-s1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Shell Shock</div>Shelly's Super shells slow down enemies for 2 sec!</div></div>
-      <div class="collapsed-panel" id="all-s2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Band-Aid</div>When Shelly falls below 40% health, she instantly heals for 2340 health. Band-Aid recharges in 15 sec.</div></div>
+      <div class="collapsed-panel" id="all-s1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Berserker</div>When Bull falls below 60% health, his reload speed doubles!</div></div>
+      <div class="collapsed-panel" id="all-s2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Tough Guy</div>When Bull falls below 40% health, he gains a shield that reduces all damage he takes by 30%.</div></div>
 
       <div class="section-title" style="color:var(--purple);margin-top:18px">◆ HYPERCHARGE</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-hc')">
-          <img src="Assets/Shelly/HC.png" alt="Shell Overload" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Nita/HC.png" alt="Shell Overload" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(196,122,232,0.15)">💜</div>
-          <div><div class="igc-name">Double Barrel</div><div class="igc-desc">Stronger super, stronger attacks</div></div>
+          <div><div class="igc-name">Jaws of Steel</div><div class="igc-desc">Reduce Damage In Super</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-hc" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Shell Overload</div>Super Shell is 33% larger.</div></div>
+      <div class="collapsed-panel" id="all-hc" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Jaws of Steel</div>Bulldozer reduces damage taken by 80%.</div></div>
 
       <div class="section-title" style="color:var(--gray);margin-top:18px">● GEARS — STANDARD</div>
       <div class="gear-row-items">
@@ -571,14 +567,14 @@ body {
     <div class="section-title">META RANKING</div>
     <div class="meta-rank-card">
       <div class="meta-tier-display">
-        <div class="meta-tier-letter mt-C">C</div>
+        <div class="meta-tier-letter mt-S">S</div>
         <div>
           <div class="mti-label">CURRENT TIER</div>
-          <div class="mti-name">C TIER</div>
-          <div class="mti-sub">Situational Pick</div>
+          <div class="mti-name">S TIER</div>
+          <div class="mti-sub">Overpowered Pick</div>
         </div>
       </div>
-      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:55%"></div></div>
+      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:100%"></div></div>
       <div class="meta-bar-label"><span>F</span><span>D</span><span>C</span><span>B</span><span>A</span><span>S</span></div>
     </div>
 
@@ -592,18 +588,18 @@ body {
 const urlParams = new URLSearchParams(window.location.search);
 const brawlerParam = urlParams.get('name') || 'Shelly';
 
-document.getElementById('hero-model-img').src = `Assets/Shelly/model.png`;
+document.getElementById('hero-model-img').src = `Assets/Bull/model.png`;
 document.getElementById('hero-model-img').alt = brawlerParam;
 document.getElementById('brawler-name-overlay').innerHTML = `<em>${brawlerParam.toUpperCase()}</em>`;
 document.title = `BRAWL STATS SSS — ${brawlerParam}`;
 
 const GAMEMODES = [
-  { label: 'Bounty',    color: '#f44336', stars: 1 },
-  { label: 'Brawl Ball',color: '#4caf50', stars: 3 },
-  { label: 'Gem Grab',  color: '#9c27b0', stars: 3 },
-  { label: 'Heist',     color: '#ff9800', stars: 1 },
-  { label: 'Hot Zone',  color: '#f06292', stars: 1 },
-  { label: 'Knockout',  color: '#29b6f6', stars: 1 },
+  { label: 'Bounty',    color: '#f44336', stars: 4 },
+  { label: 'Brawl Ball',color: '#4caf50', stars: 5 },
+  { label: 'Gem Grab',  color: '#9c27b0', stars: 5 },
+  { label: 'Heist',     color: '#ff9800', stars: 4 },
+  { label: 'Hot Zone',  color: '#f06292', stars: 4 },
+  { label: 'Knockout',  color: '#29b6f6', stars: 3 },
 ];
 
 const gmContainer = document.getElementById('gm-ratings');
@@ -619,6 +615,7 @@ const gmContainer = document.getElementById('gm-ratings');
     <div class="gm-score-text">${gm.stars}/5</div>`;
   gmContainer.appendChild(row);
 });
+
 const NOTE_KEY = "buildNoteDismissedAt";
 const NOTE_COOLDOWN = 24 * 60 * 60 * 1000; 
 
@@ -649,6 +646,7 @@ function dismissNote() {
 
   localStorage.setItem(NOTE_KEY, Date.now().toString());
 }
+
 function toggleDetail(id) {
   const el = document.getElementById(id);
   if (el) el.classList.toggle('open');
