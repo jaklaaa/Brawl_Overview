@@ -19,17 +19,16 @@
   <!-- COL 1: MODEL PANEL -->
   <div class="model-col">
     <div class="model-bg-glow"></div>
-     <img class="model-img" id="hero-model-img"
-     src="Assets/Poco/model.png"
-     alt="Rosa"
-     onerror="this.onerror=null; this.src='Assets/Poco/Model.png';">
+   <img class="model-img" id="hero-model-img"
+     src="Assets/Jessie/Model.png"
+     onerror="this.onerror=null; this.src='Assets/Jessie/Model.png';">
     <div class="model-placeholder" id="model-placeholder" style="display:none">
       <div class="ph-icon">🔫</div>
       <div class="ph-text">MODEL</div>
     </div>
     <div class="model-overlay">
-      <div class="model-brawler-name" id="brawler-name-overlay"><em>POCO</em></div>
-      <div class="model-class-badge" id="brawler-class-badge">SUPPORT</div>
+      <div class="model-brawler-name" id="brawler-name-overlay"><em>Jessie</em></div>
+      <div class="model-class-badge" id="brawler-class-badge">CONTROLLER</div>
     </div>
   </div>
 
@@ -38,7 +37,7 @@
     <div class="tab-row">
       <div class="tab-btn active" onclick="switchTab('build')">BEST BUILD</div>
       <div class="tab-btn" onclick="switchTab('all')">ALL ITEMS</div>
-            <div class="tab-btn" onclick="switchTab('matchups')">MATCHUPS</div>
+      <div class="tab-btn" onclick="switchTab('matchups')">MATCHUPS</div>
       <div class="tab-btn" onclick="switchTab('skins')">SKINS</div>
     </div>
 
@@ -65,18 +64,18 @@
           <div class="build-type-label" style="color:var(--green)">● GADGET</div>
           <div class="build-items">
             <div class="item-chip selected gadget" onclick="toggleDetail('d-g1')">
-              <img src="Assets/Poco/G2.png" alt="Fast Forward"
+              <img src="Assets/Jessie/G2.png" alt="Fast Forward"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder gadget" style="display:none">⚡</div>
-              <div class="ic-name">Protective Tunes</div>
+              <div class="ic-name">Recoil Spring</div>
               <div class="ic-dot dot-gadget"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-g1">
           <div class="item-detail-panel">
-            <div class="idp-name">Protective Tunes</div>
-           While both gadgets are really usefull, this one seems to be become better each update with more stuns in the game. Not to mention this just extra hard-counters brawlers poco is meant to counter. 
+            <div class="idp-name">Recoil Spring</div>
+           Jessie is only playable in heist as a damage dealer with her Turret, this increases your turrets damage so it's the better one. In other games you should have the other gadget, but you shouldn't play her outside of heist anyways.
           </div>
         </div>
 
@@ -84,18 +83,18 @@
           <div class="build-type-label" style="color:var(--yellow)">● STAR POWER</div>
           <div class="build-items">
             <div class="item-chip selected starpower" onclick="toggleDetail('d-s2')">
-              <img src="Assets/Poco/S2.png" alt="Band-Aid"
+              <img src="Assets/Jessie/S2.png" alt="Band-Aid"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder starpower" style="display:none">⭐</div>
-              <div class="ic-name">Screeching Solo</div>
+              <div class="ic-name">Shocky</div>
               <div class="ic-dot dot-starpower"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-s2">
           <div class="item-detail-panel">
-            <div class="idp-name">Screeching Solo</div>
-            Poco is a low dps-brawler, and that extra dps is really nice on Poco. 
+            <div class="idp-name">Shockys</div>
+            The other star power can be better in gamemodes outside of heist, but since that is the only gamemode where you can ever play Jessie you should have this one.
           </div>
         </div>
 
@@ -103,31 +102,31 @@
           <div class="build-type-label" style="color:var(--gray)">● GEARS</div>
           <div class="build-items">
             <div class="item-chip selected gear" onclick="toggleDetail('d-gear1')">
-              <img src="Assets/Gears/GadgetCooldownGear.png" alt="Damage"
+              <img src="Assets/Gears/DamageGear.png" alt="Damage"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder gear" style="display:none">⚔️</div>
-              <div class="ic-name">Gadget Cooldown</div>
+              <div class="ic-name">Damage</div>
               <div class="ic-dot dot-gear"></div>
             </div>
             <div class="item-chip selected gear" onclick="toggleDetail('d-gear2')">
-              <img src="Assets/Gears/ShieldGear.png" alt="Health"
+              <img src="Assets/Gears/PetPowerGear.png" alt="Health"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder gear" style="display:none">❤️</div>
-              <div class="ic-name">Shield</div>
+              <div class="ic-name">Pet Power</div>
               <div class="ic-dot dot-gear"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-gear1">
           <div class="item-detail-panel">
-            <div class="idp-name">Gadget Cooldown Gear</div>
-              Poco is good in this meta only because of his gadgets, with either one of them being really really strong. So this just allows even more gadget spam.
+            <div class="idp-name">Damage Gear</div>
+              Jessie is only playable in heist, the most important aspect of a brawler there is damage to either defend or go aggressive. So the damage gear is a need for a heist-only brawler like Jessie. 
           </div>
         </div>
         <div class="collapsed-panel" id="d-gear2">
           <div class="item-detail-panel">
-            <div class="idp-name">Shield Gear</div>
-              [Explanation w.i.p]
+            <div class="idp-name">Pet Power Gear</div>
+              Same reason as damage gear. Read that.
           </div>
         </div>
 
@@ -136,18 +135,18 @@
           <div class="build-type-label" style="color:var(--purple)">◆ HYPERCHARGE</div>
           <div class="build-items">
             <div class="item-chip selected hypercharge" onclick="toggleDetail('d-hyper')">
-              <img src="Assets/Poco/HC.png" alt="Shell Overload"
+              <img src="Assets/Jessie/HC.png" alt="Shell Overload"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder hypercharge" style="display:none">💜</div>
-              <div class="ic-name">Medic's Melody</div>
+              <div class="ic-name">Scrapy 2.0</div>
               <div class="ic-dot dot-hyper"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-hyper">
           <div class="item-detail-panel">
-            <div class="idp-name">Medic's Melody</div>
-           Poco's hypercharge is underwhelming, often the overhealing doesn't accomplish much and its a normal super if you don't even overheal. </div>
+            <div class="idp-name">Scrapy 2.0</div>
+          Very bad hypercharge. Don't bother buying, it's an improvement over the normal super but barely changes anything. </div>
         </div>
       </div>
     </div>
@@ -158,44 +157,44 @@
       <div class="section-title" style="color:var(--green)">● GADGETS</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-g1')">
-          <img src="Assets/Poco/G1.png" alt="Fast Forward" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Jessie/G1.png" alt="Fast Forward" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(74,197,74,0.15)">⚡</div>
-          <div><div class="igc-name">Tuning Fork</div><div class="igc-desc">Heal Allies</div></div>
+          <div><div class="igc-name">Spark Plug</div><div class="igc-desc">Slow around your turret</div></div>
         </div>
         <div class="item-grid-chip" onclick="toggleDetail('all-g2')">
-          <img src="Assets/Poco/G2.png" alt="Shell Shock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Jessie/G2.png" alt="Shell Shock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(74,197,74,0.15)">🐢</div>
-          <div><div class="igc-name">Protective Tunes</div><div class="igc-desc">Remove Status Effects</div></div>
+          <div><div class="igc-name">Recoil Spring</div><div class="igc-desc">Scrappy increased attack speed</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-g1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Tuning Fork</div>Poco and all nearby allies heal 800 health per second for 5 seconds. Cooldown: 20 seconds.</div></div>
-      <div class="collapsed-panel" id="all-g2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Protective Tunes</div>Removes active adverse effects from friendly brawlers in a large area and gives a 4.0 second immunity. Cooldown: 18 seconds.</div></div>
+      <div class="collapsed-panel" id="all-g1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Spark Plug</div>Jessie triggers a shockwave from her turret, slowing down all enemies within its area of effect. Cooldown: 15 seconds.</div></div>
+      <div class="collapsed-panel" id="all-g2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Recoil Spring</div>Scrappy's attack speed is doubled for 5.0 seconds. Cooldown: 11 seconds.</div></div>
 
       <div class="section-title" style="color:var(--yellow);margin-top:18px">● STAR POWERS</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-s1')">
-          <img src="Assets/Poco/S1.png" a  lt="Shell Shock SP" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Jessie/S1.png" a  lt="Shell Shock SP" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(247,201,72,0.15)">⭐</div>
-          <div><div class="igc-name">Medical Use</div><div class="igc-desc">Attacks Heal Barley</div></div>
+          <div><div class="igc-name">Energize</div><div class="igc-desc">Heal Turret</div></div>
         </div>
         <div class="item-grid-chip" onclick="toggleDetail('all-s2')">
-          <img src="Assets/Poco/S2.png" alt="Band-Aid" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Jessie/S2.png" alt="Band-Aid" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(247,201,72,0.15)">🩹</div>
-          <div><div class="igc-name">Extra Noxious</div><div class="igc-desc">Deal More Damage</div></div>
+          <div><div class="igc-name">Shocky</div><div class="igc-desc">Turret attacks bounce</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-s1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Medical Use!</div>Barley regains 540 health from each attack.</div></div>
-      <div class="collapsed-panel" id="all-s2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Extra Noxious</div>Adds +200 damage per second to Barley's attack.</div></div>
+      <div class="collapsed-panel" id="all-s1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Energize</div>Jessie can repair her gun turret for 1060 of its missing health by zapping it with her attack.</div></div>
+      <div class="collapsed-panel" id="all-s2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Scrapy</div>Scrappy the Turret now shoots energy orbs that bounce between enemies. The orbs' range after a bounce is 51% of normal range.</div></div>
 
       <div class="section-title" style="color:var(--purple);margin-top:18px">◆ HYPERCHARGE</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-hc')">
-          <img src="Assets/Poco/HC.png" alt="Shell Overload" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Jessie/HC.png" alt="Shell Overload" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(196,122,232,0.15)">💜</div>
-          <div><div class="igc-name">Medic's Melody</div><div class="igc-desc">Super Oveheals</div></div>
+          <div><div class="igc-name">Scrappy 2.0</div><div class="igc-desc">Bigger Badder Turret</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-hc" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Medic's Melody</div>Encore now overheals, adding a decaying shield for the amount overhealed. Shield lasts for 5 seconds.</div></div>
+      <div class="collapsed-panel" id="all-hc" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Scrappy 2.0</div>Jessie's turret has 50% more health and deals 20% more damage.</div></div>
 
       <div class="section-title" style="color:var(--gray);margin-top:18px">● GEARS — STANDARD</div>
       <div class="gear-row-items">
@@ -229,6 +228,11 @@
           <div class="ic-img-placeholder gear" style="display:none">⏱️</div>
           <div class="ic-name" style="font-size:11px">Gadget CD</div>
         </div>
+        <div class="item-chip gear" onclick="toggleDetail('ag-pp')">
+          <img src="Assets/Gears/PetPowerGear.png" alt="Gadget CD" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ic-img-placeholder gear" style="display:none">⏱️</div>
+          <div class="ic-name" style="font-size:11px">Pet Power</div>
+        </div>
       </div>
       <div class="collapsed-panel" id="ag-spd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Speed Gear</div>+15% movement speed in bushes.</div></div>
       <div class="collapsed-panel" id="ag-vis" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Vision Gear</div>Reveals enemies in bushes for 2s after hitting them.</div></div>
@@ -236,7 +240,11 @@
       <div class="collapsed-panel" id="ag-shd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Shield Gear</div>+900 shield that regenerates out of combat.</div></div>
       <div class="collapsed-panel" id="ag-dmg" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Damage Gear</div>+15% damage below 50% HP. Core pick for the Band-Aid combo.</div></div>
       <div class="collapsed-panel" id="ag-gcd" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Gadget Cooldown Gear</div>Reduces gadget cooldown. More useful with Fast Forward.</div></div>
+      <div class="collapsed-panel" id="ag-pp"  style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Pet Power Gear</div>Pet power increased by 25%.</div></div>
+
     </div>
+  
+
       <!-- ═══ MATCHUPS ═══ -->
     <div class="tab-pane" id="tab-matchups">
       <div class="matchup-intro">
@@ -267,27 +275,26 @@
       <div class="skins-filter-row" id="skins-filters"></div>
       <div class="skins-grid" id="skins-grid"></div>
     </div>
-    </div>
+</div>
   <!-- COL 3: META + GAMEMODES -->
   <div>
     <div class="section-title">META RANKING</div>
     <div class="meta-rank-card">
       <div class="meta-tier-display">
-        <div class="meta-tier-letter mt-B">B</div>
+        <div class="meta-tier-letter mt-F">F</div>
         <div>
           <div class="mti-label">CURRENT TIER</div>
-          <div class="mti-name">B TIER</div>
-          <div class="mti-sub">Solid Pick</div>
+          <div class="mti-name">F TIER</div>
+          <div class="mti-sub">Never Play</div>
         </div>
       </div>
-      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:70%"></div></div>
+      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:4%"></div></div>
       <div class="meta-bar-label"><span>F</span><span>D</span><span>C</span><span>B</span><span>A</span><span>S</span></div>
     </div>
 
     <div class="section-title">GAMEMODE RATINGS</div>
     <div class="gm-ratings-card" id="gm-ratings"></div>
   </div>
-
 </div><!-- /main-content -->
 
 <!-- SKIN MODAL -->
@@ -310,21 +317,21 @@
   </div>
 </div>
 
+
 <script>
 const urlParams = new URLSearchParams(window.location.search);
-const brawlerParam = urlParams.get('name') || 'Shelly';
+const brawlerParam = 'Jessie'
 
-document.getElementById('hero-model-img').src = `Assets/Poco/model.png`;
-document.getElementById('hero-model-img').alt = brawlerParam;
+document.getElementById('hero-model-img').src = `Assets/Jessie/model.png`;
 document.getElementById('brawler-name-overlay').innerHTML = `<em>${brawlerParam.toUpperCase()}</em>`;
 document.title = `BRAWL STATS SSS — ${brawlerParam}`;
 
 const GAMEMODES = [
-  { label: 'Bounty',    color: '#f44336', stars: 3 },
-  { label: 'Brawl Ball',color: '#4caf50', stars: 4 },
+  { label: 'Bounty',    color: '#f44336', stars: 1 },
+  { label: 'Brawl Ball',color: '#4caf50', stars: 1 },
   { label: 'Gem Grab',  color: '#9c27b0', stars: 3 },
   { label: 'Heist',     color: '#ff9800', stars: 1 },
-  { label: 'Hot Zone',  color: '#f06292', stars: 4 },
+  { label: 'Hot Zone',  color: '#f06292', stars: 1 },
   { label: 'Knockout',  color: '#29b6f6', stars: 1 },
 ];
 
@@ -382,26 +389,14 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
-}
-/* ════════════════════════════════════════
+}/* ════════════════════════════════════════
    MATCHUPS DATA
    type: 'loses-to' | 'counters' | 'even'
    severity: 'hard' | 'soft' (for loses-to / counters)
 ════════════════════════════════════════ */
 const MATCHUPS = [
   // Loses to
-  { name: 'Emz',    type: 'loses-to',  severity: 'hard',
-    reason: "Emz and Poco have similair range, however Emz's attack lingers longer and can thus keep more control. Slowly pushing Poco Back.", img: '../portraits/emz_portrait.jpg' },
-  { name: 'Mortis', type: 'loses-to',  severity: 'hard',
-    reason: "Poco doesn't have the dps to keep up with a Mortis at short range.", img: '../portraits/mortis_portrait.jpg' },
-  { name: 'Kaze',    type: 'loses-to',  severity: 'hard',
-    reason: "Poco doesn't have the dps to keep up with a Kaze at short range.", img: '../portraits/Kaze_portrait.jpg' },
-  { name: 'Kenji',     type: 'loses-to',  severity: 'hard',
-    reason: "Poco doesn't have the dps to keep up with a Kenji at short range.", img: '../portraits/kenji_portrait.jpg' },
-  { name: 'Crow',     type: 'loses-to',  severity: 'soft',
-    reason: "Crow's anti-healing effect on his main attack makes Poco a lot worse since he cannot support that well anymore.", img: '../portraits/crow_portrait.jpg' },
-  
-];
+  ];
 
 function buildMatchups() {
   const sections = { 'loses-to': [], 'counters': [], 'even': [] };
@@ -467,95 +462,109 @@ const RARITY_GEM_DEFAULT = {
 
 const SKINS = [
   {
-    id: 'default', name: 'Default Poco',
+    id: 'default', name: 'Default Jessie',
     rarity: 'default', limited: false,
     price: 'Free',
-    img: 'Assets/Poco/model.png',
-    desc: 'The default Poco look.',
+    img: 'Assets/Jessie/model.png',
+    desc: 'The default Jessie look.',
   },
   {
-    id: '1', name: 'Phantom Poco',
-    rarity: 'rare', limited: false,
+    id: '1', name: 'Doll Jessie',
+    rarity: 'rare', limited: false, seasonal: false,
     price: '29 💎',
-    img: 'Assets/Poco/skins/Phantom Poco.png',
+    img: 'Assets/Jessie/skins/Doll.png',
+    desc: '',
+  },
+  {
+    id: '2', name: 'Summer Jessie',
+    rarity: 'super-rare', limited: false, seasonal: false,
+    price: '79 💎',
+    img: 'Assets/Jessie/skins/Summer.png',
     desc: '',
   },
    {
-    id: '2', name: 'Pirate Poco', 
-    rarity: 'super-rare', limited: false, seasonal: true,
+    id: '3', name: 'Red Dragon Jessie',
+    rarity: 'super-rare', limited: true, seasonal: false,
+    price: 'Free',
+    img: 'Assets/Jessie/skins/Red Dragon.png',
+    desc: 'Free from Brawl Stars China launch',
+  },
+  {
+    id: '3', name: 'Sandy Jessie',
+    rarity: 'super-rare', limited: true, seasonal: false,
     price: '79 💎',
-    img: 'Assets/Poco/skins/Pirate Poco.png',
+    img: 'Assets/Jessie/skins/Sandy.png',
     desc: '',
   },
-    {
-    id: '3', name: 'Star Poco',
-    rarity: 'super-rare', limited: true,
+  {
+    id: '4', name: 'Jessie Jessie',
+    rarity: 'super-rare', limited: true, seasonal: false,
     price: '79 💎',
-    img: 'Assets/Poco/skins/Star Poco.png',
+    img: 'Assets/Jessie/skins/Jessie.png',
     desc: '',
   },
-     {
-    id: '4', name: 'Serenade Poco',
-    rarity: 'epic', limited: false,
+   {
+    id: '5', name: 'Dragon Knight Jessie',
+    rarity: 'epic', limited: false, seasonal: false,
     price: '149 💎',
-    img: 'Assets/Poco/skins/Serenade Poco.png',
+    img: 'Assets/Jessie/skins/Dragon Knight.png',
     desc: '',
   },
-       {
-    id: '5', name: 'Trash Poco',
-    rarity: 'epic', limited: false,
+  {
+    id: '6', name: 'Shadow Knight Jessie',
+    rarity: 'epic', limited: false, seasonal: false,
+    price: '39 💎',
+    img: 'Assets/Jessie/skins/Shadow Knight.png',
+    desc: 'Color variant',
+  },
+  {
+    id: '7', name: 'Tanuki Jessie',
+    rarity: 'epic', limited: false, seasonal: false,
     price: '149 💎',
-    img: 'Assets/Poco/skins/Trash Poco.png',
+    img: 'Assets/Jessie/skins/Tanuki.png',
     desc: '',
   },
-     {
-    id: '6', name: 'Desperado Poco',
-    rarity: 'epic', limited: false,
+  {
+    id: '8', name: 'Cat Burglar Jessie',
+    rarity: 'epic', limited: false, seasonal: true,
     price: '149 💎',
-    img: 'Assets/Poco/skins/Desperado Poco.png',
+    img: 'Assets/Jessie/skins/Cat Burglar.png',
     desc: '',
   },
-       {
-    id: '7', name: 'Poco CCTV',
-    rarity: 'epic', limited: false,
+  {
+    id: '9', name: 'Jessie Musketeer',
+    rarity: 'epic', limited: false, seasonal: false,
     price: '149 💎',
-    img: 'Assets/Poco/skins/Poco CCTV.png',
+    img: 'Assets/Jessie/skins/Jessie Musketeer.png',
     desc: '',
   },
-       {
-    id: '8', name: 'Quit Playing Poco',
-    rarity: 'epic', limited: false,
-    price: '149 💎',
-    img: 'Assets/Poco/skins/Quit Playing Poco.png',
-    desc: '',
-  },
-       {
-    id: '9', name: 'Possessed Poco',
-    rarity: 'mythic', limited: false, 
+  {
+    id: '10', name: 'Skadi Jessie',
+    rarity: 'mythic', limited: false, seasonal: false,
     price: '199 💎',
-    img: 'Assets/Poco/skins/Possessed Poco.png',
+    img: 'Assets/Jessie/skins/Skadi.png',
     desc: '',
   },
-         {
-    id: '10', name: 'DJ Poco',
-    rarity: 'hypercharge', limited: false,
-    price: '599 💎',
-    img: 'Assets/Poco/skins/DJ Poco.png',
+  {
+    id: '11', name: 'Mecha Jessie',
+    rarity: 'legendary', limited: false, seasonal: false,
+    price: '299 💎',
+    img: 'Assets/Jessie/skins/Mecha.png',
     desc: '',
   },
-           {
-    id: '11', name: 'Scratcher Poco',
-    rarity: 'hypercharge', limited: false,
-    price: '599 💎',
-    img: 'Assets/Poco/skins/Scratcher Poco.png',
-    desc: 'Color Variant',
+  {
+    id: '12', name: 'Shining Mecha Jessie',
+    rarity: 'legendary', limited: false, seasonal: false,
+    price: '299 💎',
+    img: 'Assets/Jessie/skins/Shining Mecha.png',
+    desc: '',
   },
-           {
-    id: '12', name: 'Beatmaker Poco',
-    rarity: 'hypercharge', limited: false,
-    price: '599 💎',
-    img: 'Assets/Poco/skins/Beatmaker Poco.png',
-    desc: 'Color Variant',
+  {
+    id: '13', name: 'Bubblegum Mecha Jessie',
+    rarity: 'legendary', limited: false, seasonal: false,
+    price: '299 💎',
+    img: 'Assets/Jessie/skins/Bubblegum Mecha.png',
+    desc: '',
   },
 ];
 
@@ -605,7 +614,7 @@ function buildSkins() {
     card.dataset.limited = skin.limited;
     card.onclick = () => openSkinModal(skin);
 
-card.innerHTML = `
+    card.innerHTML = `
   <div class="skin-img-wrap">
     ${skin.limited ? '<div class="skin-limited-badge">LIMITED</div>' : ''}
     ${skin.seasonal ? '<div class="skin-seasonal-badge">SEASONAL</div>' : ''}
