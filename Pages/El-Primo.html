@@ -1,338 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BRAWL STATS SSS — Brawler</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #0d0f1a;
-  --panel: #131629;
-  --border: #1e2540;
-  --accent: #f7c948;
-  --accent2: #3bf0c4;
-  --text: #e8eaf6;
-  --muted: #5c6bc0;
-  --green: #4ac54a;
-  --yellow: #f7c948;
-  --purple: #c47ae8;
-  --gray: #8a9ab5;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Rajdhani', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+<link rel="stylesheet" href="Astyles.css">
 
-/* ── HEADER ── */
-.header {
-  background: linear-gradient(135deg, #1a1f3a 0%, #0d1020 100%);
-  border-bottom: 2px solid var(--accent);
-  padding: 14px 24px;
-  display: flex; align-items: center; gap: 16px;
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 4px 30px rgba(247,201,72,0.15);
-}
-.logo { font-size: 26px; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-shadow: 0 0 20px rgba(247,201,72,0.5); }
-.logo span { color: var(--accent2); }
-.back-btn {
-  display: flex; align-items: center; gap: 6px;
-  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-  border-radius: 6px; padding: 6px 14px; cursor: pointer;
-  font-family: 'Rajdhani', sans-serif; font-weight: 700;
-  font-size: 13px; letter-spacing: 1px; color: var(--muted);
-  transition: all 0.2s; text-decoration: none;
-}
-.back-btn:hover { color: var(--text); border-color: var(--accent); }
-
-/* ── MAIN 3-COL LAYOUT ── */
-.main-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-  display: grid;
-  grid-template-columns: 220px 1fr 320px;
-  gap: 20px;
-  align-items: start;
-}
-@media (max-width: 900px) {
-  .main-content { grid-template-columns: 1fr 1fr; }
-  .model-col { grid-column: 1 / -1; }
-}
-@media (max-width: 600px) {
-  .main-content { grid-template-columns: 1fr; }
-}
-
-/* ── MODEL COLUMN ── */
-.model-col {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: linear-gradient(180deg, #111428 0%, #0c0e1e 100%);
-  min-height: 340px;
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-}
-.model-bg-glow {
-  position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-  width: 180px; height: 180px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(247,201,72,0.09) 0%, transparent 70%);
-  pointer-events: none;
-}
-.model-img {
-  width: 100%; height: auto;
-  object-fit: contain;
-  max-height: 300px;
-  position: relative; z-index: 1;
-  filter: drop-shadow(0 4px 24px rgba(247,201,72,0.22));
-  display: block;
-}
-.model-placeholder {
-  width: 100%; height: 280px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; opacity: 0.3; position: relative; z-index: 1;
-}
-.model-placeholder .ph-icon { font-size: 64px; }
-.model-placeholder .ph-text { font-size: 10px; color: var(--muted); letter-spacing: 2px; font-family: 'Share Tech Mono', monospace; }
-
-/* Name + class overlay at bottom of model panel */
-.model-overlay {
-  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
-  padding: 40px 14px 14px;
-  background: linear-gradient(0deg, rgba(10,11,22,0.95) 0%, rgba(10,11,22,0.6) 60%, transparent 100%);
-}
-.model-brawler-name {
-  font-size: 28px; font-weight: 700; letter-spacing: 3px;
-  color: var(--text); line-height: 1;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
-}
-.model-brawler-name em { color: var(--accent); font-style: normal; }
-.model-class-badge {
-  display: inline-block; margin-top: 5px;
-  font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px;
-  padding: 2px 8px; border-radius: 3px;
-  background: rgba(59,240,196,0.12); border: 1px solid rgba(59,240,196,0.3);
-  color: var(--accent2);
-}
-
-/* ── SECTION TITLE ── */
-.section-title {
-  font-size: 11px; letter-spacing: 3px; color: var(--muted);
-  text-transform: uppercase; margin-bottom: 14px;
-  padding-bottom: 6px; border-bottom: 1px solid var(--border);
-}
-
-/* ── TABS ── */
-.tab-row {
-  display: flex; gap: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border);
-}
-.tab-btn {
-  padding: 8px 18px; font-family: 'Rajdhani', sans-serif; font-weight: 700;
-  font-size: 13px; letter-spacing: 1.5px; color: var(--muted);
-  border-bottom: 2px solid transparent; cursor: pointer;
-  transition: all 0.15s; margin-bottom: -1px;
-}
-.tab-btn:hover { color: var(--text); }
-.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-.tab-pane { display: none; }
-.tab-pane.active { display: block; }
-
-/* ── BUILD CARD ── */
-.build-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px;
-  margin-bottom: 16px;
-}
-.build-recommended-tag {
-  display: inline-block;
-  font-family: 'Share Tech Mono', monospace; font-size: 9px;
-  letter-spacing: 2px; padding: 2px 8px; border-radius: 3px;
-  background: rgba(247,201,72,0.12); border: 1px solid rgba(247,201,72,0.3);
-  color: var(--accent); margin-bottom: 14px;
-}
-.build-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
-.build-type-label {
-  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-  width: 96px; flex-shrink: 0; padding-top: 12px;
-  font-family: 'Share Tech Mono', monospace;
-}
-.build-items { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
-.build-divider { border: none; border-top: 1px solid var(--border); margin: 10px 0; }
-
-/* ── ITEM CHIP ── */
-.item-chip {
-  display: flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-  border-radius: 8px; padding: 6px 10px 6px 6px;
-  cursor: pointer; transition: all 0.2s;
-}
-.item-chip:hover { background: rgba(255,255,255,0.08); }
-.item-chip.selected.gadget      { border-color: rgba(74,197,74,0.5);   background: rgba(74,197,74,0.07); }
-.item-chip.selected.starpower   { border-color: rgba(247,201,72,0.5);  background: rgba(247,201,72,0.07); }
-.item-chip.selected.hypercharge { border-color: rgba(196,122,232,0.5); background: rgba(196,122,232,0.07); }
-.item-chip.selected.gear        { border-color: rgba(138,154,181,0.5); background: rgba(138,154,181,0.07); }
-.item-chip img {
-  width: 36px; height: 36px; border-radius: 6px; object-fit: cover; flex-shrink: 0;
-}
-.ic-img-placeholder {
-  width: 36px; height: 36px; border-radius: 6px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 16px;
-}
-.ic-img-placeholder.gadget     { background: rgba(74,197,74,0.15); }
-.ic-img-placeholder.starpower  { background: rgba(247,201,72,0.15); }
-.ic-img-placeholder.hypercharge{ background: rgba(196,122,232,0.15); }
-.ic-img-placeholder.gear       { background: rgba(138,154,181,0.12); }
-.ic-name { font-size: 12px; font-weight: 700; line-height: 1.2; max-width: 110px; }
-.ic-dot  { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-left: 4px; }
-.dot-gadget    { background: var(--green); }
-.dot-starpower { background: var(--yellow); }
-.dot-hyper     { background: var(--purple); }
-.dot-gear      { background: var(--gray); }
-
-/* ── COLLAPSED PANEL ── */
-.collapsed-panel {
-  overflow: hidden; max-height: 0; opacity: 0;
-  transition: max-height 0.3s ease, opacity 0.3s;
-}
-.collapsed-panel.open { max-height: 200px; opacity: 1; }
-.item-detail-panel {
-  background: #0c0e1c; border: 1px solid var(--border);
-  border-radius: 8px; padding: 12px 14px; margin-top: 6px; margin-bottom: 4px;
-  font-size: 13px; color: var(--muted); line-height: 1.6;
-  font-family: 'Share Tech Mono', monospace;
-}
-.idp-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 5px; font-family: 'Rajdhani', sans-serif; }
-
-/* ── ALL ITEMS ── */
-.all-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
-.item-grid-chip {
-  display: flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-  border-radius: 8px; padding: 6px 10px 6px 6px;
-  cursor: pointer; transition: all 0.2s;
-}
-.item-grid-chip:hover { background: rgba(255,255,255,0.07); }
-.item-grid-chip img {
-  width: 32px; height: 32px; border-radius: 6px; object-fit: cover; flex-shrink: 0;
-}
-.igc-ph {
-  width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 14px;
-}
-.igc-name { font-size: 12px; font-weight: 700; }
-.igc-desc { font-size: 10px; color: var(--muted); font-family: 'Share Tech Mono', monospace; }
-.gear-row-items { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-
-/* ── RIGHT COLUMN ── */
-.meta-rank-card {
-  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
-  border-radius: 10px; padding: 18px; margin-bottom: 18px;
-}
-.meta-tier-display { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
-.meta-tier-letter {
-  width: 60px; height: 60px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 36px; font-weight: 700; color: #000; flex-shrink: 0;
-}
-.mt-S { background: #ff4e50; box-shadow: 0 0 20px rgba(255,78,80,0.4); }
-.mt-A { background: #ff9800; box-shadow: 0 0 20px rgba(255,152,0,0.4); }
-.mt-B { background: #ffeb3b; box-shadow: 0 0 16px rgba(255,235,59,0.3); }
-.mt-C { background: #8bc34a; }
-.mt-D { background: #29b6f6; }
-.mt-F { background: #9e9e9e; }
-.mti-label { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
-.mti-name  { font-size: 20px; font-weight: 700; color: var(--text); }
-.mti-sub   { font-size: 11px; color: var(--muted); font-family: 'Share Tech Mono', monospace; }
-.meta-bar-wrap { background: var(--border); border-radius: 4px; height: 6px; overflow: hidden; margin-top: 10px; }
-.meta-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent2), var(--accent)); }
-.meta-bar-label { display: flex; justify-content: space-between; font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 4px; }
-.build-note {
-  background: rgba(255, 200, 0, 0.08);
-  border-left: 4px solid #ffc800;
-  border-radius: 6px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  color: #e6e6e6;
-  overflow: hidden;
-}
-
-/* Header */
-.build-note-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 10px;
-  cursor: pointer;
-}
-
-.note-title {
-  font-weight: bold;
-  color: #ffc800;
-}
-
-/* Buttons */
-.note-actions {
-  display: flex;
-  gap: 6px;
-}
-
-.note-btn {
-  background: transparent;
-  border: none;
-  color: #ccc;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.note-btn:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-.note-btn.close:hover {
-  color: #ff4d4d;
-}
-
-/* Content */
-.build-note-content {
-  padding: 0 10px 10px 10px;
-  line-height: 1.4;
-}
-
-/* Collapsed state */
-.build-note.collapsed .build-note-content {
-  display: none;
-}
-.gm-ratings-card {
-  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
-  border-radius: 10px; padding: 18px;
-}
-.gm-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.gm-row:last-child { border-bottom: none; }
-.gm-dot  { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
-.gm-name { flex: 1; font-size: 14px; font-weight: 600; }
-.gm-stars { display: flex; gap: 3px; }
-.star {
-  width: 13px; height: 13px; background: var(--border); border-radius: 2px;
-  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
-}
-.star.filled { background: var(--accent); }
-.gm-score-text { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--muted); width: 22px; text-align: right; }
-
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-</style>
 </head>
 <body>
 
@@ -346,8 +19,9 @@ body {
   <!-- COL 1: MODEL PANEL -->
   <div class="model-col">
     <div class="model-bg-glow"></div>
-    <img class="model-img" id="hero-model-img" src="" alt=""
-         onerror="this.style.display='none'; document.getElementById('model-placeholder').style.display='flex'">
+       <img class="model-img" id="hero-model-img"
+     src="Assets/El Primo/Model.png"
+     onerror="this.onerror=null; this.src='Assets/El Primo/Model.png';">
     <div class="model-placeholder" id="model-placeholder" style="display:none">
       <div class="ph-icon">🔫</div>
       <div class="ph-text">MODEL</div>
@@ -363,6 +37,8 @@ body {
     <div class="tab-row">
       <div class="tab-btn active" onclick="switchTab('build')">BEST BUILD</div>
       <div class="tab-btn" onclick="switchTab('all')">ALL ITEMS</div>
+      <div class="tab-btn" onclick="switchTab('matchups')">MATCHUPS</div>
+      <div class="tab-btn" onclick="switchTab('skins')">SKINS</div>
     </div>
 
     <!-- BEST BUILD -->
@@ -566,8 +242,40 @@ body {
       <div class="collapsed-panel" id="ag-gcd" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Gadget Cooldown Gear</div>Reduces gadget cooldown. More useful with Fast Forward.</div></div>
       <div class="collapsed-panel" id="ag-rl"  style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Super Charge Gear</div>Super charges 10% faster.</div></div>
     </div>
-  </div>
+  
+<!-- ═══ MATCHUPS ═══ -->
+    <div class="tab-pane" id="tab-matchups">
+      <div class="matchup-intro">
+               Counters are brawlers that hold a natural advantage over others based on <b style="color:var(--text)">range, speed, damage output, or mechanics.</b> This however does not mean it's impossible to win or lose, it just puts you at a dissadvantage or advantage.
+      </div>
 
+      <!-- Loses to -->
+      <div class="matchup-section">
+        <div class="matchup-section-header">
+          <div class="matchup-section-icon msi-counter">💀</div>
+          <div class="matchup-section-title loses-to">● LOSES TO</div>
+        </div>
+        <div class="matchup-list" id="matchup-loses-to"></div>
+      </div>
+
+      <!-- Counters -->
+      <div class="matchup-section">
+        <div class="matchup-section-header">
+          <div class="matchup-section-icon msi-countered">⚔️</div>
+          <div class="matchup-section-title counters">● COUNTERS</div>
+        </div>
+        <div class="matchup-list" id="matchup-counters"></div>
+      </div>
+    </div>
+
+    <!-- ═══ SKINS ═══ -->
+    <div class="tab-pane" id="tab-skins">
+      <div class="skins-filter-row" id="skins-filters"></div>
+      <div class="skins-grid" id="skins-grid"></div>
+    </div>
+    </div>
+
+  
   <!-- COL 3: META + GAMEMODES -->
   <div>
     <div class="section-title">META RANKING</div>
@@ -589,7 +297,25 @@ body {
   </div>
 
 </div>
-
+<!-- SKIN MODAL -->
+<div class="skin-modal-overlay" id="skin-modal-overlay" onclick="closeSkinModal(event)">
+  <div class="skin-modal" id="skin-modal">
+    <div class="skin-modal-top" id="skin-modal-top">
+      <div class="skin-modal-close" onclick="closeSkinModalDirect()">✕</div>
+      <div class="skin-modal-limited-badge" id="skin-modal-limited" style="display:none">LIMITED</div>
+      <img class="skin-modal-img" id="skin-modal-img" src="" alt=""
+           onerror="this.style.display='none'">
+    </div>
+    <div class="skin-modal-body">
+      <div class="skin-modal-name" id="skin-modal-name"></div>
+      <div class="skin-modal-rarity-row">
+        <div class="skin-modal-rarity-tag" id="skin-modal-rarity-tag"></div>
+        <div class="skin-modal-price" id="skin-modal-price"></div>
+      </div>
+      <div class="skin-modal-desc" id="skin-modal-desc"></div>
+    </div>
+  </div>
+</div>
 <script>
 const urlParams = new URLSearchParams(window.location.search);
 const brawlerParam = urlParams.get('name') || 'Shelly';
@@ -663,6 +389,345 @@ function switchTab(tab) {
   document.getElementById('tab-' + tab).classList.add('active');
   document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
 }
+/* ════════════════════════════════════════
+   MATCHUPS DATA
+   type: 'loses-to' | 'counters' | 'even'
+   severity: 'hard' | 'soft' (for loses-to / counters)
+════════════════════════════════════════ */
+const MATCHUPS = [
+  // Loses to
+  { name: 'Nita',    type: 'loses-to',  severity: 'hard',
+    reason: 'Bruce is simply to hard to Shelly to deal with', img: '../portraits/nita_portrait.jpg' },
+  { name: 'Tara', type: 'loses-to',  severity: 'hard',
+    reason: 'Pets to stop damage and super to interupt Shelly.', img: '../portraits/tara_portrait.jpg' },
+  { name: 'Ruffs',    type: 'loses-to',  severity: 'hard',
+    reason: 'Sandback gadget stops shelly from closing the distance, wallbreak through super is also bad for Shelly.', img: '../portraits/ruffs_portrait.jpg' },
+  { name: 'Charlie',     type: 'loses-to',  severity: 'hard',
+    reason: 'Pets to stop damage and super to shut down shelly', img: '../portraits/charlie_portrait.jpg' },
+  { name: 'Stu',     type: 'loses-to',  severity: 'hard',
+    reason: 'Breaking the map and juking shots', img: '../portraits/stu_portrait.jpg' },
+  { name: 'Amber',     type: 'loses-to',  severity: 'soft',
+    reason: 'Destroying bushes and outranging Shelly', img: '../portraits/amber_portrait.jpg' },
+
+  // Counters
+  { name: 'Darryl', type: 'counters',  severity: 'hard',
+    reason: "Shelly's burst is too high for Darryl to compete with", img: '../portraits/Darryl_portrait.jpg' },
+  { name: 'Mortis', type: 'counters',  severity: 'hard',
+    reason: "Shelly's super insta deletes mortis", img: '../portraits/Mortis_portrait.jpg' },
+  { name: 'Rosa', type: 'counters',  severity: 'hard',
+    reason: "Rosa's Super actually helps Shelly, since she can keep chaining supers", img: '../portraits/Rosa_portrait.jpg' },
+  { name: 'El Primo',   type: 'counters',  severity: 'soft',
+    reason: 'While a good El Primo can win, most of the time Shelly can just delete him with her super', img: '../portraits/El Primo_portrait.jpg' },
+  { name: 'Mina',     type: 'counters',  severity: 'soft',
+    reason: "Mina will be unable to land her third attacks on Shelly since she will just insta kill her as soon as she gets close", img: '../portraits/Mina_portrait.jpg' },
+];
+
+function buildMatchups() {
+  const sections = { 'loses-to': [], 'counters': [], 'even': [] };
+  MATCHUPS.forEach(m => sections[m.type].push(m));
+
+  function renderList(id, items, cssClass) {
+    const container = document.getElementById(id);
+    items.forEach(m => {
+      const badgeMap = {
+        'loses-to-hard': ['badge-hard-counter', 'HARD COUNTER'],
+        'loses-to-soft': ['badge-soft-counter', 'SOFT COUNTER'],
+        'counters-hard': ['badge-counters',     'COUNTERS'],
+        'counters-soft': ['badge-counters',     'SOFT WIN'],
+      };
+      const key = m.type + '-' + (m.severity || '');
+      const [badgeCls, badgeLabel] = badgeMap[key] || ['badge-even', 'EVEN'];
+
+      const row = document.createElement('div');
+      row.className = `matchup-row ${cssClass}`;
+      row.innerHTML = `
+        <img class="matchup-avatar" src="${m.img}" alt="${m.name}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="matchup-avatar-ph" style="display:none">🎮</div>
+        <div class="matchup-info">
+          <div class="matchup-name">${m.name}</div>
+          <div class="matchup-reason">${m.reason}</div>
+        </div>
+        <div class="matchup-badge ${badgeCls}">${badgeLabel}</div>`;
+      container.appendChild(row);
+    });
+  }
+
+  renderList('matchup-loses-to', sections['loses-to'], 'loses-to');
+  renderList('matchup-counters', sections['counters'],  'counters');
+}
+buildMatchups();
+
+/* ════════════════════════════════════════
+   SKINS DATA
+   rarity: 'default' | 'rare' | 'super-rare' | 'epic' | 'mythic' | 'legendary'
+   limited: true | false
+   price: gem cost string or 'Free' / 'Brawl Pass' etc.
+   img: relative path inside Assets/Shelly/skins/
+════════════════════════════════════════ */
+const RARITIES = [
+  { key: 'default',    label: 'Default',    color: '#8a9ab5' },
+  { key: 'rare',       label: 'Rare',       color: '#0BD40D' },
+  { key: 'super-rare', label: 'Super Rare', color: '#0B8AD4' },
+  { key: 'epic',       label: 'Epic',       color: '#680B8A' },
+  { key: 'mythic',     label: 'Mythic',     color: '#9C0303' },
+  { key: 'legendary',  label: 'Legendary',  color: '#F2E707' },
+  { key: 'hypercharge',label: 'Hypercharge',color: '#C65CF7' },
+  { key: 'exclusive',  label: 'Exclusive',  color: '#8AFFA1' },
+];
+
+const RARITY_META = Object.fromEntries(RARITIES.map(r => [r.key, r]));
+
+// Price lookup by rarity (defaults — override per skin)
+const RARITY_GEM_DEFAULT = {
+  'default': 'Free', 'rare': '29 💎', 'super-rare': '79 💎',
+  'epic': '149 💎', 'mythic': '199 💎', 'legendary': '299 💎',
+};
+
+const SKINS = [
+  {
+    id: 'default', name: 'Default El Primo',
+    rarity: 'default', limited: false,
+    price: 'Free',
+    img: 'Assets/El Primo/model.png',
+    desc: 'The default Nita look.',
+  },
+  {
+    id: '1', name: 'El Primo Universitario',
+    rarity: 'rare', limited: true, seasonal: false,
+    price: '49 💎',
+    img: 'Assets/El Primo/skins/El Primo Universitario.png',
+    desc: '',
+  },
+  {
+    id: '2', name: 'El Primo Club Nacional',
+    rarity: 'rare', limited: true, seasonal: false,
+    price: '49 💎',
+    img: 'Assets/El Primo/skins/El Primo Club Nacional.png',
+    desc: '',
+  },
+    {
+    id: '3', name: 'El Primo Corinthians',
+    rarity: 'rare', limited: true, seasonal: false,
+    price: '49 💎',
+    img: 'Assets/El Primo/skins/El Primo Corinthians.png',
+    desc: '',
+  },
+      {
+    id: '4', name: 'Vamprimo',
+    rarity: 'rare', limited: false, seasonal: false,
+    price: '29 💎',
+    img: 'Assets/El Primo/skins/Vamprimo.png',
+    desc: '',
+  },
+        {
+    id: '5', name: 'El Rudo Primo',
+    rarity: 'super-rare', limited: false, seasonal: false,
+    price: '79 💎',
+    img: 'Assets/El Primo/skins/El Rudo Primo.png',
+    desc: '',
+  },
+          {
+    id: '6', name: 'El Atómico',
+    rarity: 'super-rare', limited: false, seasonal: false,
+    price: '79 💎',
+    img: 'Assets/El Primo/skins/El Atómico.png',
+    desc: '',
+  },
+            {
+    id: '7', name: 'El Corazón',
+    rarity: 'super-rare', limited: false, seasonal: false,
+    price: '79 💎',
+    img: 'Assets/El Primo/skins/El Corazón.png',
+    desc: '',
+  },
+              {
+    id: '8', name: 'El Mayordomo',
+    rarity: 'super-rare', limited: false, seasonal: false,
+    price: '79 💎',
+    img: 'Assets/El Primo/skins/El Mayordomo.png',
+    desc: '',
+  },
+{
+    id: '9', name: 'El Rey Primo',
+    rarity: 'epic', limited: false, seasonal: false,
+    price: '149 💎',
+    img: 'Assets/El Primo/skins/El Rey Primo.png',
+    desc: '',
+  },
+  {
+    id: '10', name: 'El Brown',
+    rarity: 'epic', limited: false, seasonal: false,
+    price: '149 💎',
+    img: 'Assets/El Primo/skins/El Brown.png',
+    desc: '',
+  },
+  {
+    id: '11', name: 'El Dragón Verdoso',
+    rarity: 'epic', limited: false, seasonal: false,
+    price: '149 💎',
+    img: 'Assets/El Primo/skins/El Dragón Verdoso.png',
+    desc: '',
+  },
+    {
+    id: '12', name: 'El Dragón Rosado',
+    rarity: 'epic', limited: false, seasonal: false,
+    price: '149 💎',
+    img: 'Assets/El Primo/skins/El Dragón Rosado.png',
+    desc: '',
+  },
+{
+    id: '13', name: 'El Tigro',
+    rarity: 'epic', limited: false, seasonal: true,
+    price: '149 💎',
+    img: 'Assets/El Primo/skins/El Tigro.png',
+    desc: '',
+  },
+  {
+    id: '14', name: 'El Baby Shark',
+    rarity: 'epic', limited: true, seasonal: false,
+    price: '149 💎',
+    img: 'Assets/El Primo/skins/El Baby Shark.png',
+    desc: '',
+  },
+   {
+    id: '15', name: 'El Grilo',
+    rarity: 'epic', limited: false, seasonal: false,
+    price: '149 💎',
+    img: 'Assets/El Primo/skins/El Grilo.png',
+    desc: '',
+  },
+  {
+    id: '16', name: 'El Quarterback',
+    rarity: 'mythic', limited: false, seasonal: false,
+    price: '199 💎',
+    img: 'Assets/El Primo/skins/El Quarterback.png',
+    desc: '',
+  },
+    {
+    id: '17', name: 'SpongeBob ',
+    rarity: 'mythic', limited: true, seasonal: false,
+    price: '199 💎',
+    img: 'Assets/El Primo/skins/SpongeBob.png',
+    desc: '',
+  },
+];
+
+let activeFilter = 'all';
+
+function buildSkins() {
+  // Filter buttons
+  const filterRow = document.getElementById('skins-filters');
+
+  // "All" button
+  const allBtn = document.createElement('div');
+  allBtn.className = 'skin-filter-btn active';
+  allBtn.textContent = 'ALL';
+  allBtn.style.setProperty('--rc', '#e8eaf6');
+  allBtn.onclick = () => applyFilter('all', allBtn);
+  filterRow.appendChild(allBtn);
+
+  // Rarity buttons — only show rarities that exist in this brawler's skins
+  const presentRarities = [...new Set(SKINS.map(s => s.rarity))];
+  RARITIES.filter(r => presentRarities.includes(r.key)).forEach(r => {
+    const btn = document.createElement('div');
+    btn.className = `skin-filter-btn rarity-${r.key}`;
+    btn.textContent = r.label.toUpperCase();
+    btn.style.setProperty('--rc', r.color);
+    btn.dataset.rarity = r.key;
+    btn.onclick = () => applyFilter(r.key, btn);
+    filterRow.appendChild(btn);
+  });
+
+  // Limited button
+  const limBtn = document.createElement('div');
+  limBtn.className = 'skin-filter-btn';
+  limBtn.textContent = 'LIMITED';
+  limBtn.style.setProperty('--rc', '#f04a4a');
+  limBtn.dataset.rarity = 'limited';
+  limBtn.onclick = () => applyFilter('limited', limBtn);
+  filterRow.appendChild(limBtn);
+
+  // Skin cards
+  const grid = document.getElementById('skins-grid');
+  SKINS.forEach(skin => {
+    const rMeta = RARITY_META[skin.rarity];
+    const card = document.createElement('div');
+    card.className = `skin-card rarity-${skin.rarity}`;
+    card.style.setProperty('--rc', rMeta.color);
+    card.dataset.rarity = skin.rarity;
+    card.dataset.limited = skin.limited;
+    card.onclick = () => openSkinModal(skin);
+
+card.innerHTML = `
+  <div class="skin-img-wrap">
+    ${skin.limited ? '<div class="skin-limited-badge">LIMITED</div>' : ''}
+    ${skin.seasonal ? '<div class="skin-seasonal-badge">SEASONAL</div>' : ''}
+        <img class="skin-img" src="${skin.img}" alt="${skin.name}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="skin-img-ph" style="display:none">🎮</div>
+      </div>
+      <div class="skin-info">
+        <div class="skin-name">${skin.name}</div>
+        <div class="skin-meta-row">
+          <div class="skin-rarity-pip">
+            <div class="skin-rarity-dot"></div>
+            <div class="skin-rarity-label">${rMeta.label.toUpperCase()}</div>
+          </div>
+          <div class="skin-gems">${skin.price}</div>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function applyFilter(filter, clickedBtn) {
+  activeFilter = filter;
+  // Toggle button states
+  document.querySelectorAll('.skin-filter-btn').forEach(b => b.classList.remove('active'));
+  clickedBtn.classList.add('active');
+
+  document.querySelectorAll('.skin-card').forEach(card => {
+    if (filter === 'all') {
+      card.classList.remove('hidden');
+    } else if (filter === 'limited') {
+      card.classList.toggle('hidden', card.dataset.limited !== 'true');
+    } else {
+      card.classList.toggle('hidden', card.dataset.rarity !== filter);
+    }
+  });
+}
+
+function openSkinModal(skin) {
+  const rMeta = RARITY_META[skin.rarity];
+  const overlay = document.getElementById('skin-modal-overlay');
+  const modal   = document.getElementById('skin-modal');
+
+  document.getElementById('skin-modal-top').style.setProperty('--rc', rMeta.color);
+  document.getElementById('skin-modal-img').src = skin.img;
+  document.getElementById('skin-modal-img').style.display = '';
+  document.getElementById('skin-modal-name').textContent = skin.name;
+  document.getElementById('skin-modal-rarity-tag').textContent = rMeta.label.toUpperCase();
+  document.getElementById('skin-modal-rarity-tag').style.setProperty('--rc', rMeta.color);
+  document.getElementById('skin-modal-price').innerHTML = `<span class="gem-icon">💎</span>${skin.price}`;
+  document.getElementById('skin-modal-desc').textContent = skin.desc;
+
+  const limBadge = document.getElementById('skin-modal-limited');
+  limBadge.style.display = skin.limited ? '' : 'none';
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSkinModal(e) {
+  if (e.target === document.getElementById('skin-modal-overlay')) closeSkinModalDirect();
+}
+function closeSkinModalDirect() {
+  document.getElementById('skin-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+buildSkins();
 </script>
 </body>
 </html>
