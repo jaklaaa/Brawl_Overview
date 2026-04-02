@@ -18,6 +18,7 @@
   --yellow: #f7c948;
   --purple: #c47ae8;
   --gray: #8a9ab5;
+  --red: #f04a4a;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -99,7 +100,6 @@ body {
 .model-placeholder .ph-icon { font-size: 64px; }
 .model-placeholder .ph-text { font-size: 10px; color: var(--muted); letter-spacing: 2px; font-family: 'Share Tech Mono', monospace; }
 
-/* Name + class overlay at bottom of model panel */
 .model-overlay {
   position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
   padding: 40px 14px 14px;
@@ -129,12 +129,14 @@ body {
 /* ── TABS ── */
 .tab-row {
   display: flex; gap: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border);
+  overflow-x: auto; scrollbar-width: none;
 }
+.tab-row::-webkit-scrollbar { display: none; }
 .tab-btn {
   padding: 8px 18px; font-family: 'Rajdhani', sans-serif; font-weight: 700;
   font-size: 13px; letter-spacing: 1.5px; color: var(--muted);
   border-bottom: 2px solid transparent; cursor: pointer;
-  transition: all 0.15s; margin-bottom: -1px;
+  transition: all 0.15s; margin-bottom: -1px; white-space: nowrap;
 }
 .tab-btn:hover { color: var(--text); }
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
@@ -262,8 +264,6 @@ body {
   color: #e6e6e6;
   overflow: hidden;
 }
-
-/* Header */
 .build-note-header {
   display: flex;
   justify-content: space-between;
@@ -271,46 +271,16 @@ body {
   padding: 8px 10px;
   cursor: pointer;
 }
-
-.note-title {
-  font-weight: bold;
-  color: #ffc800;
-}
-
-/* Buttons */
-.note-actions {
-  display: flex;
-  gap: 6px;
-}
-
+.note-title { font-weight: bold; color: #ffc800; }
+.note-actions { display: flex; gap: 6px; }
 .note-btn {
-  background: transparent;
-  border: none;
-  color: #ccc;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 2px 6px;
-  border-radius: 4px;
+  background: transparent; border: none; color: #ccc;
+  cursor: pointer; font-size: 14px; padding: 2px 6px; border-radius: 4px;
 }
-
-.note-btn:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-.note-btn.close:hover {
-  color: #ff4d4d;
-}
-
-/* Content */
-.build-note-content {
-  padding: 0 10px 10px 10px;
-  line-height: 1.4;
-}
-
-/* Collapsed state */
-.build-note.collapsed .build-note-content {
-  display: none;
-}
+.note-btn:hover { background: rgba(255,255,255,0.1); }
+.note-btn.close:hover { color: #ff4d4d; }
+.build-note-content { padding: 0 10px 10px 10px; line-height: 1.4; }
+.build-note.collapsed .build-note-content { display: none; }
 
 .gm-ratings-card {
   background: rgba(255,255,255,0.02); border: 1px solid var(--border);
@@ -330,6 +300,264 @@ body {
 }
 .star.filled { background: var(--accent); }
 .gm-score-text { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--muted); width: 22px; text-align: right; }
+
+/* ══════════════════════════════════════════
+   MATCHUPS TAB
+══════════════════════════════════════════ */
+.matchup-intro {
+  font-size: 12px; color: var(--muted); font-family: 'Share Tech Mono', monospace;
+  margin-bottom: 18px; line-height: 1.6;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.matchup-section { margin-bottom: 22px; }
+
+.matchup-section-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.matchup-section-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.msi-counter  { background: rgba(240,74,74,0.15); border: 1px solid rgba(240,74,74,0.3); }
+.msi-countered{ background: rgba(74,197,74,0.15);  border: 1px solid rgba(74,197,74,0.3); }
+
+.matchup-section-title {
+  font-size: 11px; letter-spacing: 2px; font-weight: 700;
+  font-family: 'Share Tech Mono', monospace; text-transform: uppercase;
+}
+.matchup-section-title.loses-to { color: var(--red); }
+.matchup-section-title.counters { color: var(--green); }
+
+.matchup-list { display: flex; flex-direction: column; gap: 6px; }
+
+.matchup-row {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 12px;
+  transition: background 0.15s;
+}
+.matchup-row:hover { background: rgba(255,255,255,0.05); }
+
+.matchup-row.loses-to  { border-left: 3px solid var(--red); }
+.matchup-row.counters  { border-left: 3px solid var(--green); }
+
+.matchup-avatar {
+  width: 38px; height: 38px; border-radius: 8px;
+  object-fit: cover; flex-shrink: 0;
+  background: rgba(255,255,255,0.05);
+}
+.matchup-avatar-ph {
+  width: 38px; height: 38px; border-radius: 8px;
+  background: rgba(255,255,255,0.05); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.matchup-info { flex: 1; }
+.matchup-name { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
+.matchup-reason {
+  font-size: 10px; color: var(--muted); font-family: 'Share Tech Mono', monospace;
+  margin-top: 2px; line-height: 1.4;
+}
+.matchup-badge {
+  flex-shrink: 0;
+  font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 1.5px;
+  padding: 3px 8px; border-radius: 3px; font-weight: 700;
+}
+.badge-hard-counter { background: rgba(240,74,74,0.15); color: var(--red); border: 1px solid rgba(240,74,74,0.3); }
+.badge-soft-counter { background: rgba(240,140,74,0.15); color: #f09050; border: 1px solid rgba(240,140,74,0.3); }
+.badge-counters     { background: rgba(74,197,74,0.15);  color: var(--green); border: 1px solid rgba(74,197,74,0.3); }
+
+/* ══════════════════════════════════════════
+   SKINS TAB
+══════════════════════════════════════════ */
+.skins-filter-row {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.skin-filter-btn {
+  font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 1.5px;
+  padding: 4px 10px; border-radius: 4px; cursor: pointer;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+  color: var(--muted); transition: all 0.15s;
+}
+.skin-filter-btn:hover { color: var(--text); }
+.skin-filter-btn.active { color: var(--bg); }
+
+/* Rarity colors */
+.rarity-default   { --rc: #8a9ab5; }
+.rarity-rare      { --rc: #29b6f6; }
+.rarity-super-rare{ --rc: #ab47bc; }
+.rarity-epic      { --rc: #f06292; }
+.rarity-mythic    { --rc: #ff7043; }
+.rarity-legendary { --rc: #f7c948; }
+
+.skin-filter-btn.active { background: var(--rc); border-color: var(--rc); }
+.skin-filter-btn:not(.active):hover { border-color: var(--rc); color: var(--rc); }
+
+.skins-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.skin-card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+  cursor: pointer; transition: all 0.2s;
+  position: relative;
+}
+.skin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.skin-card.hidden { display: none; }
+
+/* Rarity top stripe */
+.skin-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--rc);
+  z-index: 2;
+}
+
+.skin-img-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #141628 0%, #0c0e1e 100%);
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.skin-img {
+  width: 85%; height: 85%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+  transition: transform 0.25s;
+}
+.skin-card:hover .skin-img { transform: scale(1.06); }
+.skin-img-ph {
+  font-size: 42px; opacity: 0.3;
+}
+
+/* Limited badge */
+.skin-limited-badge {
+  position: absolute; top: 8px; right: 7px; z-index: 3;
+  font-family: 'Share Tech Mono', monospace; font-size: 8px; letter-spacing: 1px;
+  padding: 2px 6px; border-radius: 3px;
+  background: rgba(240,74,74,0.85); color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+}
+
+.skin-info {
+  padding: 8px 10px 10px;
+  border-top: 1px solid var(--border);
+}
+.skin-name {
+  font-size: 12px; font-weight: 700; line-height: 1.2;
+  margin-bottom: 5px; letter-spacing: 0.3px;
+}
+.skin-meta-row {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.skin-rarity-pip {
+  display: flex; align-items: center; gap: 4px;
+}
+.skin-rarity-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--rc);
+  box-shadow: 0 0 6px var(--rc);
+}
+.skin-rarity-label {
+  font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 1px;
+  color: var(--rc);
+}
+.skin-gems {
+  font-family: 'Share Tech Mono', monospace; font-size: 10px;
+  color: var(--muted); display: flex; align-items: center; gap: 3px;
+}
+.gem-icon { font-size: 10px; }
+
+/* Skin modal overlay */
+.skin-modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(5,6,16,0.88); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s;
+}
+.skin-modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.skin-modal {
+  background: #131629; border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  max-width: 400px; width: 90%;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  transform: translateY(12px) scale(0.97);
+  transition: transform 0.22s;
+}
+.skin-modal-overlay.open .skin-modal { transform: none; }
+
+.skin-modal-top {
+  position: relative;
+  background: linear-gradient(180deg, #1a1e38 0%, #0c0e1e 100%);
+  min-height: 200px;
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid var(--border);
+}
+.skin-modal-top::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--rc);
+}
+.skin-modal-img {
+  width: 180px; height: 180px; object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+}
+.skin-modal-close {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+  border-radius: 6px; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 14px; color: var(--muted);
+  transition: all 0.15s;
+}
+.skin-modal-close:hover { color: var(--text); background: rgba(255,255,255,0.12); }
+
+.skin-modal-limited-badge {
+  position: absolute; top: 18px; left: 16px;
+  font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 1.5px;
+  padding: 3px 8px; border-radius: 4px;
+  background: rgba(240,74,74,0.85); color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.skin-modal-body { padding: 18px 20px; }
+.skin-modal-name { font-size: 22px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
+.skin-modal-rarity-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.skin-modal-rarity-tag {
+  font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
+  padding: 3px 10px; border-radius: 4px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--rc);
+  color: var(--rc);
+}
+.skin-modal-price {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--muted);
+  display: flex; align-items: center; gap: 5px;
+}
+.skin-modal-desc {
+  font-size: 13px; color: var(--muted); line-height: 1.6;
+  font-family: 'Share Tech Mono', monospace;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
@@ -360,33 +588,33 @@ body {
     </div>
   </div>
 
-  <!-- COL 2: BUILD TABS -->
+  <!-- COL 2: BUILD / MATCHUPS / SKINS TABS -->
   <div>
     <div class="tab-row">
       <div class="tab-btn active" onclick="switchTab('build')">BEST BUILD</div>
       <div class="tab-btn" onclick="switchTab('all')">ALL ITEMS</div>
+      <div class="tab-btn" onclick="switchTab('matchups')">MATCHUPS</div>
+      <div class="tab-btn" onclick="switchTab('skins')">SKINS</div>
     </div>
 
-    <!-- BEST BUILD -->
+    <!-- ═══ BEST BUILD ═══ -->
     <div class="tab-pane active" id="tab-build">
       <div class="build-card">
         <div class="build-recommended-tag">★ RECOMMENDED BUILD</div>
 
-<div class="build-note" id="buildNote">
-  <div class="build-note-header">
-    <span class="note-title">⚠️ Note</span>
-
-    <div class="note-actions">
-      <button class="note-btn" onclick="toggleNote()">▾</button>
-      <button class="note-btn close" onclick="dismissNote()">✕</button>
-    </div>
-  </div>
-
-  <div class="build-note-content" id="buildNoteContent">
-    • Best build is optimized for <b>Ranked (Legendary+)</b><br>
-    • If a brawler has buffies, they are assumed in the <b>Best Build</b> section
-  </div>
-</div>
+        <div class="build-note" id="buildNote">
+          <div class="build-note-header">
+            <span class="note-title">⚠️ Note</span>
+            <div class="note-actions">
+              <button class="note-btn" onclick="toggleNote()">▾</button>
+              <button class="note-btn close" onclick="dismissNote()">✕</button>
+            </div>
+          </div>
+          <div class="build-note-content" id="buildNoteContent">
+            • Best build is optimized for <b>Ranked (Legendary+)</b><br>
+            • If a brawler has buffies, they are assumed in the <b>Best Build</b> section
+          </div>
+        </div>
 
         <div class="build-row">
           <div class="build-type-label" style="color:var(--green)">● GADGET</div>
@@ -403,7 +631,7 @@ body {
         <div class="collapsed-panel" id="d-g1">
           <div class="item-detail-panel">
             <div class="idp-name">Fast Forward</div>
-           Mainly better because you get all your ammo back. The buffie invulnerable is very good for surviving quick burst damage. 
+            Mainly better because you get all your ammo back. The buffie invulnerable is very good for surviving quick burst damage.
           </div>
         </div>
 
@@ -422,7 +650,7 @@ body {
         <div class="collapsed-panel" id="d-s2">
           <div class="item-detail-panel">
             <div class="idp-name">Band-Aid</div>
-            Both star powers of Shelly are a bit meh, neither one really outshines the other. If you use Shelly as counter pick then 'Shell Shock' is better, but this one is more consistant overall.
+            Both star powers of Shelly are a bit meh, neither one really outshines the other. If you use Shelly as counter pick then 'Shell Shock' is better, but this one is more consistent overall.
           </div>
         </div>
 
@@ -448,13 +676,13 @@ body {
         <div class="collapsed-panel" id="d-gear1">
           <div class="item-detail-panel">
             <div class="idp-name">Damage Gear</div>
-                Shelly is an Damage Dealer, with as role being an 'anti-agro/tank', this means she should just win her 1v1's and let her teammates shine afterwards. The best way to increase your chances of winning a 1v1 is by having even more damage.
+            Shelly is a Damage Dealer, with a role as an 'anti-agro/tank', meaning she should win her 1v1's and let her teammates shine afterwards. The best way to increase your chances of winning a 1v1 is by having even more damage.
           </div>
         </div>
         <div class="collapsed-panel" id="d-gear2">
           <div class="item-detail-panel">
             <div class="idp-name">Health Gear</div>
-              Shelly nearly always has a bad matchup, so 900 extra 'max' health is a must have.
+            Shelly nearly always has a bad matchup, so 900 extra max health is a must have.
           </div>
         </div>
 
@@ -474,14 +702,14 @@ body {
         <div class="collapsed-panel" id="d-hyper">
           <div class="item-detail-panel">
             <div class="idp-name">Double Barrel</div>
-           Shelly's hypercharge and hypercharge buffie are both not very good, and definitely not needed to play this brawler. Nice to own, but don't buy for coins. </div>
+            Shelly's hypercharge and hypercharge buffie are both not very good, and definitely not needed to play this brawler. Nice to own, but don't buy for coins.
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ALL ITEMS -->
+    <!-- ═══ ALL ITEMS ═══ -->
     <div class="tab-pane" id="tab-all">
-
       <div class="section-title" style="color:var(--green)">● GADGETS</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-g1')">
@@ -564,7 +792,40 @@ body {
       <div class="collapsed-panel" id="ag-dmg" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Damage Gear</div>+15% damage below 50% HP. Core pick for the Band-Aid combo.</div></div>
       <div class="collapsed-panel" id="ag-gcd" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Gadget Cooldown Gear</div>Reduces gadget cooldown. More useful with Fast Forward.</div></div>
     </div>
-  </div>
+
+    <!-- ═══ MATCHUPS ═══ -->
+    <div class="tab-pane" id="tab-matchups">
+      <div class="matchup-intro">
+        Matchup data reflects general <b style="color:var(--text)">1v1 performance</b> in open or semi-open maps.<br>
+        Results may vary by map, game mode, and player skill.
+      </div>
+
+      <!-- Loses to -->
+      <div class="matchup-section">
+        <div class="matchup-section-header">
+          <div class="matchup-section-icon msi-counter">💀</div>
+          <div class="matchup-section-title loses-to">● LOSES TO</div>
+        </div>
+        <div class="matchup-list" id="matchup-loses-to"></div>
+      </div>
+
+      <!-- Counters -->
+      <div class="matchup-section">
+        <div class="matchup-section-header">
+          <div class="matchup-section-icon msi-countered">⚔️</div>
+          <div class="matchup-section-title counters">● COUNTERS</div>
+        </div>
+        <div class="matchup-list" id="matchup-counters"></div>
+      </div>
+    </div>
+
+    <!-- ═══ SKINS ═══ -->
+    <div class="tab-pane" id="tab-skins">
+      <div class="skins-filter-row" id="skins-filters"></div>
+      <div class="skins-grid" id="skins-grid"></div>
+    </div>
+
+  </div><!-- /col 2 -->
 
   <!-- COL 3: META + GAMEMODES -->
   <div>
@@ -586,9 +847,30 @@ body {
     <div class="gm-ratings-card" id="gm-ratings"></div>
   </div>
 
+</div><!-- /main-content -->
+
+<!-- SKIN MODAL -->
+<div class="skin-modal-overlay" id="skin-modal-overlay" onclick="closeSkinModal(event)">
+  <div class="skin-modal" id="skin-modal">
+    <div class="skin-modal-top" id="skin-modal-top">
+      <div class="skin-modal-close" onclick="closeSkinModalDirect()">✕</div>
+      <div class="skin-modal-limited-badge" id="skin-modal-limited" style="display:none">LIMITED</div>
+      <img class="skin-modal-img" id="skin-modal-img" src="" alt=""
+           onerror="this.style.display='none'">
+    </div>
+    <div class="skin-modal-body">
+      <div class="skin-modal-name" id="skin-modal-name"></div>
+      <div class="skin-modal-rarity-row">
+        <div class="skin-modal-rarity-tag" id="skin-modal-rarity-tag"></div>
+        <div class="skin-modal-price" id="skin-modal-price"></div>
+      </div>
+      <div class="skin-modal-desc" id="skin-modal-desc"></div>
+    </div>
+  </div>
 </div>
 
 <script>
+/* ── BRAWLER SETUP ── */
 const urlParams = new URLSearchParams(window.location.search);
 const brawlerParam = urlParams.get('name') || 'Shelly';
 
@@ -597,15 +879,15 @@ document.getElementById('hero-model-img').alt = brawlerParam;
 document.getElementById('brawler-name-overlay').innerHTML = `<em>${brawlerParam.toUpperCase()}</em>`;
 document.title = `BRAWL STATS SSS — ${brawlerParam}`;
 
+/* ── GAMEMODES ── */
 const GAMEMODES = [
-  { label: 'Bounty',    color: '#f44336', stars: 1 },
-  { label: 'Brawl Ball',color: '#4caf50', stars: 3 },
-  { label: 'Gem Grab',  color: '#9c27b0', stars: 3 },
-  { label: 'Heist',     color: '#ff9800', stars: 1 },
-  { label: 'Hot Zone',  color: '#f06292', stars: 1 },
-  { label: 'Knockout',  color: '#29b6f6', stars: 1 },
+  { label: 'Bounty',     color: '#f44336', stars: 1 },
+  { label: 'Brawl Ball', color: '#4caf50', stars: 3 },
+  { label: 'Gem Grab',   color: '#9c27b0', stars: 3 },
+  { label: 'Heist',      color: '#ff9800', stars: 1 },
+  { label: 'Hot Zone',   color: '#f06292', stars: 1 },
+  { label: 'Knockout',   color: '#29b6f6', stars: 1 },
 ];
-
 const gmContainer = document.getElementById('gm-ratings');
 [...GAMEMODES].sort((a,b) => a.label.localeCompare(b.label)).forEach(gm => {
   const row = document.createElement('div');
@@ -619,46 +901,363 @@ const gmContainer = document.getElementById('gm-ratings');
     <div class="gm-score-text">${gm.stars}/5</div>`;
   gmContainer.appendChild(row);
 });
-const NOTE_KEY = "buildNoteDismissedAt";
-const NOTE_COOLDOWN = 24 * 60 * 60 * 1000; 
 
+/* ── BUILD NOTE ── */
+const NOTE_KEY = "buildNoteDismissedAt";
+const NOTE_COOLDOWN = 24 * 60 * 60 * 1000;
 document.addEventListener("DOMContentLoaded", () => {
   const note = document.getElementById("buildNote");
   const dismissedAt = localStorage.getItem(NOTE_KEY);
-
   if (dismissedAt) {
-    const now = Date.now();
-    const timePassed = now - parseInt(dismissedAt, 10);
-
-    if (timePassed < NOTE_COOLDOWN) {
-      note.style.display = "none";
-    } else {
-      localStorage.removeItem(NOTE_KEY);
-    }
+    const timePassed = Date.now() - parseInt(dismissedAt, 10);
+    if (timePassed < NOTE_COOLDOWN) note.style.display = "none";
+    else localStorage.removeItem(NOTE_KEY);
   }
 });
-
-function toggleNote() {
-  const note = document.getElementById("buildNote");
-  note.classList.toggle("collapsed");
-}
-
+function toggleNote() { document.getElementById("buildNote").classList.toggle("collapsed"); }
 function dismissNote() {
-  const note = document.getElementById("buildNote");
-  note.style.display = "none";
-
+  document.getElementById("buildNote").style.display = "none";
   localStorage.setItem(NOTE_KEY, Date.now().toString());
 }
+
+/* ── COLLAPSIBLE ── */
 function toggleDetail(id) {
   const el = document.getElementById(id);
   if (el) el.classList.toggle('open');
 }
+
+/* ── TABS ── */
 function switchTab(tab) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
 }
+
+/* ════════════════════════════════════════
+   MATCHUPS DATA
+   type: 'loses-to' | 'counters' | 'even'
+   severity: 'hard' | 'soft' (for loses-to / counters)
+════════════════════════════════════════ */
+const MATCHUPS = [
+  // Loses to
+  { name: 'Nita',    type: 'loses-to',  severity: 'hard',
+    reason: 'Bruce is simply to hard to Shelly to deal with', img: '../portraits/nita_portrait.jpg' },
+  { name: 'Tara', type: 'loses-to',  severity: 'hard',
+    reason: 'Pets to stop damage and super to interupt Shelly.', img: '../portraits/tara_portrait.jpg' },
+  { name: 'Ruffs',    type: 'loses-to',  severity: 'hard',
+    reason: 'Sandback gadget stops shelly from closing the distance, wallbreak through super is also bad for Shelly.', img: '../portraits/ruffs_portrait.jpg' },
+  { name: 'Charlie',     type: 'loses-to',  severity: 'hard',
+    reason: 'Pets to stop damage and super to shut down shelly', img: '../portraits/charlie_portrait.jpg' },
+  { name: 'Stu',     type: 'loses-to',  severity: 'hard',
+    reason: 'Breaking the map and juking shots', img: '../portraits/stu_portrait.jpg' },
+  { name: 'Amber',     type: 'loses-to',  severity: 'soft',
+    reason: 'Destroying bushes and outranging Shelly', img: '../portraits/amber_portrait.jpg' },
+
+  // Counters
+  { name: 'Darryl', type: 'counters',  severity: 'hard',
+    reason: "Shelly's burst is too high for Darryl to compete with", img: '../portraits/Darryl_portrait.jpg' },
+  { name: 'Mortis', type: 'counters',  severity: 'hard',
+    reason: "Shelly's super insta deletes mortis", img: '../portraits/Mortis_portrait.jpg' },
+  { name: 'Rosa', type: 'counters',  severity: 'hard',
+    reason: "Rosa's Super actually helps Shelly, since she can keep chaining supers", img: '../portraits/Rosa_portrait.jpg' },
+  { name: 'El Primo',   type: 'counters',  severity: 'soft',
+    reason: 'While a good El Primo can win, most of the time Shelly can just delete him with her super', img: '../portraits/El Primo_portrait.jpg' },
+  { name: 'Mina',     type: 'counters',  severity: 'soft',
+    reason: "Mina will be unable to land her third attacks on Shelly since she will just insta kill her as soon as she gets close", img: '../portraits/Mina_portrait.jpg' },
+];
+
+function buildMatchups() {
+  const sections = { 'loses-to': [], 'counters': [], 'even': [] };
+  MATCHUPS.forEach(m => sections[m.type].push(m));
+
+  function renderList(id, items, cssClass) {
+    const container = document.getElementById(id);
+    items.forEach(m => {
+      const badgeMap = {
+        'loses-to-hard': ['badge-hard-counter', 'HARD COUNTER'],
+        'loses-to-soft': ['badge-soft-counter', 'SOFT COUNTER'],
+        'counters-hard': ['badge-counters',     'COUNTERS'],
+        'counters-soft': ['badge-counters',     'SOFT WIN'],
+      };
+      const key = m.type + '-' + (m.severity || '');
+      const [badgeCls, badgeLabel] = badgeMap[key] || ['badge-even', 'EVEN'];
+
+      const row = document.createElement('div');
+      row.className = `matchup-row ${cssClass}`;
+      row.innerHTML = `
+        <img class="matchup-avatar" src="${m.img}" alt="${m.name}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="matchup-avatar-ph" style="display:none">🎮</div>
+        <div class="matchup-info">
+          <div class="matchup-name">${m.name}</div>
+          <div class="matchup-reason">${m.reason}</div>
+        </div>
+        <div class="matchup-badge ${badgeCls}">${badgeLabel}</div>`;
+      container.appendChild(row);
+    });
+  }
+
+  renderList('matchup-loses-to', sections['loses-to'], 'loses-to');
+  renderList('matchup-counters', sections['counters'],  'counters');
+}
+buildMatchups();
+
+/* ════════════════════════════════════════
+   SKINS DATA
+   rarity: 'default' | 'rare' | 'super-rare' | 'epic' | 'mythic' | 'legendary'
+   limited: true | false
+   price: gem cost string or 'Free' / 'Brawl Pass' etc.
+   img: relative path inside Assets/Shelly/skins/
+════════════════════════════════════════ */
+const RARITIES = [
+  { key: 'default',    label: 'Default',    color: '#8a9ab5' },
+  { key: 'rare',       label: 'Rare',       color: '#0BD40D' },
+  { key: 'super-rare', label: 'Super Rare', color: '#0B8AD4' },
+  { key: 'epic',       label: 'Epic',       color: '#680B8A' },
+  { key: 'mythic',     label: 'Mythic',     color: '#9C0303' },
+  { key: 'legendary',  label: 'Legendary',  color: '#F2E707' },
+  { key: 'hypercharge',label: 'Hypercharge',color: '#C65CF7' },
+  { key: 'exclusive',  label: 'Exclusive',  color: '#8AFFA1' },
+];
+
+const RARITY_META = Object.fromEntries(RARITIES.map(r => [r.key, r]));
+
+// Price lookup by rarity (defaults — override per skin)
+const RARITY_GEM_DEFAULT = {
+  'default': 'Free', 'rare': '29 💎', 'super-rare': '79 💎',
+  'epic': '149 💎', 'mythic': '199 💎', 'legendary': '299 💎',
+};
+
+const SKINS = [
+  {
+    id: 'default', name: 'Default Shelly',
+    rarity: 'default', limited: false,
+    price: 'Free',
+    img: 'Assets/Shelly/model.png',
+    desc: 'The default Shelly look.',
+  },
+  {
+    id: '1', name: 'Star Shelly',
+    rarity: 'exclusive', limited: true,
+    price: 'free',
+    img: 'Assets/Shelly/skins/star shelly.png',
+    desc: 'Free for registering before 2019.',
+  },
+  {
+    id: '2', name: 'Classic Shelly',
+    rarity: 'rare', limited: true,
+    price: 'free',
+    img: 'Assets/Shelly/skins/classic shelly.png',
+    desc: 'Free from Brawlidays 2022 gift.',
+  },
+    {
+    id: '3', name: 'Bandita Shelly',
+    rarity: 'rare', limited: false,
+    price: '29 💎',
+    img: 'Assets/Shelly/skins/Bandita shelly.png',
+    desc: '',
+  },
+      {
+    id: '4', name: 'U De Chile Shelly',
+    rarity: 'rare', limited: true,
+    price: '49 💎',
+    img: 'Assets/Shelly/skins/U De Chile shelly.png',
+    desc: '',
+  },
+      {
+    id: '5', name: 'America Shelly',
+    rarity: 'rare', limited: true,
+    price: '49 💎',
+    img: 'Assets/Shelly/skins/America shelly.png',
+    desc: '',
+  },
+      {
+    id: '6', name: 'Boca Juniors Shelly',
+    rarity: 'rare', limited: true,
+    price: '49 💎',
+    img: 'Assets/Shelly/skins/Boca Juniors shelly.png',
+    desc: '',
+  },
+       {
+    id: '7', name: 'PSG  Shelly',
+    rarity: 'super-rare', limited: false,
+    price: '79 💎',
+    img: 'Assets/Shelly/skins/PSG shelly.png',
+    desc: 'Could be obtained for free in 2020',
+  },
+    {
+    id: '8', name: 'Princess  Shelly',
+    rarity: 'super-rare', limited: true,
+    price: 'Brawl Pass',
+    img: 'Assets/Shelly/skins/Princess shelly.png',
+    desc: 'Brawl Pass Exclusive',
+  },
+  {
+    id: '9', name: 'Sherrif  Shelly',
+    rarity: 'super-rare', limited: false,
+    price: '79 💎',
+    img: 'Assets/Shelly/skins/Sherrif shelly.png',
+    desc: '',
+  },
+      {
+    id: '10', name: 'Witch  Shelly',
+    rarity: 'epic', limited: true,
+    price: '149 💎',
+    img: 'Assets/Shelly/skins/Witch shelly.png',
+    desc: '',
+  },
+  {
+    id: '11', name: 'Shelly Dancer ',
+    rarity: 'epic', limited: false,
+    price: '149 💎',
+    img: 'Assets/Shelly/skins/Shelly dancer.png',
+    desc: 'Brawl Pass skin',
+  },
+   {
+    id: '12', name: 'Shelly Dancer Iris',
+    rarity: 'epic', limited: false,
+    price: '149 💎',
+    img: 'Assets/Shelly/skins/Shelly dancer iris.png',
+    desc: 'Color Variant',
+  },
+   {
+    id: '13', name: 'Shelly Dancer Dahlia',
+    rarity: 'epic', limited: false,
+    price: '149 💎',
+    img: 'Assets/Shelly/skins/Shelly dancer dahlia.png',
+    desc: 'Color Variant',
+  },
+  {
+    id: '14', name: 'Hoot Hoot Shelly',
+    rarity: 'mythic', limited: false,
+    price: '199 💎',
+    img: 'Assets/Shelly/skins/Hoot Hoot Shelly.png',
+    desc: '',
+  },
+ {
+    id: '15', name: 'Squad Busters Shelly',
+    rarity: 'mythic', limited: true,
+    price: '199 💎',
+    img: 'Assets/Shelly/skins/Squad Busters Shelly.png',
+    desc: '',
+  },
+];
+
+let activeFilter = 'all';
+
+function buildSkins() {
+  // Filter buttons
+  const filterRow = document.getElementById('skins-filters');
+
+  // "All" button
+  const allBtn = document.createElement('div');
+  allBtn.className = 'skin-filter-btn active';
+  allBtn.textContent = 'ALL';
+  allBtn.style.setProperty('--rc', '#e8eaf6');
+  allBtn.onclick = () => applyFilter('all', allBtn);
+  filterRow.appendChild(allBtn);
+
+  // Rarity buttons — only show rarities that exist in this brawler's skins
+  const presentRarities = [...new Set(SKINS.map(s => s.rarity))];
+  RARITIES.filter(r => presentRarities.includes(r.key)).forEach(r => {
+    const btn = document.createElement('div');
+    btn.className = `skin-filter-btn rarity-${r.key}`;
+    btn.textContent = r.label.toUpperCase();
+    btn.style.setProperty('--rc', r.color);
+    btn.dataset.rarity = r.key;
+    btn.onclick = () => applyFilter(r.key, btn);
+    filterRow.appendChild(btn);
+  });
+
+  // Limited button
+  const limBtn = document.createElement('div');
+  limBtn.className = 'skin-filter-btn';
+  limBtn.textContent = 'LIMITED';
+  limBtn.style.setProperty('--rc', '#f04a4a');
+  limBtn.dataset.rarity = 'limited';
+  limBtn.onclick = () => applyFilter('limited', limBtn);
+  filterRow.appendChild(limBtn);
+
+  // Skin cards
+  const grid = document.getElementById('skins-grid');
+  SKINS.forEach(skin => {
+    const rMeta = RARITY_META[skin.rarity];
+    const card = document.createElement('div');
+    card.className = `skin-card rarity-${skin.rarity}`;
+    card.style.setProperty('--rc', rMeta.color);
+    card.dataset.rarity = skin.rarity;
+    card.dataset.limited = skin.limited;
+    card.onclick = () => openSkinModal(skin);
+
+    card.innerHTML = `
+      <div class="skin-img-wrap">
+        ${skin.limited ? '<div class="skin-limited-badge">LIMITED</div>' : ''}
+        <img class="skin-img" src="${skin.img}" alt="${skin.name}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="skin-img-ph" style="display:none">🎮</div>
+      </div>
+      <div class="skin-info">
+        <div class="skin-name">${skin.name}</div>
+        <div class="skin-meta-row">
+          <div class="skin-rarity-pip">
+            <div class="skin-rarity-dot"></div>
+            <div class="skin-rarity-label">${rMeta.label.toUpperCase()}</div>
+          </div>
+          <div class="skin-gems">${skin.price}</div>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function applyFilter(filter, clickedBtn) {
+  activeFilter = filter;
+  // Toggle button states
+  document.querySelectorAll('.skin-filter-btn').forEach(b => b.classList.remove('active'));
+  clickedBtn.classList.add('active');
+
+  document.querySelectorAll('.skin-card').forEach(card => {
+    if (filter === 'all') {
+      card.classList.remove('hidden');
+    } else if (filter === 'limited') {
+      card.classList.toggle('hidden', card.dataset.limited !== 'true');
+    } else {
+      card.classList.toggle('hidden', card.dataset.rarity !== filter);
+    }
+  });
+}
+
+function openSkinModal(skin) {
+  const rMeta = RARITY_META[skin.rarity];
+  const overlay = document.getElementById('skin-modal-overlay');
+  const modal   = document.getElementById('skin-modal');
+
+  document.getElementById('skin-modal-top').style.setProperty('--rc', rMeta.color);
+  document.getElementById('skin-modal-img').src = skin.img;
+  document.getElementById('skin-modal-img').style.display = '';
+  document.getElementById('skin-modal-name').textContent = skin.name;
+  document.getElementById('skin-modal-rarity-tag').textContent = rMeta.label.toUpperCase();
+  document.getElementById('skin-modal-rarity-tag').style.setProperty('--rc', rMeta.color);
+  document.getElementById('skin-modal-price').innerHTML = `<span class="gem-icon">💎</span>${skin.price}`;
+  document.getElementById('skin-modal-desc').textContent = skin.desc;
+
+  const limBadge = document.getElementById('skin-modal-limited');
+  limBadge.style.display = skin.limited ? '' : 'none';
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSkinModal(e) {
+  if (e.target === document.getElementById('skin-modal-overlay')) closeSkinModalDirect();
+}
+function closeSkinModalDirect() {
+  document.getElementById('skin-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+buildSkins();
 </script>
 </body>
 </html>
