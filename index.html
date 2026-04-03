@@ -214,107 +214,121 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 <div class="page" id="page-sirito"><div id="sirito-content"></div></div>
 
 <script>
-const LAST_UPDATED = '2026-03-29: 23:52';
+const LAST_UPDATED = '2026-04-03: 15:42';
+
+// ─────────────────────────────────────────────────────────────
+// PRO META MANUAL TIER LIST
+// Edit these arrays to reorder/move brawlers between tiers.
+// Any brawler in PRO_DATA not listed here goes to UNRANKED.
+// Left → right = order within a tier.
+// ─────────────────────────────────────────────────────────────
+const PRO_MANUAL_TIERS = {
+  S: ['NAJIA', 'LEON', 'BULL', 'MORTIS', 'CROW', 'CLANCY', 'PIERCE'],
+  A: ['CHESTER', 'RUFFS', 'OTIS', 'SPIKE', 'SIRIUS', 'KAZE', 'EMZ', 'BYRON', 'CHARLIE', 'SHADE',  
+      'GENE', 'NITA', 'BIBI', 'LILY', 'BELLE', 'MEEPLE','MAX', 'ZIGGY', 'ANGELO', 'MINA', 'NANI', 'POCO', 'STU', 'GRAY'],
+  B: ['KENJI', 'RICO', 'KIT', 'COLT', 'BO', 'BROCK', 'GUS', 'FINX', 'SANDY', 'R-T', 'PAM', 'PENNY', 'LOU', 'JAE-YONG', 'AMBER',
+      'BUSTER', 'OLLIE', 'JANET', 'MOE', 'CARL', 'CORDELIUS', 'ALLI', 'SHELLY', 'WILLOW', 'TARA', 'BARLEY', '8-BIT', 'JUJU', 
+      'LARRY & LAWRIE', 'PIPER'],
+  C: ['LUMI', 'GALE', 'MELODIE', 'SQUEAK', 'BERRY', 'MEG', 'DARRYL', 'GRIFF', 'TRUNK', 'DRACO', 'BEA', 'HANK', 'FANG', 'LOLA', 'MAISIE', 'MANDY'],
+  D: ['GLOWBERT', 'PEARL', 'DOUG', 'EVE', 'CHUCK', 'SURGE', 'TICK', 'MICO', 'SPROUT', 'JACKY', 'BUZZ', 'EL PRIMO', 'GROM', 'FRANK', 'ROSA', 'BONNIE', 'GIGI'],
+  F: ['MR. P', 'DYNAMIKE', 'COLETTE', 'ASH', 'JESSIE', 'EDGAR', 'SAM'],
+};
+// ─────────────────────────────────────────────────────────────
 
 const PRO_DATA = [
-  { brawler: '8-BIT',                   bounty: [9,5], brawlBall: null, gemGrab: [5,2], heist: [16,6], hotZone: [1,0], knockout: [1,0] },
-  { brawler: 'ALLI',                    bounty: [9,4], brawlBall: [15,10], gemGrab: [16,4], heist: [2,1], hotZone: [11,6], knockout: [6,3] },
-  { brawler: 'AMBER',                   bounty: null, brawlBall: [10,4], gemGrab: [11,8], heist: [22,11], hotZone: [7,2], knockout: [1,0] },
-  { brawler: 'ANGELO',                  bounty: [41,24], brawlBall: null, gemGrab: null, heist: [8,6], hotZone: null, knockout: [37,22] },
-  { brawler: 'ASH',                     bounty: null, brawlBall: [1,0], gemGrab: [2,2], heist: null, hotZone: [2,1], knockout: null },
-  { brawler: 'BARLEY',                  bounty: [2,0], brawlBall: [7,6], gemGrab: null, heist: [1,1], hotZone: [17,9], knockout: null },
-  { brawler: 'BEA',                     bounty: null, brawlBall: [6,0], gemGrab: null, heist: [4,4], hotZone: [5,2], knockout: null },
-  { brawler: 'BELLE',                   bounty: [60,36], brawlBall: null, gemGrab: null, heist: [2,0], hotZone: [2,2], knockout: [8,5] },
-  { brawler: 'BERRY',                   bounty: [2,0], brawlBall: [3,1], gemGrab: [1,1], heist: [10,5], hotZone: [12,7], knockout: [1,0] },
-  { brawler: 'BIBI',                    bounty: [4,1], brawlBall: [61,33], gemGrab: [44,22], heist: [81,40], hotZone: [34,19], knockout: null },
-  { brawler: 'BO',                      bounty: [7,4], brawlBall: [8,4], gemGrab: [17,9], heist: [4,1], hotZone: [20,8], knockout: [25,14] },
-  { brawler: 'BONNIE',                  bounty: null, brawlBall: [1,0], gemGrab: null, heist: [1,0], hotZone: null, knockout: [1,0] },
-  { brawler: 'BROCK',                   bounty: [14,6], brawlBall: null, gemGrab: [1,0], heist: [7,3], hotZone: null, knockout: [36,20] },
-  { brawler: 'BULL',                    bounty: [23,14], brawlBall: [82,44], gemGrab: [78,44], heist: [36,15], hotZone: [61,40], knockout: [8,5] },
-  { brawler: 'BUSTER',                  bounty: [8,3], brawlBall: [1,0], gemGrab: [2,2], heist: null, hotZone: [1,1], knockout: [5,2] },
-  { brawler: 'BUZZ',                    bounty: null, brawlBall: [3,1], gemGrab: [9,4], heist: [9,3], hotZone: null, knockout: null },
-  { brawler: 'BYRON',                   bounty: [89,36], brawlBall: [3,1], gemGrab: [3,2], heist: [2,1], hotZone: [3,1], knockout: [23,13] },
-  { brawler: 'CARL',                    bounty: [11,2], brawlBall: [6,5], gemGrab: [1,0], heist: [19,10], hotZone: [2,0], knockout: null },
-  { brawler: 'CHARLIE',                 bounty: [29,9], brawlBall: [29,16], gemGrab: [29,14], heist: [10,6], hotZone: [18,5], knockout: [8,2] },
-  { brawler: 'CHESTER',                 bounty: [12,7], brawlBall: [85,39], gemGrab: [110,52], heist: [12,5], hotZone: [72,24], knockout: null },
-  { brawler: 'CHUCK',                   bounty: [1,1], brawlBall: null, gemGrab: null, heist: [14,8], hotZone: [1,0], knockout: null },
-  { brawler: 'CLANCY',                  bounty: null, brawlBall: [1,0], gemGrab: null, heist: null, hotZone: [1,0], knockout: null },
-  { brawler: 'COLETTE',                 bounty: null, brawlBall: null, gemGrab: null, heist: [1,0], hotZone: null, knockout: null },
-  { brawler: 'COLT',                    bounty: [6,2], brawlBall: [7,5], gemGrab: [1,1], heist: [55,32], hotZone: null, knockout: [4,1] },
-  { brawler: 'CORDELIUS',               bounty: [9,4], brawlBall: [11,7], gemGrab: [6,5], heist: [42,24], hotZone: [4,3], knockout: [1,0] },
-  { brawler: 'CROW',                    bounty: [71,40], brawlBall: [12,9], gemGrab: [15,10], heist: [27,14], hotZone: [11,9], knockout: [20,9] },
-  { brawler: 'DARRYL',                  bounty: null, brawlBall: null, gemGrab: null, heist: [4,0], hotZone: null, knockout: [7,1] },
-  { brawler: 'DOUG',                    bounty: [7,5], brawlBall: [1,0], gemGrab: [3,2], heist: null, hotZone: [1,0], knockout: [2,2] },
-  { brawler: 'DRACO',                   bounty: null, brawlBall: [2,1], gemGrab: [2,0], heist: [2,0], hotZone: [11,4], knockout: null },
-  { brawler: 'DYNAMIKE',                bounty: null, brawlBall: [3,1], gemGrab: null, heist: [2,1], hotZone: [1,1], knockout: null },
-  { brawler: 'EDGAR',                   bounty: null, brawlBall: null, gemGrab: [1,0], heist: [6,4], hotZone: [1,0], knockout: null },
-  { brawler: 'EL PRIMO',                bounty: null, brawlBall: [9,4], gemGrab: [1,0], heist: null, hotZone: null, knockout: null },
-  { brawler: 'EMZ',                     bounty: [2,0], brawlBall: [83,49], gemGrab: [54,27], heist: [38,15], hotZone: [73,43], knockout: [3,2] },
-  { brawler: 'EVE',                     bounty: null, brawlBall: null, gemGrab: null, heist: [10,5], hotZone: null, knockout: [27,14] },
-  { brawler: 'FANG',                    bounty: [3,1], brawlBall: [1,0], gemGrab: [3,3], heist: null, hotZone: [1,1], knockout: [2,0] },
-  { brawler: 'FINX',                    bounty: [3,3], brawlBall: [4,4], gemGrab: [12,9], heist: null, hotZone: [79,50], knockout: null },
-  { brawler: 'FRANK',                   bounty: [2,2], brawlBall: [6,0], gemGrab: [2,1], heist: [3,0], hotZone: [5,1], knockout: [1,1] },
-  { brawler: 'GALE',                    bounty: null, brawlBall: [36,21], gemGrab: [7,2], heist: [1,0], hotZone: [23,7], knockout: null },
-  { brawler: 'GENE',                    bounty: [56,28], brawlBall: null, gemGrab: [6,2], heist: null, hotZone: null, knockout: [21,11] },
-  { brawler: 'GIGI',                    bounty: null, brawlBall: null, gemGrab: [1,1], heist: null, hotZone: null, knockout: null },
-  { brawler: 'GLOWBERT',                bounty: [39,16], brawlBall: [37,22], gemGrab: [39,18], heist: [27,12], hotZone: [65,42], knockout: [13,7] },
-  { brawler: 'GRAY',                    bounty: [26,16], brawlBall: null, gemGrab: [12,6], heist: null, hotZone: [25,14], knockout: [10,5] },
-  { brawler: 'GRIFF',                   bounty: null, brawlBall: [3,1], gemGrab: [1,0], heist: [9,3], hotZone: [9,5], knockout: [1,0] },
-  { brawler: 'GUS',                     bounty: [33,14], brawlBall: null, gemGrab: [14,10], heist: null, hotZone: null, knockout: [27,12] },
-  { brawler: 'HANK',                    bounty: [1,0], brawlBall: [3,1], gemGrab: [3,1], heist: [1,1], hotZone: [4,2], knockout: null },
-  { brawler: 'JACKY',                   bounty: null, brawlBall: [1,0], gemGrab: [1,1], heist: null, hotZone: null, knockout: null },
-  { brawler: 'JAE-YONG',                bounty: [36,17], brawlBall: [5,2], gemGrab: [2,0], heist: null, hotZone: [2,1], knockout: [18,9] },
-  { brawler: 'JANET',                   bounty: [1,1], brawlBall: null, gemGrab: [45,14], heist: null, hotZone: null, knockout: [1,0] },
-  { brawler: 'JESSIE',                  bounty: null, brawlBall: null, gemGrab: [1,1], heist: [2,1], hotZone: [2,1], knockout: null },
-  { brawler: 'JUJU',                    bounty: [1,0], brawlBall: null, gemGrab: null, heist: [1,0], hotZone: [3,1], knockout: [1,1] },
-  { brawler: 'KAZE',                    bounty: [84,46], brawlBall: [1,0], gemGrab: null, heist: [48,26], hotZone: [13,7], knockout: null },
-  { brawler: 'KENJI',                   bounty: [5,5], brawlBall: [20,10], gemGrab: [6,3], heist: null, hotZone: [32,13], knockout: null },
-  { brawler: 'KIT',                     bounty: [36,14], brawlBall: null, gemGrab: [44,20], heist: [9,3], hotZone: [3,2], knockout: [16,9] },
-  { brawler: 'LARRY & LAWRIE',          bounty: [1,0], brawlBall: [3,2], gemGrab: [1,0], heist: null, hotZone: [1,1], knockout: null },
-  { brawler: 'LEON',                    bounty: [45,31], brawlBall: [64,26], gemGrab: [62,30], heist: [4,2], hotZone: [76,39], knockout: [34,20] },
-  { brawler: 'LILY',                    bounty: [5,4], brawlBall: null, gemGrab: [45,19], heist: [24,9], hotZone: [5,2], knockout: null },
-  { brawler: 'LOLA',                    bounty: [1,0], brawlBall: null, gemGrab: [1,1], heist: [6,4], hotZone: null, knockout: null },
-  { brawler: 'LOU',                     bounty: [1,1], brawlBall: [8,6], gemGrab: [9,3], heist: [3,2], hotZone: [57,31], knockout: [1,0] },
-  { brawler: 'LUMI',                    bounty: null, brawlBall: [16,4], gemGrab: [4,3], heist: [18,9], hotZone: [7,2], knockout: null },
-  { brawler: 'MAISIE',                  bounty: null, brawlBall: null, gemGrab: [2,1], heist: null, hotZone: null, knockout: null },
-  { brawler: 'MANDY',                   bounty: [1,0], brawlBall: null, gemGrab: null, heist: null, hotZone: null, knockout: null },
-  { brawler: 'MAX',                     bounty: [9,3], brawlBall: [26,16], gemGrab: [32,20], heist: null, hotZone: null, knockout: [9,6] },
-  { brawler: 'MEEPLE',                  bounty: [20,9], brawlBall: [34,13], gemGrab: [8,4], heist: [3,2], hotZone: [15,7], knockout: [9,5] },
-  { brawler: 'MEG',                     bounty: null, brawlBall: [8,4], gemGrab: null, heist: null, hotZone: [10,4], knockout: null },
-  { brawler: 'MELODIE',                 bounty: [4,3], brawlBall: [2,1], gemGrab: [2,1], heist: [29,11], hotZone: [1,1], knockout: [1,0] },
-  { brawler: 'MICO',                    bounty: [2,0], brawlBall: null, gemGrab: [2,2], heist: [4,3], hotZone: null, knockout: null },
-  { brawler: 'MINA',                    bounty: [35,21], brawlBall: [5,3], gemGrab: [10,7], heist: null, hotZone: [11,8], knockout: [11,5] },
-  { brawler: 'MOE',                     bounty: [1,0], brawlBall: [30,14], gemGrab: [22,11], heist: null, hotZone: null, knockout: null },
-  { brawler: 'MORTIS',                  bounty: [74,37], brawlBall: [35,15], gemGrab: [76,39], heist: null, hotZone: [57,31], knockout: [8,4] },
-  { brawler: 'NANI',                    bounty: [66,36], brawlBall: null, gemGrab: null, heist: [5,2], hotZone: null, knockout: [16,7] },
-  { brawler: 'NITA',                    bounty: [1,0], brawlBall: [35,14], gemGrab: [50,28], heist: [22,13], hotZone: [15,6], knockout: null },
-  { brawler: 'OLLIE',                   bounty: [17,7], brawlBall: [1,1], gemGrab: null, heist: null, hotZone: null, knockout: [23,10] },
-  { brawler: 'OTIS',                    bounty: [6,3], brawlBall: [72,27], gemGrab: [43,20], heist: [47,26], hotZone: [32,13], knockout: null },
-  { brawler: 'PAM',                     bounty: [1,1], brawlBall: [2,2], gemGrab: [29,15], heist: null, hotZone: [24,10], knockout: null },
-  { brawler: 'PEARL',                   bounty: [14,6], brawlBall: null, gemGrab: [5,2], heist: null, hotZone: null, knockout: [10,5] },
-  { brawler: 'PENNY',                   bounty: [23,12], brawlBall: [1,0], gemGrab: [18,11], heist: [7,5], hotZone: [14,8], knockout: null },
-  { brawler: 'PIERCE',                  bounty: [74,29], brawlBall: [36,19], gemGrab: [18,9], heist: [20,10], hotZone: [61,22], knockout: [20,10] },
-  { brawler: 'PIPER',                   bounty: [9,5], brawlBall: null, gemGrab: null, heist: [2,1], hotZone: null, knockout: [4,1] },
-  { brawler: 'POCO',                    bounty: [4,2], brawlBall: [19,10], gemGrab: [7,4], heist: null, hotZone: [36,24], knockout: [3,0] },
-  { brawler: 'R-T',                     bounty: [29,12], brawlBall: [4,3], gemGrab: [6,3], heist: [3,1], hotZone: [1,0], knockout: [37,17] },
-  { brawler: 'RICO',                    bounty: [2,0], brawlBall: [30,14], gemGrab: [41,19], heist: [50,29], hotZone: null, knockout: [8,1] },
-  { brawler: 'ROSA',                    bounty: [2,2], brawlBall: null, gemGrab: [12,5], heist: null, hotZone: null, knockout: [1,0] },
-  { brawler: 'RUFFS',                   bounty: [35,22], brawlBall: [25,13], gemGrab: [68,34], heist: [45,22], hotZone: [37,21], knockout: [12,8] },
-  { brawler: 'SAM',                     bounty: null, brawlBall: null, gemGrab: null, heist: [2,0], hotZone: null, knockout: null },
-  { brawler: 'SANDY',                   bounty: [1,0], brawlBall: [7,2], gemGrab: [44,20], heist: [1,0], hotZone: null, knockout: [1,0] },
-  { brawler: 'SHADE',                   bounty: [4,1], brawlBall: [28,15], gemGrab: [25,16], heist: [18,8], hotZone: [5,3], knockout: null },
-  { brawler: 'SHELLY',                  bounty: [1,1], brawlBall: [14,6], gemGrab: [15,7], heist: [1,1], hotZone: [2,1], knockout: [1,1] },
-  { brawler: 'SIRIUS',                  bounty: [32,18], brawlBall: [52,29], gemGrab: [77,31], heist: [40,21], hotZone: [58,21], knockout: [8,3] },
-  { brawler: 'SPIKE',                   bounty: [35,16], brawlBall: [70,27], gemGrab: [46,15], heist: [40,19], hotZone: [54,21], knockout: [16,11] },
-  { brawler: 'SPROUT',                  bounty: [6,2], brawlBall: null, gemGrab: [1,0], heist: null, hotZone: null, knockout: [5,4] },
-  { brawler: 'SQUEAK',                  bounty: [3,2], brawlBall: [4,2], gemGrab: [2,0], heist: [1,0], hotZone: [1,1], knockout: [11,5] },
-  { brawler: 'STU',                     bounty: [4,2], brawlBall: [33,19], gemGrab: [34,20], heist: [1,0], hotZone: [28,16], knockout: null },
-  { brawler: 'SURGE',                   bounty: null, brawlBall: null, gemGrab: [12,9], heist: null, hotZone: null, knockout: null },
-  { brawler: 'TARA',                    bounty: null, brawlBall: [1,0], gemGrab: [28,14], heist: [2,1], hotZone: null, knockout: null },
-  { brawler: 'TICK',                    bounty: [3,0], brawlBall: null, gemGrab: null, heist: null, hotZone: [1,0], knockout: [5,3] },
-  { brawler: 'TRUNK',                   bounty: [1,0], brawlBall: [5,3], gemGrab: [13,6], heist: [1,0], hotZone: [3,1], knockout: null },
-  { brawler: 'WILLOW',                  bounty: [4,3], brawlBall: [33,15], gemGrab: null, heist: null, hotZone: null, knockout: null },
-  { brawler: 'ZIGGY',                   bounty: [38,21], brawlBall: [26,13], gemGrab: [13,6], heist: [13,6], hotZone: [40,17], knockout: [11,4] },
+  { brawler: '8-BIT',                   bounty: [2,1], brawlBall: null, gemGrab: [1,0], heist: [4,1], hotZone: [1,1], knockout: null },
+  { brawler: 'ALLI',                    bounty: [4,2], brawlBall: [5,2], gemGrab: [1,0], heist: [1,0], hotZone: null, knockout: [1,1] },
+  { brawler: 'AMBER',                   bounty: [1,1], brawlBall: [5,4], gemGrab: [3,2], heist: [6,2], hotZone: [2,0], knockout: null },
+  { brawler: 'ANGELO',                  bounty: [9,3], brawlBall: null, gemGrab: null, heist: [4,2], hotZone: null, knockout: [14,9] },
+  { brawler: 'BARLEY',                  bounty: null, brawlBall: [1,0], gemGrab: null, heist: [1,0], hotZone: [8,2], knockout: null },
+  { brawler: 'BEA',                     bounty: null, brawlBall: null, gemGrab: null, heist: [2,1], hotZone: [1,0], knockout: null },
+  { brawler: 'BELLE',                   bounty: [26,11], brawlBall: null, gemGrab: null, heist: [1,1], hotZone: null, knockout: [4,2] },
+  { brawler: 'BERRY',                   bounty: null, brawlBall: null, gemGrab: [1,0], heist: [4,2], hotZone: [4,2], knockout: [2,0] },
+  { brawler: 'BIBI',                    bounty: [3,2], brawlBall: [6,3], gemGrab: [3,1], heist: [14,7], hotZone: [9,7], knockout: null },
+  { brawler: 'BO',                      bounty: [5,1], brawlBall: null, gemGrab: [5,4], heist: [1,0], hotZone: [10,5], knockout: [7,4] },
+  { brawler: 'BONNIE',                  bounty: null, brawlBall: null, gemGrab: null, heist: [1,0], hotZone: null, knockout: [2,0] },
+  { brawler: 'BROCK',                   bounty: [7,5], brawlBall: null, gemGrab: null, heist: [3,2], hotZone: [1,0], knockout: [11,7] },
+  { brawler: 'BULL',                    bounty: [4,2], brawlBall: [17,9], gemGrab: [15,11], heist: [19,10], hotZone: [11,4], knockout: [2,0] },
+  { brawler: 'BUSTER',                  bounty: [3,2], brawlBall: [2,0], gemGrab: [4,2], heist: [1,1], hotZone: [2,1], knockout: [4,2] },
+  { brawler: 'BUZZ',                    bounty: null, brawlBall: [1,0], gemGrab: null, heist: [1,0], hotZone: null, knockout: null },
+  { brawler: 'BYRON',                   bounty: [24,19], brawlBall: [2,2], gemGrab: [4,3], heist: [1,0], hotZone: [1,1], knockout: [12,5] },
+  { brawler: 'CARL',                    bounty: [4,3], brawlBall: null, gemGrab: [1,0], heist: [7,6], hotZone: null, knockout: null },
+  { brawler: 'CHARLIE',                 bounty: [7,1], brawlBall: [12,5], gemGrab: [12,6], heist: [5,4], hotZone: [6,2], knockout: [2,2] },
+  { brawler: 'CHESTER',                 bounty: [3,2], brawlBall: [33,17], gemGrab: [39,16], heist: [3,2], hotZone: [37,22], knockout: null },
+  { brawler: 'CHUCK',                   bounty: null, brawlBall: null, gemGrab: null, heist: [4,2], hotZone: [1,1], knockout: null },
+  { brawler: 'CLANCY',                  bounty: [6,4], brawlBall: [22,9], gemGrab: [29,12], heist: [20,6], hotZone: [30,17], knockout: [2,0] },
+  { brawler: 'COLT',                    bounty: [1,1], brawlBall: [2,1], gemGrab: null, heist: [27,10], hotZone: [1,1], knockout: null },
+  { brawler: 'CORDELIUS',               bounty: null, brawlBall: [5,1], gemGrab: null, heist: [9,4], hotZone: null, knockout: null },
+  { brawler: 'CROW',                    bounty: [16,12], brawlBall: [5,4], gemGrab: [14,9], heist: [14,9], hotZone: [15,5], knockout: [6,2] },
+  { brawler: 'DARRYL',                  bounty: null, brawlBall: null, gemGrab: null, heist: [1,0], hotZone: null, knockout: [4,2] },
+  { brawler: 'DOUG',                    bounty: [1,1], brawlBall: null, gemGrab: [1,0], heist: null, hotZone: null, knockout: [4,3] },
+  { brawler: 'DRACO',                   bounty: null, brawlBall: null, gemGrab: [1,0], heist: null, hotZone: [2,1], knockout: null },
+  { brawler: 'EDGAR',                   bounty: null, brawlBall: null, gemGrab: null, heist: [2,1], hotZone: null, knockout: null },
+  { brawler: 'EL PRIMO',                bounty: null, brawlBall: [1,1], gemGrab: null, heist: null, hotZone: null, knockout: null },
+  { brawler: 'EMZ',                     bounty: null, brawlBall: [18,9], gemGrab: [16,7], heist: [11,5], hotZone: [16,9], knockout: null },
+  { brawler: 'EVE',                     bounty: null, brawlBall: null, gemGrab: null, heist: [8,3], hotZone: null, knockout: [3,0] },
+  { brawler: 'FANG',                    bounty: [2,1], brawlBall: null, gemGrab: [1,0], heist: null, hotZone: null, knockout: null },
+  { brawler: 'FINX',                    bounty: null, brawlBall: [2,2], gemGrab: [1,0], heist: null, hotZone: [22,11], knockout: null },
+  { brawler: 'FRANK',                   bounty: null, brawlBall: null, gemGrab: null, heist: [1,0], hotZone: null, knockout: [1,0] },
+  { brawler: 'GALE',                    bounty: null, brawlBall: [7,2], gemGrab: [1,1], heist: null, hotZone: [2,1], knockout: null },
+  { brawler: 'GENE',                    bounty: [27,13], brawlBall: null, gemGrab: [4,2], heist: null, hotZone: null, knockout: [4,2] },
+  { brawler: 'GIGI',                    bounty: null, brawlBall: null, gemGrab: null, heist: [1,0], hotZone: null, knockout: null },
+  { brawler: 'GLOWBERT',                bounty: [1,0], brawlBall: [1,1], gemGrab: [1,0], heist: [1,0], hotZone: [2,2], knockout: [3,2] },
+  { brawler: 'GRAY',                    bounty: [6,3], brawlBall: null, gemGrab: [1,1], heist: null, hotZone: [4,1], knockout: [2,1] },
+  { brawler: 'GRIFF',                   bounty: null, brawlBall: [1,1], gemGrab: null, heist: null, hotZone: [3,1], knockout: null },
+  { brawler: 'GROM',                    bounty: null, brawlBall: null, gemGrab: null, heist: null, hotZone: null, knockout: [1,1] },
+  { brawler: 'GUS',                     bounty: [11,6], brawlBall: [1,1], gemGrab: [3,2], heist: null, hotZone: null, knockout: [9,5] },
+  { brawler: 'HANK',                    bounty: null, brawlBall: [1,1], gemGrab: null, heist: null, hotZone: [1,1], knockout: null },
+  { brawler: 'JACKY',                   bounty: null, brawlBall: [2,2], gemGrab: null, heist: null, hotZone: null, knockout: null },
+  { brawler: 'JAE-YONG',                bounty: [14,5], brawlBall: null, gemGrab: null, heist: null, hotZone: null, knockout: [9,3] },
+  { brawler: 'JANET',                   bounty: null, brawlBall: null, gemGrab: [15,8], heist: null, hotZone: null, knockout: [1,1] },
+  { brawler: 'JUJU',                    bounty: [2,2], brawlBall: null, gemGrab: null, heist: [2,1], hotZone: [4,1], knockout: null },
+  { brawler: 'KAZE',                    bounty: [26,13], brawlBall: null, gemGrab: null, heist: [24,12], hotZone: [3,1], knockout: [1,0] },
+  { brawler: 'KENJI',                   bounty: [4,3], brawlBall: [11,5], gemGrab: [5,2], heist: null, hotZone: [18,9], knockout: null },
+  { brawler: 'KIT',                     bounty: [6,2], brawlBall: [1,0], gemGrab: [14,4], heist: [1,1], hotZone: [2,1], knockout: [8,4] },
+  { brawler: 'LARRY & LAWRIE',          bounty: null, brawlBall: [4,4], gemGrab: null, heist: null, hotZone: null, knockout: null },
+  { brawler: 'LEON',                    bounty: [16,9], brawlBall: [20,10], gemGrab: [23,10], heist: [1,0], hotZone: [22,13], knockout: [7,3] },
+  { brawler: 'LILY',                    bounty: null, brawlBall: null, gemGrab: [24,14], heist: [10,3], hotZone: [1,0], knockout: null },
+  { brawler: 'LOLA',                    bounty: null, brawlBall: null, gemGrab: null, heist: [1,1], hotZone: null, knockout: null },
+  { brawler: 'LOU',                     bounty: [1,1], brawlBall: [2,2], gemGrab: null, heist: null, hotZone: [16,9], knockout: null },
+  { brawler: 'LUMI',                    bounty: [1,0], brawlBall: [4,2], gemGrab: [2,0], heist: [8,5], hotZone: [1,0], knockout: null },
+  { brawler: 'MAISIE',                  bounty: null, brawlBall: [1,1], gemGrab: null, heist: [1,0], hotZone: null, knockout: null },
+  { brawler: 'MAX',                     bounty: [9,3], brawlBall: [7,1], gemGrab: [9,8], heist: [1,1], hotZone: null, knockout: [1,1] },
+  { brawler: 'MEEPLE',                  bounty: [9,4], brawlBall: [10,5], gemGrab: [2,0], heist: null, hotZone: [8,1], knockout: [5,2] },
+  { brawler: 'MEG',                     bounty: null, brawlBall: [2,1], gemGrab: null, heist: null, hotZone: [2,0], knockout: [1,1] },
+  { brawler: 'MELODIE',                 bounty: [3,2], brawlBall: null, gemGrab: null, heist: [6,4], hotZone: null, knockout: null },
+  { brawler: 'MICO',                    bounty: [2,1], brawlBall: null, gemGrab: null, heist: [1,1], hotZone: null, knockout: [1,1] },
+  { brawler: 'MINA',                    bounty: [4,1], brawlBall: [3,3], gemGrab: [1,1], heist: [1,1], hotZone: [9,5], knockout: [3,0] },
+  { brawler: 'MOE',                     bounty: null, brawlBall: [7,6], gemGrab: [6,3], heist: null, hotZone: [2,0], knockout: null },
+  { brawler: 'MORTIS',                  bounty: [18,6], brawlBall: [18,9], gemGrab: [17,11], heist: [1,0], hotZone: [30,18], knockout: [7,4] },
+  { brawler: 'NANI',                    bounty: [18,8], brawlBall: null, gemGrab: null, heist: [2,1], hotZone: null, knockout: [2,1] },
+  { brawler: 'NITA',                    bounty: null, brawlBall: [12,2], gemGrab: [10,6], heist: [13,5], hotZone: [6,1], knockout: null },
+  { brawler: 'OLLIE',                   bounty: [5,3], brawlBall: null, gemGrab: [1,0], heist: null, hotZone: null, knockout: [13,5] },
+  { brawler: 'OTIS',                    bounty: [3,1], brawlBall: [29,12], gemGrab: [13,4], heist: [22,15], hotZone: [10,3], knockout: null },
+  { brawler: 'PAM',                     bounty: [2,0], brawlBall: null, gemGrab: [6,3], heist: null, hotZone: [14,8], knockout: null },
+  { brawler: 'PEARL',                   bounty: [4,3], brawlBall: null, gemGrab: [2,1], heist: null, hotZone: null, knockout: [2,0] },
+  { brawler: 'PENNY',                   bounty: [8,3], brawlBall: null, gemGrab: [4,2], heist: [1,0], hotZone: [10,5], knockout: null },
+  { brawler: 'PIERCE',                  bounty: [23,11], brawlBall: [12,7], gemGrab: [5,4], heist: [8,5], hotZone: [18,8], knockout: [3,1] },
+  { brawler: 'PIPER',                   bounty: [3,0], brawlBall: null, gemGrab: null, heist: null, hotZone: null, knockout: [1,1] },
+  { brawler: 'POCO',                    bounty: null, brawlBall: [9,6], gemGrab: null, heist: null, hotZone: [8,4], knockout: null },
+  { brawler: 'R-T',                     bounty: [9,3], brawlBall: null, gemGrab: [1,1], heist: null, hotZone: null, knockout: [16,9] },
+  { brawler: 'RICO',                    bounty: null, brawlBall: [5,1], gemGrab: [11,2], heist: [13,6], hotZone: null, knockout: [5,4] },
+  { brawler: 'ROSA',                    bounty: null, brawlBall: [1,0], gemGrab: [1,0], heist: null, hotZone: null, knockout: null },
+  { brawler: 'RUFFS',                   bounty: [12,7], brawlBall: [9,6], gemGrab: [25,14], heist: [9,6], hotZone: [23,13], knockout: [3,2] },
+  { brawler: 'SANDY',                   bounty: null, brawlBall: [2,1], gemGrab: [23,13], heist: null, hotZone: [1,0], knockout: null },
+  { brawler: 'SHADE',                   bounty: null, brawlBall: [11,6], gemGrab: [9,6], heist: [13,8], hotZone: [3,2], knockout: null },
+  { brawler: 'SHELLY',                  bounty: null, brawlBall: [7,5], gemGrab: [3,2], heist: null, hotZone: null, knockout: null },
+  { brawler: 'SIRIUS',                  bounty: [6,3], brawlBall: [12,7], gemGrab: [11,5], heist: [11,7], hotZone: [12,5], knockout: [1,1] },
+  { brawler: 'SPIKE',                   bounty: [10,6], brawlBall: [15,7], gemGrab: [11,3], heist: [4,2], hotZone: [15,7], knockout: [1,0] },
+  { brawler: 'SPROUT',                  bounty: [1,0], brawlBall: null, gemGrab: null, heist: null, hotZone: [1,1], knockout: [2,0] },
+  { brawler: 'SQUEAK',                  bounty: null, brawlBall: [4,1], gemGrab: [3,3], heist: null, hotZone: null, knockout: [2,0] },
+  { brawler: 'STU',                     bounty: null, brawlBall: [6,2], gemGrab: [7,3], heist: null, hotZone: [5,3], knockout: null },
+  { brawler: 'SURGE',                   bounty: null, brawlBall: [3,1], gemGrab: [2,1], heist: null, hotZone: [1,0], knockout: null },
+  { brawler: 'TARA',                    bounty: null, brawlBall: [2,1], gemGrab: [5,3], heist: null, hotZone: [1,1], knockout: null },
+  { brawler: 'TICK',                    bounty: [3,1], brawlBall: null, gemGrab: null, heist: null, hotZone: null, knockout: [2,2] },
+  { brawler: 'TRUNK',                   bounty: null, brawlBall: null, gemGrab: [3,2], heist: null, hotZone: null, knockout: null },
+  { brawler: 'WILLOW',                  bounty: [2,1], brawlBall: [12,4], gemGrab: null, heist: null, hotZone: null, knockout: null },
+  { brawler: 'ZIGGY',                   bounty: [5,3], brawlBall: [9,6], gemGrab: [2,1], heist: [4,2], hotZone: [6,5], knockout: [1,0] },
 ];
 
 const PLAYERS = {
@@ -384,8 +398,7 @@ const PLAYERS = {
   { brawler: 'SPROUT', gamemode: 'hotZone', map: 'Dueling Beetles', wins: 0, losses: 1 },
   { brawler: 'TARA', gamemode: 'knockout', map: 'Flaring Phoenix', wins: 0, losses: 1 },
 ]},
-  daniel: { name: 'DANIEL', tag: '#DANIEL', color: '#64b5f6', matches: 
-[
+  daniel: { name: 'DANIEL', tag: '#DANIEL', color: '#64b5f6', matches: [
   { brawler: 'BIBI', gamemode: 'gemGrab', map: 'Gem Fort', wins: 2, losses: 0 },
   { brawler: 'BIBI', gamemode: 'gemGrab', map: 'Hard Rock Mine', wins: 0, losses: 1 },
   { brawler: 'BIBI', gamemode: 'gemGrab', map: 'Undermine', wins: 1, losses: 1 },
@@ -459,9 +472,9 @@ const PLAYERS = {
 const GM_COLORS  = { bounty:'#f44336', brawlBall:'#4caf50', gemGrab:'#9c27b0', heist:'#ff9800', hotZone:'#f06292', knockout:'#29b6f6' };
 const GM_LABELS  = { bounty:'Bounty', brawlBall:'Brawl Ball', gemGrab:'Gem Grab', heist:'Heist', hotZone:'Hot Zone', knockout:'Knockout' };
 const GM_ORDER   = ['bounty','brawlBall','gemGrab','heist','hotZone','knockout'];
-const PRO_TIERS  = [
-  { key:'S', pct:0.10 }, { key:'A', pct:0.25 }, { key:'B', pct:0.50 },
-  { key:'C', pct:0.75 }, { key:'D', pct:0.90 }, { key:'F', pct:1.00 },
+const TIER_DEFS  = [
+  { key:'S' }, { key:'A' }, { key:'B' },
+  { key:'C' }, { key:'D' }, { key:'F' },
 ];
 
 function portraitUrl(name) { return 'portraits/' + name.toLowerCase() + '_portrait.jpg'; }
@@ -474,65 +487,57 @@ function brawlerToPage(name) {
   return name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'').replace(/-+/g,'-');
 }
 
-// ── Compute tier for every PRO brawler → Map<NAME, tierKey> ──
-function computeProTiers() {
-  const scored = [];
-  const unrankedNames = [];
+// Build a lookup of total sets/wins per brawler from PRO_DATA for tooltip use
+function buildProStatsMap() {
+  const map = new Map();
   for (const b of PRO_DATA) {
     let sets = 0, wins = 0;
     for (const gm of GM_ORDER) { if (b[gm]) { sets += b[gm][0]; wins += b[gm][1]; } }
-    const sc = sets >= 3 ? score(sets, wins) : null;
-    if (sc !== null) scored.push({ name: b.brawler, score: sc });
-    else unrankedNames.push(b.brawler);
+    map.set(b.brawler, { sets, wins });
   }
-  scored.sort((a, b) => b.score - a.score);
-  const total = scored.length;
-  const map = new Map();
-  scored.forEach((b, i) => {
-    const pct = (i + 1) / total;
-    const tier = PRO_TIERS.find(t => pct <= t.pct);
-    map.set(b.name, tier.key);
-  });
-  for (const n of unrankedNames) map.set(n, 'UNRANKED');
   return map;
 }
 
-// ── Render tier list; tierLookup optional (used for pro page links) ──
-function renderTierList(container, scored, unranked, tierDefs, tierLookup) {
-  const buckets = {};
-  for (const t of tierDefs) buckets[t.key] = [];
-  scored.sort((a, b) => b.score - a.score);
-  const total = scored.length;
-  scored.forEach((b, i) => {
-    const pct = (i + 1) / total;
-    const tier = tierDefs.find(t => pct <= t.pct);
-    buckets[tier.key].push(b);
-  });
+// ── Render the PRO manual tier list ──
+function buildProTierList() {
+  const proStats = buildProStatsMap();
+  const container = document.getElementById('pro-tier-list');
+  container.innerHTML = '';
 
-  for (const t of tierDefs) {
+  // Collect all manually placed brawlers
+  const placed = new Set();
+  for (const names of Object.values(PRO_MANUAL_TIERS)) names.forEach(n => placed.add(n));
+
+  // Unranked = in PRO_DATA but not in any manual tier
+  const unranked = PRO_DATA
+    .filter(b => !placed.has(b.brawler))
+    .map(b => {
+      const s = proStats.get(b.brawler) || { sets: 0, wins: 0 };
+      return { name: b.brawler, ...s };
+    });
+
+  for (const tier of TIER_DEFS) {
+    const names = PRO_MANUAL_TIERS[tier.key] || [];
     const row = document.createElement('div');
     row.className = 'tier-row';
-    row.innerHTML = `<div class="tier-label tier-${t.key}">${t.key}</div>`;
+    row.innerHTML = `<div class="tier-label tier-${tier.key}">${tier.key}</div>`;
     const inner = document.createElement('div');
     inner.className = 'tier-brawlers';
-    const brawlers = buckets[t.key];
-    if (!brawlers.length) {
+
+    if (!names.length) {
       inner.innerHTML = '<span class="empty-tier">—</span>';
     } else {
-      for (const b of brawlers) {
-        const wr = (b.wins / b.sets * 100).toFixed(1);
-        const page = brawlerToPage(b.name);
-        // Use tierLookup for the pro-computed tier if available, otherwise use current bucket
-        const tierParam = tierLookup ? (tierLookup.get(b.name) || t.key) : t.key;
-        inner.innerHTML += `<a class="brawler-card" href="pages/${page}.html?name=${encodeURIComponent(b.name)}&tier=${tierParam}" style="text-decoration:none">
-          <img src="${portraitUrl(b.name)}" alt="${b.name}" onerror="this.style.background='#1a1f3a'">
-          <div class="bc-name">${b.name}</div>
-          <div class="bc-score">${b.score.toFixed(2)}</div>
+      for (const name of names) {
+        const s = proStats.get(name) || { sets: 0, wins: 0 };
+        const wr = s.sets > 0 ? (s.wins / s.sets * 100).toFixed(1) + '%' : '—';
+        const page = brawlerToPage(name);
+        inner.innerHTML += `<a class="brawler-card" href="pages/${page}.html?name=${encodeURIComponent(name)}&tier=${tier.key}" style="text-decoration:none">
+          <img src="${portraitUrl(name)}" alt="${name}" onerror="this.style.background='#1a1f3a'">
+          <div class="bc-name">${name}</div>
           <div class="bc-tooltip">
-            <div class="tt-name">${b.name}</div>
-            <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}%</span></div>
-            <div class="tt-row"><span class="tt-label">Sets Played</span><span class="tt-val">${b.sets}</span></div>
-            <div class="tt-row"><span class="tt-label">Score</span><span class="tt-val">${b.score.toFixed(2)}</span></div>
+            <div class="tt-name">${name}</div>
+            <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}</span></div>
+            <div class="tt-row"><span class="tt-label">Sets Played</span><span class="tt-val">${s.sets}</span></div>
           </div>
         </a>`;
       }
@@ -559,11 +564,10 @@ function renderTierList(container, scored, unranked, tierDefs, tierLookup) {
       uinner.innerHTML += `<a class="brawler-card" href="pages/${page}.html?name=${encodeURIComponent(b.name)}&tier=UNRANKED" style="text-decoration:none;opacity:0.45">
         <img src="${portraitUrl(b.name)}" alt="${b.name}" onerror="this.style.background='#1a1f3a'">
         <div class="bc-name">${b.name}</div>
-        <div class="bc-score">${b.sets > 0 ? b.sets+'s' : '—'}</div>
         <div class="bc-tooltip">
           <div class="tt-name">${b.name}</div>
           <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}</span></div>
-          <div class="tt-row"><span class="tt-label">Sets</span><span class="tt-val">${b.sets} (min 3)</span></div>
+          <div class="tt-row"><span class="tt-label">Sets Played</span><span class="tt-val">${b.sets}</span></div>
         </div>
       </a>`;
     }
@@ -572,19 +576,79 @@ function renderTierList(container, scored, unranked, tierDefs, tierLookup) {
   container.appendChild(urow);
 }
 
-function buildProTierList() {
-  const scored = [], unranked = [];
-  for (const b of PRO_DATA) {
-    let sets = 0, wins = 0;
-    for (const gm of GM_ORDER) { if (b[gm]) { sets += b[gm][0]; wins += b[gm][1]; } }
-    const sc = sets >= 3 ? score(sets, wins) : null;
-    if (sc !== null) scored.push({ name: b.brawler, sets, wins, score: sc });
-    else unranked.push({ name: b.brawler, sets, wins, score: 0 });
+// ── Player tier list still uses formula + shows scores ──
+function renderPlayerTierList(container, scored, unranked) {
+  const tierDefs = [
+    { key:'S', pct:0.10 }, { key:'A', pct:0.25 }, { key:'B', pct:0.50 },
+    { key:'C', pct:0.75 }, { key:'D', pct:0.90 }, { key:'F', pct:1.00 },
+  ];
+  const buckets = {};
+  for (const t of tierDefs) buckets[t.key] = [];
+  scored.sort((a, b) => b.score - a.score);
+  const total = scored.length;
+  scored.forEach((b, i) => {
+    const pct = (i + 1) / total;
+    const tier = tierDefs.find(t => pct <= t.pct);
+    buckets[tier.key].push(b);
+  });
+
+  for (const t of tierDefs) {
+    const row = document.createElement('div');
+    row.className = 'tier-row';
+    row.innerHTML = `<div class="tier-label tier-${t.key}">${t.key}</div>`;
+    const inner = document.createElement('div');
+    inner.className = 'tier-brawlers';
+    const brawlers = buckets[t.key];
+    if (!brawlers.length) {
+      inner.innerHTML = '<span class="empty-tier">—</span>';
+    } else {
+      for (const b of brawlers) {
+        const wr = (b.wins / b.sets * 100).toFixed(1);
+        inner.innerHTML += `<div class="brawler-card">
+          <img src="${portraitUrl(b.name)}" alt="${b.name}" onerror="this.style.background='#1a1f3a'">
+          <div class="bc-name">${b.name}</div>
+          <div class="bc-score">${b.score.toFixed(2)}</div>
+          <div class="bc-tooltip">
+            <div class="tt-name">${b.name}</div>
+            <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}%</span></div>
+            <div class="tt-row"><span class="tt-label">Sets Played</span><span class="tt-val">${b.sets}</span></div>
+            <div class="tt-row"><span class="tt-label">Score</span><span class="tt-val">${b.score.toFixed(2)}</span></div>
+          </div>
+        </div>`;
+      }
+    }
+    row.appendChild(inner);
+    container.appendChild(row);
   }
-  const tierLookup = computeProTiers();
-  const container = document.getElementById('pro-tier-list');
-  container.innerHTML = '';
-  renderTierList(container, scored, unranked, PRO_TIERS, tierLookup);
+
+  // Unranked
+  const urow = document.createElement('div');
+  urow.className = 'tier-row';
+  const ulabel = document.createElement('div');
+  ulabel.className = 'tier-label tier-unranked';
+  ulabel.innerHTML = 'UNRANKED<br>/NO DATA';
+  urow.appendChild(ulabel);
+  const uinner = document.createElement('div');
+  uinner.className = 'tier-brawlers';
+  if (!unranked.length) {
+    uinner.innerHTML = '<span class="empty-tier">—</span>';
+  } else {
+    for (const b of unranked) {
+      const wr = b.sets > 0 ? (b.wins / b.sets * 100).toFixed(1) + '%' : '—';
+      uinner.innerHTML += `<div class="brawler-card" style="opacity:0.45">
+        <img src="${portraitUrl(b.name)}" alt="${b.name}" onerror="this.style.background='#1a1f3a'">
+        <div class="bc-name">${b.name}</div>
+        <div class="bc-score">${b.sets > 0 ? b.sets+'s' : '—'}</div>
+        <div class="bc-tooltip">
+          <div class="tt-name">${b.name}</div>
+          <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}</span></div>
+          <div class="tt-row"><span class="tt-label">Sets</span><span class="tt-val">${b.sets} (min 3)</span></div>
+        </div>
+      </div>`;
+    }
+  }
+  urow.appendChild(uinner);
+  container.appendChild(urow);
 }
 
 function buildPlayerPage(playerId) {
@@ -699,8 +763,7 @@ function buildPlayerPage(playerId) {
     else unranked.push({ name, sets, wins: d.wins, score: 0 });
   }
   const tlWrap = document.createElement('div');
-  // Player tier lists use player-local tiers (no proTierLookup)
-  renderTierList(tlWrap, scored, unranked, PRO_TIERS, null);
+  renderPlayerTierList(tlWrap, scored, unranked);
   container.appendChild(tlWrap);
 }
 
