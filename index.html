@@ -54,6 +54,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 .top-tab[data-page="wolf"].active    { color: #ffb74d; border-bottom-color: #ffb74d; }
 .top-tab[data-page="tykoro"].active  { color: #81c784; border-bottom-color: #81c784; }
 .top-tab[data-page="sirito"].active  { color: #ce93d8; border-bottom-color: #ce93d8; }
+.top-tab[data-page="longterm"].active { color: #a78bfa; border-bottom-color: #a78bfa; }
 
 .page { display: none; padding: 24px; }
 .page.active { display: block; }
@@ -112,6 +113,58 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 .bc-tooltip .tt-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2px; }
 .bc-tooltip .tt-label { color: var(--muted); }
 .bc-tooltip .tt-val { color: var(--accent2); }
+
+/* ── Movement badges ── */
+.bc-badge {
+  position: absolute;
+  top: 2px; right: 2px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px; font-weight: 700;
+  line-height: 1;
+  padding: 2px 3px;
+  pointer-events: none;
+  z-index: 10;
+}
+.bc-badge-up {
+  background: rgba(0, 200, 100, 0.20);
+  border: 1px solid rgba(0, 200, 100, 0.5);
+  color: #2ddb8a;
+}
+.bc-badge-down {
+  background: rgba(239, 83, 80, 0.20);
+  border: 1px solid rgba(239, 83, 80, 0.5);
+  color: #ef6e6b;
+}
+.bc-badge-new {
+  background: rgba(247, 201, 72, 0.20);
+  border: 1px solid rgba(247, 201, 72, 0.5);
+  color: #f7c948;
+  font-size: 7px;
+  letter-spacing: 0.5px;
+}
+/* Arrow SVG icons inside badge */
+.badge-arrow {
+  display: inline-block;
+  width: 8px; height: 8px;
+}
+
+/* ── Long-term tier page ── */
+.longterm-header {
+  border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;
+  background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(59,240,196,0.04));
+  border: 1px solid rgba(167,139,250,0.25);
+}
+.longterm-header h2 { font-size: 22px; font-weight: 700; letter-spacing: 2px; color: #a78bfa; margin-bottom: 6px; }
+.longterm-header p { font-size: 13px; color: var(--muted); font-family: 'Share Tech Mono', monospace; line-height: 1.6; }
+.lt-legend {
+  display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;
+  padding: 10px 14px; background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border); border-radius: 6px;
+}
+.lt-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: 'Share Tech Mono', monospace; color: var(--muted); }
+.lt-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
 
 .player-header {
   border-radius: 10px; padding: 18px 22px; margin-bottom: 22px;
@@ -199,6 +252,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 
 <div class="top-nav">
   <div class="top-tab active" data-page="pro" onclick="switchPage('pro')">⚡ PRO META</div>
+  <div class="top-tab" data-page="longterm" onclick="switchPage('longterm')">📊 PAST 6 MONTHS</div>
   <div class="top-tab" data-page="jasper" onclick="switchPage('jasper')">JASPER</div>
   <div class="top-tab" data-page="daniel" onclick="switchPage('daniel')">DANIEL</div>
   <div class="top-tab" data-page="wolf" onclick="switchPage('wolf')">WOLF</div>
@@ -207,6 +261,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 </div>
 
 <div class="page active" id="page-pro"><div id="pro-tier-list"></div></div>
+<div class="page" id="page-longterm"><div id="longterm-content"></div></div>
 <div class="page" id="page-jasper"><div id="jasper-content"></div></div>
 <div class="page" id="page-daniel"><div id="daniel-content"></div></div>
 <div class="page" id="page-wolf"><div id="wolf-content"></div></div>
@@ -216,24 +271,76 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 <script>
 const LAST_UPDATED = '2026-04-03: 19:42';
 
-// ─────────────────────────────────────────────────────────────
-// PRO META MANUAL TIER LIST
-// Edit these arrays to reorder/move brawlers between tiers.
-// Any brawler in PRO_DATA not listed here goes to UNRANKED.
-// Left → right = order within a tier.
-// ─────────────────────────────────────────────────────────────
 const PRO_MANUAL_TIERS = {
-  S: ['NAJIA', 'LEON', 'BULL', 'MORTIS', 'CROW', 'CLANCY', 'PIERCE'],
-  A: ['CHESTER', 'RUFFS', 'OTIS', 'SPIKE', 'SIRIUS', 'KAZE', 'EMZ', 'BYRON', 'CHARLIE', 'SHADE',  
-      'GENE', 'NITA', 'BIBI', 'LILY', 'BELLE', 'MEEPLE','MAX', 'ZIGGY', 'ANGELO', 'MINA', 'NANI', 'POCO', 'STU', 'GRAY'],
-  B: ['KENJI', 'RICO', 'KIT', 'COLT', 'BO', 'BROCK', 'GUS', 'FINX', 'SANDY', 'R-T', 'PAM', 'PENNY', 'LOU', 'JAE-YONG', 'AMBER',
-      'BUSTER', 'OLLIE', 'JANET', 'MOE', 'CARL', 'CORDELIUS', 'ALLI', 'SHELLY', 'WILLOW', 'TARA', 'BARLEY', '8-BIT', 'JUJU', 
-      'LARRY & LAWRIE', 'PIPER'],
-  C: ['LUMI', 'GALE', 'MELODIE', 'SQUEAK', 'BERRY', 'MEG', 'DARRYL', 'GRIFF', 'TRUNK', 'DRACO', 'BEA', 'HANK', 'FANG', 'LOLA', 'MAISIE', 'MANDY'],
-  D: ['GLOWBERT', 'PEARL', 'DOUG', 'EVE', 'CHUCK', 'SURGE', 'TICK', 'MICO', 'SPROUT', 'JACKY', 'BUZZ', 'EL PRIMO', 'GROM', 'FRANK', 'ROSA', 'BONNIE', 'GIGI'],
-  F: ['MR. P', 'DYNAMIKE', 'COLETTE', 'ASH', 'JESSIE', 'EDGAR', 'SAM'],
+  S: ['NAJIA', 'CHESTER', 'MORTIS', 'LEON', 'CLANCY', 'RUFFS', 'PIERCE', 'OTIS'],
+  A: ['BULL', 'EMZ', 'CROW', 'SIRIUS', 'SPIKE', 'SHADE', 'BYRON', 'KAZE', 'CHARLIE', 'MEEPLE', 'GENE', 'RICO', 'LILY', 'BELLE', 'ZIGGY', 'ANGELO', 'KIT'],
+  B: ['NITA', 'BROCK', 'BIBI', 'BO', 'COLT', 'GUS', 'STU', 'AMBER', 'SANDY', 'R-T', 'MINA', 'FINX', 'LOU', 'ALLI', 'POCO', 'GRAY', 'KENJI' ,'JAE-YONG', 'MOE',  'PENNY', 'PAM', ],
+  C: ['MAX', 'NANI', 'OLLIE', 'CARL', 'CORDELIUS', 'SHELLY', 'BUSTER', 'JANET', 'GALE','MELODIE', 'SQUEAK', '8-BIT', 'WILLOW','EVE', 'LUMI', 'GLOWBERT', 'PEARL', 'PIPER', 'DRACO', 'MEG', 'TRUNK',  
+      'JUJU', 'CHUCK', 'GRIFF', 'TARA', 'BERRY', 'BARLEY', 'TICK', 'DOUG', 'SPROUT', 'LARRY & LAWRIE'],
+  D: ['FRANK', 'BEA', 'DARRYL', 'SURGE', 'ROSA', 'HANK', 'FANG', 'MICO', 'JACKY', 'MR. P', 'EDGAR', 'BUZZ', 'BONNIE'],
+  F: ['MAISIE', 'EL PRIMO', 'LOLA', 'DYNAMIKE', 'GROM', 'COLETTE', 'ASH', 'GIGI', 'MANDY', 'JESSIE', 'SAM']
 };
-// ─────────────────────────────────────────────────────────────
+
+const PREV_LIST = {
+  S: ['SIRIUS', 'CROW', 'BULL', 'BIBI', 'SPIKE', 'EMZ', 'LEON', 'PIERCE', 'GLOWBERT', 'BO'],
+  A: ['FRANK', 'MINA', 'BYRON', 'OTIS', 'RICO', 'MORTIS', 'KAZE', 'ANGELO', 'SHELLY', 'POCO', 'GUS', 'FINX', 'AMBER', 'CHESTER', 'KENJI', 'NITA'],
+  B: ['LILY', 'GENE', 'RUFFS', 'CHARLIE', 'SHADE', 'CORDELIUS', 'COLT', 'MEEPLE', 'GRAY', 'NANI', 'BELLE', 'ALLI', 'MOE', 'R-T', 'JANET', 'JUJU', 'MAX', 
+      'BROCK', 'BEA', 'LOU', 'CARL', 'TARA', 'SQUEAK', 'KIT', 'LUMI', 'SANDY', 'ZIGGY', 'WILLOW', 'JAE-YONG'],
+  C: ['MELODIE', 'STU', 'PAM', 'GALE', 'LARRY & LAWRIE', 'HANK', 'PIPER', 'TRUNK', 'BUSTER', 'PENNY', 'BERRY', '8-BIT', 'MEG', 'BARLEY', 'OLLIE', 'GRIFF', 'MANDY', 
+      'TICK', 'BUZZ', 'MAISIE', 'EVE', 'DRACO', 'LOLA', 'SPROUT', 'ASH', 'DYNAMIKE', 'PEARL'],
+  D: ['DOUG', 'FANG', 'BONNIE', 'COLETTE', 'DARRYL', 'MICO', 'CLANCY', 'GIGI', 'SURGE', 'EL PRIMO', 'CHUCK', 'ROSA', 'JESSIE', 'SAM', 'GROM'],
+  F: ['MR. P', 'EDGAR', 'JACKY'],
+};
+
+// ─── PAST 6 MONTHS long-term tier list ────────────────────────────────────────
+
+const LONGTERM_TIERS = {
+  S: ['OTIS', 'MINA', 'MEEPLE', 'MORTIS', 'CROW'],
+  A: ['SPIKE', 'KAZE', 'SHADE', 'LILY', 'ANGELO', 'RUFFS', 'BYRON', 'GENE', 'FINX', 'EMZ', 'RICO', 'MOE', 'AMBER', 'JUJU', 'CORDELIUS', 'LEON', 'BIBI', 'BULL', 'GRAY', 'GUS', 'PAM', 'CHESTER', 'SHELLY', 'KENJI', 'CHARLIE', 'BELLE', 'LARRY & LAWRIE', 'MAX'],
+  B: ['COLT', 'FRANK', 'ALLI', 'KIT', 'SQUEAK', 'STU', 'LOU', 'SANDY', 'TARA', 'BROCK', 'JAE-YONG', 'MELODIE', 'BUSTER', 'ASH', 'TRUNK', 'OLLIE', 'BERRY', 'WILLOW', 'JANET', 'NANI', 'CARL', 'PENNY', 'PIPER', 'BARLEY', 'ZIGGY', 'R-T', 'BO', 'LUMI', 'DRACO', 'HANK', 'GRIFF', 'GALE', 'BEA', 'TICK', 'POCO', 'SPROUT'],
+  C: ['8-BIT', 'NITA', 'PEARL', 'DOUG', 'MEG', 'FANG', 'MANDY', 'EVE', 'SURGE', 'DARRYL', 'CLANCY', 'MAISIE', 'BONNIE', 'LOLA', 'BUZZ', 'DYNAMIKE'],
+  D: ['COLETTE', 'JACKY', 'MR. P', 'SAM', 'GROM', 'MICO', 'ROSA', 'CHUCK', 'EDGAR', 'EL PRIMO'],
+  F: ['JESSIE'],
+};
+
+// Tier order for numeric comparison (lower index = better)
+const TIER_ORDER = ['S','A','B','C','D','F'];
+
+// Build a map of brawler → tier for quick lookup
+function buildTierMap(tiers) {
+  const map = {};
+  for (const [tier, names] of Object.entries(tiers)) {
+    for (const name of names) map[name] = tier;
+  }
+  return map;
+}
+
+// Returns: 'up' | 'down' | 'new' | null
+function getMovement(name, currentTier) {
+  const prevMap = buildTierMap(PREV_LIST);
+  if (!prevMap[name]) return 'new';
+  const prevTier = prevMap[name];
+  if (prevTier === currentTier) return null;
+  const prevIdx = TIER_ORDER.indexOf(prevTier);
+  const currIdx = TIER_ORDER.indexOf(currentTier);
+  return currIdx < prevIdx ? 'up' : 'down';
+}
+
+function badgeHTML(movement) {
+  if (!movement) return '';
+  if (movement === 'up') return `<div class="bc-badge bc-badge-up">
+    <svg class="badge-arrow" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 7V1M4 1L1.5 3.5M4 1L6.5 3.5" stroke="#2ddb8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>`;
+  if (movement === 'down') return `<div class="bc-badge bc-badge-down">
+    <svg class="badge-arrow" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 1V7M4 7L1.5 4.5M4 7L6.5 4.5" stroke="#ef6e6b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>`;
+  if (movement === 'new') return `<div class="bc-badge bc-badge-new">NEW</div>`;
+  return '';
+}
 
 const PRO_DATA = [
   { brawler: '8-BIT',                   bounty: [7,6], brawlBall: null, gemGrab: [1,0], heist: [8,3], hotZone: [3,2], knockout: null },
@@ -470,7 +577,6 @@ const PLAYERS = {
     { brawler: 'CROW', gamemode: 'brawlBall', map: 'Center Stage', wins: 0, losses: 1 },
     { brawler: 'TARA', gamemode: 'brawlBall', map: 'Triple Dribble', wins: 1, losses: 0 },
     { brawler: 'CROW', gamemode: 'brawlBall', map: 'Spiraling Out', wins: 1, losses: 1 },
-
   ] },
   sirito: { name: 'SIRITO', tag: '#SIRITO', color: '#ce93d8', matches: [
     { brawler: 'BULL', gamemode: 'hotZone', map: 'Ring of Fire', wins: 0, losses: 1 },
@@ -504,7 +610,6 @@ function brawlerToPage(name) {
   return name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'').replace(/-+/g,'-');
 }
 
-// Build a lookup of total sets/wins per brawler from PRO_DATA for tooltip use
 function buildProStatsMap() {
   const map = new Map();
   for (const b of PRO_DATA) {
@@ -515,17 +620,15 @@ function buildProStatsMap() {
   return map;
 }
 
-// ── Render the PRO manual tier list ──
+// ── Render the PRO manual tier list with movement badges ──
 function buildProTierList() {
   const proStats = buildProStatsMap();
   const container = document.getElementById('pro-tier-list');
   container.innerHTML = '';
 
-  // Collect all manually placed brawlers
   const placed = new Set();
   for (const names of Object.values(PRO_MANUAL_TIERS)) names.forEach(n => placed.add(n));
 
-  // Unranked = in PRO_DATA but not in any manual tier
   const unranked = PRO_DATA
     .filter(b => !placed.has(b.brawler))
     .map(b => {
@@ -548,13 +651,25 @@ function buildProTierList() {
         const s = proStats.get(name) || { sets: 0, wins: 0 };
         const wr = s.sets > 0 ? (s.wins / s.sets * 100).toFixed(1) + '%' : '—';
         const page = brawlerToPage(name);
+        const movement = getMovement(name, tier.key);
+        const badge = badgeHTML(movement);
+
+        const prevMap = buildTierMap(PREV_LIST);
+        const prevTier = prevMap[name] || '—';
+        const movementTooltip = movement === 'up' ? `↑ Up from ${prevTier}`
+          : movement === 'down' ? `↓ Down from ${prevTier}`
+          : movement === 'new' ? '✦ New to list'
+          : `Same as before`;
+
         inner.innerHTML += `<a class="brawler-card" href="pages/${page}.html?name=${encodeURIComponent(name)}&tier=${tier.key}" style="text-decoration:none">
+          ${badge}
           <img src="${portraitUrl(name)}" alt="${name}" onerror="this.style.background='#1a1f3a'">
           <div class="bc-name">${name}</div>
           <div class="bc-tooltip">
             <div class="tt-name">${name}</div>
             <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}</span></div>
             <div class="tt-row"><span class="tt-label">Sets Played</span><span class="tt-val">${s.sets}</span></div>
+            <div class="tt-row"><span class="tt-label">Meta Change</span><span class="tt-val">${movementTooltip}</span></div>
           </div>
         </a>`;
       }
@@ -593,7 +708,100 @@ function buildProTierList() {
   container.appendChild(urow);
 }
 
-// ── Player tier list still uses formula + shows scores ──
+// ── Long-term (Past 6 Months) tier list ──
+function buildLongtermPage() {
+  const container = document.getElementById('longterm-content');
+  container.innerHTML = '';
+
+  const hdr = document.createElement('div');
+  hdr.className = 'longterm-header';
+  hdr.innerHTML = `
+    <h2>PAST 6 MONTHS — META OVERVIEW</h2>
+    <p>Reflects sustained performance across all patches from the past ~6 months.<br>
+    Brawlers are ranked on consistency and long-term meta relevance, not just current patch strength.</p>`;
+  container.appendChild(hdr);
+
+  const legend = document.createElement('div');
+  legend.className = 'lt-legend';
+  legend.innerHTML = `
+    <div class="lt-legend-item"><div class="lt-dot" style="background:#ff4e50"></div>S — Elite / Always meta</div>
+    <div class="lt-legend-item"><div class="lt-dot" style="background:#ff9800"></div>A — Consistently strong</div>
+    <div class="lt-legend-item"><div class="lt-dot" style="background:#ffeb3b"></div>B — Reliable / Situationally strong</div>
+    <div class="lt-legend-item"><div class="lt-dot" style="background:#8bc34a"></div>C — Niche / Patch-dependent</div>
+    <div class="lt-legend-item"><div class="lt-dot" style="background:#29b6f6"></div>D — Rarely seen in pro play</div>
+    <div class="lt-legend-item"><div class="lt-dot" style="background:#9e9e9e"></div>F — Not viable</div>`;
+  container.appendChild(legend);
+
+  const proStats = buildProStatsMap();
+  const placed = new Set();
+  for (const names of Object.values(LONGTERM_TIERS)) names.forEach(n => placed.add(n));
+
+  for (const tier of TIER_DEFS) {
+    const names = LONGTERM_TIERS[tier.key] || [];
+    const row = document.createElement('div');
+    row.className = 'tier-row';
+    row.innerHTML = `<div class="tier-label tier-${tier.key}">${tier.key}</div>`;
+    const inner = document.createElement('div');
+    inner.className = 'tier-brawlers';
+
+    if (!names.length) {
+      inner.innerHTML = '<span class="empty-tier">—</span>';
+    } else {
+      for (const name of names) {
+        const s = proStats.get(name) || { sets: 0, wins: 0 };
+        const wr = s.sets > 0 ? (s.wins / s.sets * 100).toFixed(1) + '%' : '—';
+        const page = brawlerToPage(name);
+
+        // Compare longterm vs current pro tier
+        const currentMap = buildTierMap(PRO_MANUAL_TIERS);
+        const currTier = currentMap[name];
+        let trendNote = 'Not in current list';
+        let trendColor = 'var(--muted)';
+        if (currTier) {
+          const ltIdx = TIER_ORDER.indexOf(tier.key);
+          const curIdx = TIER_ORDER.indexOf(currTier);
+          if (curIdx < ltIdx) { trendNote = `↑ Trending UP (now ${currTier})`; trendColor = '#2ddb8a'; }
+          else if (curIdx > ltIdx) { trendNote = `↓ Trending DOWN (now ${currTier})`; trendColor = '#ef6e6b'; }
+          else { trendNote = `Stable at ${currTier}`; }
+        }
+
+        inner.innerHTML += `<a class="brawler-card" href="pages/${page}.html?name=${encodeURIComponent(name)}&tier=${tier.key}" style="text-decoration:none">
+          <img src="${portraitUrl(name)}" alt="${name}" onerror="this.style.background='#1a1f3a'">
+          <div class="bc-name">${name}</div>
+          <div class="bc-tooltip">
+            <div class="tt-name">${name}</div>
+            <div class="tt-row"><span class="tt-label">Current Trend</span><span class="tt-val" style="color:${trendColor}">${trendNote}</span></div>
+          </div>
+        </a>`;
+      }
+    }
+    row.appendChild(inner);
+    container.appendChild(row);
+  }
+
+  // Unranked in longterm
+  const unranked = PRO_DATA.filter(b => !placed.has(b.brawler)).map(b => b.brawler);
+  if (unranked.length) {
+    const urow = document.createElement('div');
+    urow.className = 'tier-row';
+    const ulabel = document.createElement('div');
+    ulabel.className = 'tier-label tier-unranked';
+    ulabel.innerHTML = 'UNRANKED<br>/NO DATA';
+    urow.appendChild(ulabel);
+    const uinner = document.createElement('div');
+    uinner.className = 'tier-brawlers';
+    for (const name of unranked) {
+      const page = brawlerToPage(name);
+      uinner.innerHTML += `<a class="brawler-card" href="pages/${page}.html" style="text-decoration:none;opacity:0.45">
+        <img src="${portraitUrl(name)}" alt="${name}" onerror="this.style.background='#1a1f3a'">
+        <div class="bc-name">${name}</div>
+      </a>`;
+    }
+    urow.appendChild(uinner);
+    container.appendChild(urow);
+  }
+}
+
 function renderPlayerTierList(container, scored, unranked) {
   const tierDefs = [
     { key:'S', pct:0.10 }, { key:'A', pct:0.25 }, { key:'B', pct:0.50 },
@@ -638,7 +846,6 @@ function renderPlayerTierList(container, scored, unranked) {
     container.appendChild(row);
   }
 
-  // Unranked
   const urow = document.createElement('div');
   urow.className = 'tier-row';
   const ulabel = document.createElement('div');
@@ -795,6 +1002,7 @@ function switchPage(id) {
 
 document.getElementById('last-updated-date').textContent = LAST_UPDATED;
 buildProTierList();
+buildLongtermPage();
 for (const id of Object.keys(PLAYERS)) buildPlayerPage(id);
 </script>
 </body>
