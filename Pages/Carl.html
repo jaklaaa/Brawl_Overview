@@ -8,7 +8,6 @@
 
 </head>
 <body>
-
 <div class="header">
   <a class="back-btn" href="../index.html">← BACK</a>
   <div class="logo">BRAWL<span>STATS</span></div>
@@ -19,16 +18,16 @@
   <!-- COL 1: MODEL PANEL -->
   <div class="model-col">
     <div class="model-bg-glow"></div>
-   <img class="model-img" id="hero-model-img"
-     src="Assets/Jessie/Model.png"
-     onerror="this.onerror=null; this.src='Assets/Jessie/Model.png';">
+    <img class="model-img" id="hero-model-img"
+     src="Assets/Carl/Model.png"
+     onerror="this.onerror=null; this.src='Assets/Carl/Model.png';">
     <div class="model-placeholder" id="model-placeholder" style="display:none">
       <div class="ph-icon">🔫</div>
       <div class="ph-text">MODEL</div>
     </div>
     <div class="model-overlay">
-      <div class="model-brawler-name" id="brawler-name-overlay"><em>JESSIE</em></div>
-      <div class="model-class-badge" id="brawler-class-badge">CONTROLLER</div>
+      <div class="model-brawler-name" id="brawler-name-overlay"><em>Carl</em></div>
+      <div class="model-class-badge" id="brawler-class-badge">DAMAGE DEALER</div>
     </div>
   </div>
 
@@ -37,7 +36,7 @@
     <div class="tab-row">
       <div class="tab-btn active" onclick="switchTab('build')">BEST BUILD</div>
       <div class="tab-btn" onclick="switchTab('all')">ALL ITEMS</div>
-      <div class="tab-btn" onclick="switchTab('matchups')">MATCHUPS</div>
+            <div class="tab-btn" onclick="switchTab('matchups')">MATCHUPS</div>
       <div class="tab-btn" onclick="switchTab('skins')">SKINS</div>
     </div>
 
@@ -64,18 +63,18 @@
           <div class="build-type-label" style="color:var(--green)">● GADGET</div>
           <div class="build-items">
             <div class="item-chip selected gadget" onclick="toggleDetail('d-g1')">
-              <img src="Assets/Jessie/G2.png" alt="Fast Forward"
+              <img src="Assets/Carl/G1.png" alt="Fast Forward"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder gadget" style="display:none">⚡</div>
-              <div class="ic-name">Recoil Spring</div>
+              <div class="ic-name">Heat Ejector</div>
               <div class="ic-dot dot-gadget"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-g1">
           <div class="item-detail-panel">
-            <div class="idp-name">Recoil Spring</div>
-           Jessie is only playable in heist as a damage dealer with her Turret, this increases your turrets damage so it's the better one. In other games you should have the other gadget, but you shouldn't play her outside of heist anyways.
+            <div class="idp-name">Heat Ejector</div>
+          Both gadges are actually really really good, and thus I reccomend getting both of them. However you'll find that this one is more usefull most of the times. 
           </div>
         </div>
 
@@ -83,18 +82,18 @@
           <div class="build-type-label" style="color:var(--yellow)">● STAR POWER</div>
           <div class="build-items">
             <div class="item-chip selected starpower" onclick="toggleDetail('d-s2')">
-              <img src="Assets/Jessie/S2.png" alt="Band-Aid"
+              <img src="Assets/Carl/S2.png" alt="Band-Aid"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder starpower" style="display:none">⭐</div>
-              <div class="ic-name">Shocky</div>
+              <div class="ic-name">Protective Pirouette</div>
               <div class="ic-dot dot-starpower"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-s2">
           <div class="item-detail-panel">
-            <div class="idp-name">Shockys</div>
-            The other star power can be better in gamemodes outside of heist, but since that is the only gamemode where you can ever play Jessie you should have this one.
+            <div class="idp-name">Protective Pirouette</div>
+            This star power is way safer and more consistant than the other one, the other one ain't bad but you really just want that extra survivability in your super.  
           </div>
         </div>
 
@@ -102,31 +101,31 @@
           <div class="build-type-label" style="color:var(--gray)">● GEARS</div>
           <div class="build-items">
             <div class="item-chip selected gear" onclick="toggleDetail('d-gear1')">
-              <img src="Assets/Gears/DamageGear.png" alt="Damage"
+              <img src="Assets/Gears/ShieldGear.png" alt="Damage"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder gear" style="display:none">⚔️</div>
-              <div class="ic-name">Damage</div>
+              <div class="ic-name">shield</div>
               <div class="ic-dot dot-gear"></div>
             </div>
             <div class="item-chip selected gear" onclick="toggleDetail('d-gear2')">
-              <img src="Assets/Gears/PetPowerGear.png" alt="Health"
+              <img src="Assets/Gears/HealthGear.png" alt="Health"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder gear" style="display:none">❤️</div>
-              <div class="ic-name">Pet Power</div>
+              <div class="ic-name">Health</div>
               <div class="ic-dot dot-gear"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-gear1">
           <div class="item-detail-panel">
-            <div class="idp-name">Damage Gear</div>
-              Jessie is only playable in heist, the most important aspect of a brawler there is damage to either defend or go aggressive. So the damage gear is a need for a heist-only brawler like Jessie. 
+            <div class="idp-name">shield Gear</div>
+                Carl becomes super tanky with this gear.
           </div>
         </div>
         <div class="collapsed-panel" id="d-gear2">
           <div class="item-detail-panel">
-            <div class="idp-name">Pet Power Gear</div>
-              Same reason as damage gear. Read that.
+            <div class="idp-name">Health Gear</div>
+              Both health and damage gears can be interchanged. You'd usually go health into lower health enemy brawlers and damage into high health enemy brawlers.
           </div>
         </div>
 
@@ -135,18 +134,18 @@
           <div class="build-type-label" style="color:var(--purple)">◆ HYPERCHARGE</div>
           <div class="build-items">
             <div class="item-chip selected hypercharge" onclick="toggleDetail('d-hyper')">
-              <img src="Assets/Jessie/HC.png" alt="Shell Overload"
+              <img src="Assets/Carl/HC.png" alt="Shell Overload"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder hypercharge" style="display:none">💜</div>
-              <div class="ic-name">Scrapy 2.0</div>
+              <div class="ic-name">Flamespin</div>
               <div class="ic-dot dot-hyper"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-hyper">
           <div class="item-detail-panel">
-            <div class="idp-name">Scrapy 2.0</div>
-          Very bad hypercharge. Don't bother buying, it's an improvement over the normal super but barely changes anything. </div>
+            <div class="idp-name">Flamespin</div>
+           Basically your gadget becomes part of your super, and the extra burn can be nice but it's not really a good hypercharge over all. Don't reccomend. </div>
         </div>
       </div>
     </div>
@@ -157,44 +156,44 @@
       <div class="section-title" style="color:var(--green)">● GADGETS</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-g1')">
-          <img src="Assets/Jessie/G1.png" alt="Fast Forward" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Carl/G1.png" alt="Fast Forward" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(74,197,74,0.15)">⚡</div>
-          <div><div class="igc-name">Spark Plug</div><div class="igc-desc">Slow around your turret</div></div>
+          <div><div class="igc-name">Heat Ejector</div><div class="igc-desc">Healing Projectile</div></div>
         </div>
         <div class="item-grid-chip" onclick="toggleDetail('all-g2')">
-          <img src="Assets/Jessie/G2.png" alt="Shell Shock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Carl/G2.png" alt="Shell Shock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(74,197,74,0.15)">🐢</div>
-          <div><div class="igc-name">Recoil Spring</div><div class="igc-desc">Scrappy increased attack speed</div></div>
+          <div><div class="igc-name">Flying Hook</div><div class="igc-desc">Slowing Enemies</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-g1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Spark Plug</div>Jessie triggers a shockwave from her turret, slowing down all enemies within its area of effect. Cooldown: 15 seconds.</div></div>
-      <div class="collapsed-panel" id="all-g2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Recoil Spring</div>Scrappy's attack speed is doubled for 5.0 seconds. Cooldown: 11 seconds.</div></div>
+      <div class="collapsed-panel" id="all-g1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Heat Ejector</div>The next pickaxe Carl throws will drop a trail of hot rocks behind it! Opponents that touch them are set on fire, and receive 600 damage per second. Cooldown: 17 seconds.</div></div>
+      <div class="collapsed-panel" id="all-g2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Flying Hook</div>Carl's next attack makes his pickaxe pull him to the farthest point of the attack. Cooldown: 19 seconds.</div></div>
 
       <div class="section-title" style="color:var(--yellow);margin-top:18px">● STAR POWERS</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-s1')">
-          <img src="Assets/Jessie/S1.png" a  lt="Shell Shock SP" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Carl/S1.png" alt="Shell Shock SP" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(247,201,72,0.15)">⭐</div>
-          <div><div class="igc-name">Energize</div><div class="igc-desc">Heal Turret</div></div>
+          <div><div class="igc-name">Power Throw</div><div class="igc-desc">Increased Pickaxe Speed</div></div>
         </div>
         <div class="item-grid-chip" onclick="toggleDetail('all-s2')">
-          <img src="Assets/Jessie/S2.png" alt="Band-Aid" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Carl/S2.png" alt="Band-Aid" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(247,201,72,0.15)">🩹</div>
-          <div><div class="igc-name">Shocky</div><div class="igc-desc">Turret attacks bounce</div></div>
+          <div><div class="igc-name">Protective Pirouette</div><div class="igc-desc">Carl Gains A Shield</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-s1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Energize</div>Jessie can repair her gun turret for 1060 of its missing health by zapping it with her attack.</div></div>
-      <div class="collapsed-panel" id="all-s2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Scrapy</div>Scrappy the Turret now shoots energy orbs that bounce between enemies. The orbs' range after a bounce is 51% of normal range.</div></div>
+      <div class="collapsed-panel" id="all-s1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Power Throw</div>Carl throws his Pickaxe with 10% more speed, allowing it to travel faster and return faster.</div></div>
+      <div class="collapsed-panel" id="all-s2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Protective Pirouette</div>During Carl's Super, all damage he receives is reduced by 35%.</div></div>
 
       <div class="section-title" style="color:var(--purple);margin-top:18px">◆ HYPERCHARGE</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-hc')">
-          <img src="Assets/Jessie/HC.png" alt="Shell Overload" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Carl/HC.png" alt="Shell Overload" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(196,122,232,0.15)">💜</div>
-          <div><div class="igc-name">Scrappy 2.0</div><div class="igc-desc">Bigger Badder Turret</div></div>
+          <div><div class="igc-name">Flamespin</div><div class="igc-desc">Flame Trail</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-hc" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Scrappy 2.0</div>Jessie's turret has 50% more health and deals 20% more damage.</div></div>
+      <div class="collapsed-panel" id="all-hc" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Flamespin</div>Carl gains a flame trail while using his Super. The trail burns on contact, causing damage over time.</div></div>
 
       <div class="section-title" style="color:var(--gray);margin-top:18px">● GEARS — STANDARD</div>
       <div class="gear-row-items">
@@ -228,11 +227,6 @@
           <div class="ic-img-placeholder gear" style="display:none">⏱️</div>
           <div class="ic-name" style="font-size:11px">Gadget CD</div>
         </div>
-        <div class="item-chip gear" onclick="toggleDetail('ag-pp')">
-          <img src="Assets/Gears/PetPowerGear.png" alt="Gadget CD" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="ic-img-placeholder gear" style="display:none">⏱️</div>
-          <div class="ic-name" style="font-size:11px">Pet Power</div>
-        </div>
       </div>
       <div class="collapsed-panel" id="ag-spd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Speed Gear</div>+15% movement speed in bushes.</div></div>
       <div class="collapsed-panel" id="ag-vis" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Vision Gear</div>Reveals enemies in bushes for 2s after hitting them.</div></div>
@@ -240,12 +234,8 @@
       <div class="collapsed-panel" id="ag-shd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Shield Gear</div>+900 shield that regenerates out of combat.</div></div>
       <div class="collapsed-panel" id="ag-dmg" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Damage Gear</div>+15% damage below 50% HP. Core pick for the Band-Aid combo.</div></div>
       <div class="collapsed-panel" id="ag-gcd" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Gadget Cooldown Gear</div>Reduces gadget cooldown. More useful with Fast Forward.</div></div>
-      <div class="collapsed-panel" id="ag-pp"  style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Pet Power Gear</div>Pet power increased by 25%.</div></div>
-
     </div>
-  
-
-      <!-- ═══ MATCHUPS ═══ -->
+<!-- ═══ MATCHUPS ═══ -->
     <div class="tab-pane" id="tab-matchups">
       <div class="matchup-intro">
                Counters are brawlers that hold a natural advantage over others based on <b style="color:var(--text)">range, speed, damage output, or mechanics.</b> This however does not mean it's impossible to win or lose, it just puts you at a dissadvantage or advantage.
@@ -275,28 +265,29 @@
       <div class="skins-filter-row" id="skins-filters"></div>
       <div class="skins-grid" id="skins-grid"></div>
     </div>
-</div>
+    </div>
+
   <!-- COL 3: META + GAMEMODES -->
   <div>
     <div class="section-title">META RANKING</div>
     <div class="meta-rank-card">
       <div class="meta-tier-display">
-        <div class="meta-tier-letter mt-F">F</div>
+        <div class="meta-tier-letter mt-C">C</div>
         <div>
           <div class="mti-label">CURRENT TIER</div>
-          <div class="mti-name">F TIER</div>
-          <div class="mti-sub">Never Play</div>
+          <div class="mti-name">C TIER</div>
+          <div class="mti-sub">Overpowered Pick</div>
         </div>
       </div>
-      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:1%"></div></div>
+      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:36%"></div></div>
       <div class="meta-bar-label"><span>F</span><span>D</span><span>C</span><span>B</span><span>A</span><span>S</span></div>
     </div>
 
     <div class="section-title">GAMEMODE RATINGS</div>
     <div class="gm-ratings-card" id="gm-ratings"></div>
   </div>
-</div><!-- /main-content -->
 
+</div>
 <!-- SKIN MODAL -->
 <div class="skin-modal-overlay" id="skin-modal-overlay" onclick="closeSkinModal(event)">
   <div class="skin-modal" id="skin-modal">
@@ -316,21 +307,20 @@
     </div>
   </div>
 </div>
-
-
 <script>
 const urlParams = new URLSearchParams(window.location.search);
-const brawlerParam = 'Jessie'
+const brawlerParam = urlParams.get('name') || 'Shelly';
 
-document.getElementById('hero-model-img').src = `Assets/Jessie/model.png`;
+document.getElementById('hero-model-img').src = `Assets/Carl/model.png`;
+document.getElementById('hero-model-img').alt = brawlerParam;
 document.getElementById('brawler-name-overlay').innerHTML = `<em>${brawlerParam.toUpperCase()}</em>`;
 document.title = `BRAWL STATS SSS — ${brawlerParam}`;
 
 const GAMEMODES = [
-  { label: 'Bounty',    color: '#f44336', stars: 1 },
+  { label: 'Bounty',    color: '#f44336', stars: 3 },
   { label: 'Brawl Ball',color: '#4caf50', stars: 1 },
   { label: 'Gem Grab',  color: '#9c27b0', stars: 1 },
-  { label: 'Heist',     color: '#ff9800', stars: 3 },
+  { label: 'Heist',     color: '#ff9800', stars: 5 },
   { label: 'Hot Zone',  color: '#f06292', stars: 1 },
   { label: 'Knockout',  color: '#29b6f6', stars: 1 },
 ];
@@ -389,14 +379,15 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
-}/* ════════════════════════════════════════
+}
+
+/* ════════════════════════════════════════
    MATCHUPS DATA
    type: 'loses-to' | 'counters' | 'even'
    severity: 'hard' | 'soft' (for loses-to / counters)
 ════════════════════════════════════════ */
 const MATCHUPS = [
-  // Loses to
-  ];
+ ];
 
 function buildMatchups() {
   const sections = { 'loses-to': [], 'counters': [], 'even': [] };
@@ -449,6 +440,7 @@ const RARITIES = [
   { key: 'mythic',     label: 'Mythic',     color: '#9C0303' },
   { key: 'legendary',  label: 'Legendary',  color: '#F2E707' },
   { key: 'hypercharge',label: 'Hypercharge',color: '#C65CF7' },
+  { key: 'pro',  label: 'Pro Pass',  color: '#258505' },
   { key: 'exclusive',  label: 'Exclusive',  color: '#8AFFA1' },
 ];
 
@@ -462,109 +454,88 @@ const RARITY_GEM_DEFAULT = {
 
 const SKINS = [
   {
-    id: 'default', name: 'Default Jessie',
+    id: 'default', name: 'Default Carl',
     rarity: 'default', limited: false,
     price: 'Free',
-    img: 'Assets/Jessie/model.png',
-    desc: 'The default Jessie look.',
+    img: 'Assets/Carl/model.png',
+    desc: 'The default Carl look.',
   },
   {
-    id: '1', name: 'Doll Jessie',
+    id: '1', name: 'Goblin Carl',
     rarity: 'rare', limited: false, seasonal: false,
     price: '29 💎',
-    img: 'Assets/Jessie/skins/Doll.png',
+    img: 'Assets/Carl/skins/Goblin.png',
     desc: '',
   },
-  {
-    id: '2', name: 'Summer Jessie',
+{
+    id: '2', name: 'Road Rage Carl',
     rarity: 'super-rare', limited: false, seasonal: false,
     price: '79 💎',
-    img: 'Assets/Jessie/skins/Summer.png',
+    img: 'Assets/Carl/skins/Road Rage.png',
     desc: '',
   },
-   {
-    id: '3', name: 'Red Dragon Jessie',
-    rarity: 'super-rare', limited: true, seasonal: false,
-    price: 'Free',
-    img: 'Assets/Jessie/skins/Red Dragon.png',
-    desc: 'Free from Brawl Stars China launch',
-  },
   {
-    id: '3', name: 'Sandy Jessie',
-    rarity: 'super-rare', limited: true, seasonal: false,
+    id: '3', name: 'Hog Rider Carl',
+    rarity: 'super-rare', limited: false, seasonal: false,
     price: '79 💎',
-    img: 'Assets/Jessie/skins/Sandy.png',
+    img: 'Assets/Carl/skins/Hog Rider.png',
     desc: '',
   },
   {
-    id: '4', name: 'Jessie Jessie',
-    rarity: 'super-rare', limited: true, seasonal: false,
+    id: '4', name: 'Leonard Carl',
+    rarity: 'super-rare', limited: false, seasonal: false,
     price: '79 💎',
-    img: 'Assets/Jessie/skins/Jessie.png',
-    desc: '',
-  },
-   {
-    id: '5', name: 'Dragon Knight Jessie',
-    rarity: 'epic', limited: false, seasonal: false,
-    price: '149 💎',
-    img: 'Assets/Jessie/skins/Dragon Knight.png',
+    img: 'Assets/Carl/skins/Leonard.png',
     desc: '',
   },
   {
-    id: '6', name: 'Shadow Knight Jessie',
-    rarity: 'epic', limited: false, seasonal: false,
-    price: '39 💎',
-    img: 'Assets/Jessie/skins/Shadow Knight.png',
-    desc: 'Color variant',
-  },
-  {
-    id: '7', name: 'Tanuki Jessie',
-    rarity: 'epic', limited: false, seasonal: false,
-    price: '149 💎',
-    img: 'Assets/Jessie/skins/Tanuki.png',
-    desc: '',
-  },
-  {
-    id: '8', name: 'Cat Burglar Jessie',
+    id: '5', name: 'Captain Carl',
     rarity: 'epic', limited: false, seasonal: true,
     price: '149 💎',
-    img: 'Assets/Jessie/skins/Cat Burglar.png',
+    img: 'Assets/Carl/skins/Captain.png',
     desc: '',
   },
   {
-    id: '9', name: 'Jessie Musketeer',
+    id: '6', name: 'Dark Tide Carl',
+    rarity: 'epic', limited: false, seasonal: true,
+    price: '39 💎',
+    img: 'Assets/Carl/skins/Dark Tide.png',
+    desc: 'Available after purchasing Captain Carl',
+  },
+  {
+    id: '7', name: 'Surfer Carl',
+    rarity: 'epic', limited: true, seasonal: false,
+    price: 'Brawl Pass',
+    img: 'Assets/Carl/skins/Surfer.png',
+    desc: 'Brawl Pass Exclusive',
+  },
+  {
+    id: '8', name: 'Sultan Carl',
     rarity: 'epic', limited: false, seasonal: false,
-    price: '2000 ID Points',
-    img: 'Assets/Jessie/skins/Jessie Musketeer.png',
+    price: '149 💎',
+    img: 'Assets/Carl/skins/Sultan.png',
     desc: '',
   },
   {
-    id: '10', name: 'Skadi Jessie',
-    rarity: 'mythic', limited: false, seasonal: false,
-    price: '199 💎',
-    img: 'Assets/Jessie/skins/Skadi.png',
+    id: '9', name: 'Biker Carl',
+    rarity: 'epic', limited: false, seasonal: false,
+    price: '149 💎',
+    img: 'Assets/Carl/skins/Biker.png',
     desc: '',
   },
   {
-    id: '11', name: 'Mecha Jessie',
-    rarity: 'legendary', limited: false, seasonal: false,
-    price: '299 💎',
-    img: 'Assets/Jessie/skins/Mecha.png',
+    id: '10', name: 'Insector Carl',
+    rarity: 'epic', limited: false, seasonal: false,
+    price: '149 💎',
+    img: 'Assets/Carl/skins/Insector.png',
     desc: '',
   },
   {
-    id: '12', name: 'Shining Mecha Jessie',
-    rarity: 'legendary', limited: false, seasonal: false,
-    price: '49 💎',
-    img: 'Assets/Jessie/skins/Shining Mecha.png',
-    desc: 'Color variant',
-  },
-  {
-    id: '13', name: 'Bubblegum Mecha Jessie',
-    rarity: 'legendary', limited: false, seasonal: false,
-    price: '49 💎',
-    img: 'Assets/Jessie/skins/Bubblegum Mecha.png',
-    desc: 'Color variant',
+    id: '11', name: 'Crazy Clown Carl',
+    rarity: 'epic', limited: false, seasonal: false,
+    price: '149 💎',
+    img: 'Assets/Carl/skins/Crazy Clown.png',
+    desc: '',
   },
 ];
 
@@ -614,7 +585,7 @@ function buildSkins() {
     card.dataset.limited = skin.limited;
     card.onclick = () => openSkinModal(skin);
 
-    card.innerHTML = `
+card.innerHTML = `
   <div class="skin-img-wrap">
     ${skin.limited ? '<div class="skin-limited-badge">LIMITED</div>' : ''}
     ${skin.seasonal ? '<div class="skin-seasonal-badge">SEASONAL</div>' : ''}
