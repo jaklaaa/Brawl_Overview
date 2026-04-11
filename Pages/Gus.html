@@ -19,15 +19,15 @@
   <!-- COL 1: MODEL PANEL -->
   <div class="model-col">
     <div class="model-bg-glow"></div>
-   <img class="model-img" id="hero-model-img"
-     src="Assets/Dynamike/Model.png"
-     onerror="this.onerror=null; this.src='Assets/Dynamike/Model.png';">
+    <img class="model-img" id="hero-model-img"
+     src="Assets/Gus/Model.png"
+     onerror="this.onerror=null; this.src='Assets/Gus/Model.png';">
     <div class="model-placeholder" id="model-placeholder" style="display:none">
       <div class="ph-icon">🔫</div>
       <div class="ph-text">MODEL</div>
     </div>
     <div class="model-overlay">
-      <div class="model-brawler-name" id="brawler-name-overlay"><em>DYNAMIKE</em></div>
+      <div class="model-brawler-name" id="brawler-name-overlay"><em>Gus</em></div>
       <div class="model-class-badge" id="brawler-class-badge">DAMAGE DEALER</div>
     </div>
   </div>
@@ -64,18 +64,18 @@
           <div class="build-type-label" style="color:var(--green)">● GADGET</div>
           <div class="build-items">
             <div class="item-chip selected gadget" onclick="toggleDetail('d-g1')">
-              <img src="Assets/Dynamike/G2.png" alt="Fast Forward"
+              <img src="Assets/Gus/G1.png" alt="Fast Forward"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder gadget" style="display:none">⚡</div>
-              <div class="ic-name">Satchel Charge</div>
+              <div class="ic-name">Kooky Popper</div>
               <div class="ic-dot dot-gadget"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-g1">
           <div class="item-detail-panel">
-            <div class="idp-name">Satchel Charge</div>
-           Dynamike's shots are fairly hard to hit, however with this gadget you remove that weakness and can land all your hits. Often making it a certain kill.
+            <div class="idp-name">Kooky Popper</div>
+            Absolutely insanely disgusting gadget, one of the best in the game. Absolute need. 
           </div>
         </div>
 
@@ -83,18 +83,18 @@
           <div class="build-type-label" style="color:var(--yellow)">● STAR POWER</div>
           <div class="build-items">
             <div class="item-chip selected starpower" onclick="toggleDetail('d-s2')">
-              <img src="Assets/Dynamike/S2.png" alt="Band-Aid"
+              <img src="Assets/Gus/S2.png" alt="Band-Aid"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder starpower" style="display:none">⭐</div>
-              <div class="ic-name">Demolition</div>
+              <div class="ic-name">Spirit Animal</div>
               <div class="ic-dot dot-starpower"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-s2">
           <div class="item-detail-panel">
-            <div class="idp-name">Demolition</div>
-            The other star power just doesn't give much value and is super hard to use, while this one just gives additional damage which always has value.
+            <div class="idp-name">Spirit Animal</div>
+            While not amazing it's most certainly the better star power. 
           </div>
         </div>
 
@@ -109,7 +109,7 @@
               <div class="ic-dot dot-gear"></div>
             </div>
             <div class="item-chip selected gear" onclick="toggleDetail('d-gear2')">
-              <img src="Assets/Gears/GadgetCooldownGear.png" alt="Health"
+              <img src="Assets/Gears/ShieldGear.png" alt="Health"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder gear" style="display:none">❤️</div>
               <div class="ic-name">Shield</div>
@@ -120,13 +120,13 @@
         <div class="collapsed-panel" id="d-gear1">
           <div class="item-detail-panel">
             <div class="idp-name">Damage Gear</div>
-              You kinda need this gear on Dynamike, the amount of times you win an interaction thanks to this extra bit of damage is insane. 
+                Not much to say, just very solid.  
           </div>
         </div>
         <div class="collapsed-panel" id="d-gear2">
           <div class="item-detail-panel">
-            <div class="idp-name">Gadget Cooldown Gear</div>
-              The more usual approach is using the Shield gear for more survivability, however I'd say accept the fact that your useless into assassins and become an even bigger gadget menace.
+            <div class="idp-name">Shield Gear</div>
+              In bounty this could be changed to Health gear, but shield everywhere else.
           </div>
         </div>
 
@@ -135,18 +135,18 @@
           <div class="build-type-label" style="color:var(--purple)">◆ HYPERCHARGE</div>
           <div class="build-items">
             <div class="item-chip selected hypercharge" onclick="toggleDetail('d-hyper')">
-              <img src="Assets/Dynamike/HC.png" alt="Shell Overload"
+              <img src="Assets/Gus/HC.png" alt="Shell Overload"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
               <div class="ic-img-placeholder hypercharge" style="display:none">💜</div>
-              <div class="ic-name">Boomer</div>
+              <div class="ic-name">Spooky Pop</div>
               <div class="ic-dot dot-hyper"></div>
             </div>
           </div>
         </div>
         <div class="collapsed-panel" id="d-hyper">
           <div class="item-detail-panel">
-            <div class="idp-name">Boomer</div>
-          Solid hypercharge, but not worth your resources. It's a good free hypercharge to unlock, however it's not game changing enough to really justify buying it. </div>
+            <div class="idp-name">Spooky Pop</div>
+           Gus' Hypercharge is a bit underwhelming but still a fine hypercharge. Don't waste resources on it, but it's certaintenly not a useless hypercharge. </div>
         </div>
       </div>
     </div>
@@ -157,48 +157,44 @@
       <div class="section-title" style="color:var(--green)">● GADGETS</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-g1')">
-          <img src="Assets/Dynamike/G1.png" alt="Fast Forward" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Gus/G1.png" alt="Fast Forward" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(74,197,74,0.15)">⚡</div>
-          <div><div class="igc-name">Fidget Spinner</div><div class="igc-desc">Throw Dynamites Around You</div></div>
+          <div><div class="igc-name">Kooky Popper</div><div class="igc-desc">Spirits Explode</div></div>
         </div>
         <div class="item-grid-chip" onclick="toggleDetail('all-g2')">
-          <img src="Assets/Dynamike/G2.png" alt="Shell Shock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Gus/G2.png" alt="Shell Shock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(74,197,74,0.15)">🐢</div>
-          <div><div class="igc-name">Satchel Charge</div><div class="igc-desc">Your Attack Stuns</div></div>
+          <div><div class="igc-name">Soul Switcher</div><div class="igc-desc">Gain 100% Spirit</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-g1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Fidget Spinner</div>Dynamike spins furiously with increased movement speed and throws multiple sticks of dynamite around himself. Each dynamite deals 2400 damage to enemies. Cooldown: 12 seconds.</div></div>
-<div class="collapsed-panel" id="all-g2" style="margin-bottom:14px">
-  <div class="item-detail-panel">
-    <div class="idp-name">Satchel Charge</div>
-    Once activated, the next main attack also stuns enemies for 1.5 seconds. Cooldown: 23 seconds.
-  </div>
-</div>
+      <div class="collapsed-panel" id="all-g1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Kooky Popper</div>Explode all uncollected spirits, dealing 2160 damage to nearby enemies. Cooldown: 16 seconds</div></div>
+      <div class="collapsed-panel" id="all-g2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Soul Switcher</div>Gus loses 5% health but gains 100% spirit instantly. Cooldown: 10 seconds.</div></div>
+
       <div class="section-title" style="color:var(--yellow);margin-top:18px">● STAR POWERS</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-s1')">
-          <img src="Assets/Dynamike/S1.png" alt="Shell Shock SP" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Gus/S1.png" alt="Shell Shock SP" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(247,201,72,0.15)">⭐</div>
-          <div><div class="igc-name">Dyna-Jump</div><div class="igc-desc">Use Attacks To Jump</div></div>
+          <div><div class="igc-name">Health Bonanza</div><div class="igc-desc">Spirits Heal Double</div></div>
         </div>
         <div class="item-grid-chip" onclick="toggleDetail('all-s2')">
-          <img src="Assets/Dynamike/S2.png" alt="Band-Aid" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Gus/S2.png" alt="Band-Aid" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(247,201,72,0.15)">🩹</div>
-          <div><div class="igc-name">Demolition</div><div class="igc-desc">More Damage On Super</div></div>
+          <div><div class="igc-name">Spirit Animal</div><div class="igc-desc">Spirits Increase Teammate's Damage</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-s1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Dyna-Jump</div>Dynamike can ride the blast wave of his explosives to jump over obstacles!</div></div>
-      <div class="collapsed-panel" id="all-s2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Demolition</div>Adds +1600 damage to Mike's Super.</div></div>
+      <div class="collapsed-panel" id="all-s1" style="margin-bottom:8px"><div class="item-detail-panel"><div class="idp-name">Health Bonanza</div>Health gained from spirits are increased by 100%.</div></div>
+      <div class="collapsed-panel" id="all-s2" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Spirit Animal</div>Spooky increases the damage of a teammate by 25% for 5 seconds.</div></div>
 
       <div class="section-title" style="color:var(--purple);margin-top:18px">◆ HYPERCHARGE</div>
       <div class="all-items-grid">
         <div class="item-grid-chip" onclick="toggleDetail('all-hc')">
-          <img src="Assets/Dynamike/HC.png" alt="Shell Overload" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="Assets/Gus/HC.png" alt="Shell Overload" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="igc-ph" style="display:none;background:rgba(196,122,232,0.15)">💜</div>
-          <div><div class="igc-name">Boomer</div><div class="igc-desc">Bigger Badder Super</div></div>
+          <div><div class="igc-name">Spooky Pop</div><div class="igc-desc">Throws Spirits in all directions</div></div>
         </div>
       </div>
-      <div class="collapsed-panel" id="all-hc" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Boomer</div>Super bomb spawns smaller bombs.</div></div>
+      <div class="collapsed-panel" id="all-hc" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Spooky Pop</div>On impact, Gus' Super will drop spirits in all directions that deal damage to enemies and heal teammates!</div></div>
 
       <div class="section-title" style="color:var(--gray);margin-top:18px">● GEARS — STANDARD</div>
       <div class="gear-row-items">
@@ -233,17 +229,14 @@
           <div class="ic-name" style="font-size:11px">Gadget CD</div>
         </div>
       </div>
-     <div class="collapsed-panel" id="ag-spd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Speed Gear</div>+15% movement speed in bushes.</div></div>
+  <div class="collapsed-panel" id="ag-spd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Speed Gear</div>+15% movement speed in bushes.</div></div>
       <div class="collapsed-panel" id="ag-vis" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Vision Gear</div>Reveals enemies in bushes for 2s after hitting them.</div></div>
       <div class="collapsed-panel" id="ag-hp"  style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Health Gear</div>Recover health 50% more effectively.</div></div>
       <div class="collapsed-panel" id="ag-shd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Shield Gear</div>+900 shield that regenerates out of combat.</div></div>
       <div class="collapsed-panel" id="ag-dmg" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Damage Gear</div>+15% damage below 50% HP. </div></div>
       <div class="collapsed-panel" id="ag-gcd" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Gadget Cooldown Gear</div>Reduces gadget cooldown. </div></div>
-
     </div>
-  
-
-      <!-- ═══ MATCHUPS ═══ -->
+  <!-- ═══ MATCHUPS ═══ -->
     <div class="tab-pane" id="tab-matchups">
       <div class="matchup-intro">
                Counters are brawlers that hold a natural advantage over others based on <b style="color:var(--text)">range, speed, damage output, or mechanics.</b> This however does not mean it's impossible to win or lose, it just puts you at a dissadvantage or advantage.
@@ -273,28 +266,29 @@
       <div class="skins-filter-row" id="skins-filters"></div>
       <div class="skins-grid" id="skins-grid"></div>
     </div>
-</div>
+    </div>
+
   <!-- COL 3: META + GAMEMODES -->
   <div>
     <div class="section-title">META RANKING</div>
     <div class="meta-rank-card">
       <div class="meta-tier-display">
-        <div class="meta-tier-letter mt-F">F</div>
+        <div class="meta-tier-letter mt-B">B</div>
         <div>
           <div class="mti-label">CURRENT TIER</div>
-          <div class="mti-name">F TIER</div>
-          <div class="mti-sub">Never Play</div>
+          <div class="mti-name">BTIER</div>
+          <div class="mti-sub">Very Good Pick</div>
         </div>
       </div>
-      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:3%"></div></div>
+      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:66%"></div></div>
       <div class="meta-bar-label"><span>F</span><span>D</span><span>C</span><span>B</span><span>A</span><span>S</span></div>
     </div>
 
     <div class="section-title">GAMEMODE RATINGS</div>
     <div class="gm-ratings-card" id="gm-ratings"></div>
   </div>
-</div><!-- /main-content -->
 
+</div>
 <!-- SKIN MODAL -->
 <div class="skin-modal-overlay" id="skin-modal-overlay" onclick="closeSkinModal(event)">
   <div class="skin-modal" id="skin-modal">
@@ -314,24 +308,23 @@
     </div>
   </div>
 </div>
-
-
 <script>
 const urlParams = new URLSearchParams(window.location.search);
-const brawlerParam = 'Dynamike'
+const brawlerParam = urlParams.get('name') || 'Gus';
 
-document.getElementById('hero-model-img').src = `Assets/Dynamike/model.png`;
+document.getElementById('hero-model-img').src = `Assets/Gus/model.png`;
+document.getElementById('hero-model-img').alt = brawlerParam;
 document.getElementById('brawler-name-overlay').innerHTML = `<em>${brawlerParam.toUpperCase()}</em>`;
 document.title = `BRAWL STATS SSS — ${brawlerParam}`;
 
 const GAMEMODES = [
-  { label: 'Bounty',     color: '#f44336', tier: 'NP' },
+  { label: 'Bounty',     color: '#f44336', tier: 'A' },
   { label: 'Brawl Ball', color: '#4caf50', tier: 'NP' },
-  { label: 'Gem Grab',   color: '#9c27b0', tier: 'NP' },
+  { label: 'Gem Grab',   color: '#9c27b0', tier: 'F' },
   { label: 'Heist',      color: '#ff9800', tier: 'NP' },
   { label: 'Hot Zone',   color: '#f06292', tier: 'NP' },
-  { label: 'Knockout',   color: '#29b6f6', tier: 'NP' },
-  { label: 'Showdown',   color: '#1b6305', tier: 'D' },
+  { label: 'Knockout',   color: '#29b6f6', tier: 'A' },
+  { label: 'Showdown',   color: '#1b6305', tier: 'NP' },
   { label: 'Arena',      color: '#03fcdb', tier: 'NP' },
 ];
 
@@ -387,7 +380,6 @@ function dismissNote() {
 
   localStorage.setItem(NOTE_KEY, Date.now().toString());
 }
-
 function toggleDetail(id) {
   const el = document.getElementById(id);
   if (el) el.classList.toggle('open');
@@ -397,13 +389,13 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
-}/* ════════════════════════════════════════
+}
+/* ════════════════════════════════════════
    MATCHUPS DATA
    type: 'loses-to' | 'counters' | 'even'
    severity: 'hard' | 'soft' (for loses-to / counters)
 ════════════════════════════════════════ */
 const MATCHUPS = [
-  // Loses to
   ];
 
 function buildMatchups() {
@@ -457,6 +449,7 @@ const RARITIES = [
   { key: 'mythic',     label: 'Mythic',     color: '#9C0303' },
   { key: 'legendary',  label: 'Legendary',  color: '#F2E707' },
   { key: 'hypercharge',label: 'Hypercharge',color: '#C65CF7' },
+  { key: 'pro',  label: 'Pro Pass',  color: '#258505' },
   { key: 'exclusive',  label: 'Exclusive',  color: '#8AFFA1' },
 ];
 
@@ -470,165 +463,53 @@ const RARITY_GEM_DEFAULT = {
 
 const SKINS = [
   {
-    id: 'default', name: 'Default Dynamike',
+    id: 'default', name: 'Default Gus',
     rarity: 'default', limited: false,
     price: 'Free',
-    img: 'Assets/Dynamike/model.png',
-    desc: 'The default Dynamike look.',
+    img: 'Assets/Gus/model.png',
+    desc: 'The default Gus look.',
   },
   {
-    id: '1', name: 'Flamengo Mike',
-    rarity: 'rare', limited: true, seasonal: false,
-    price: '49 💎',
-    img: 'Assets/Dynamike/skins/Flamengo Mike.png',
-    desc: '',
-  },
-  {
-    id: '2', name: 'LDU Quito Mike',
-    rarity: 'rare', limited: true, seasonal: false,
-    price: '49 💎',
-    img: 'Assets/Dynamike/skins/LDU Quito Mike.png',
-    desc: '',
-  },
-  {
-    id: '3', name: 'Chivas Mike',
-    rarity: 'rare', limited: true, seasonal: false,
-    price: '49 💎',
-    img: 'Assets/Dynamike/skins/Chivas Mike.png',
-    desc: '',
-  },
-   {
-    id: '4', name: 'Firecracker Wizard Mike',
+    id: '1', name: 'Boy Scout Gus',
     rarity: 'rare', limited: false, seasonal: false,
     price: '29 💎',
-    img: 'Assets/Dynamike/skins/Firecracker Wizard Mike.png',
+    img: 'Assets/Gus/skins/Boy Scout.png',
     desc: '',
   },
   {
-    id: '5', name: 'Santa Mike',
-    rarity: 'super-rare', limited: true, seasonal: false,
-    price: '79 💎',
-    img: 'Assets/Dynamike/skins/Santa Mike.png',
-    desc: '',
-  },
-  {
-    id: '6', name: 'Bellhop Mike',
-    rarity: 'super-rare', limited: true, seasonal: false,
-    price: 'Brawl Pass',
-    img: 'Assets/Dynamike/skins/Bellhop Mike.png',
-    desc: '',
-  },
-  {
-    id: '7', name: 'Boomer Mike',
+    id: '2', name: 'Balloon Sally Gus',
     rarity: 'super-rare', limited: false, seasonal: false,
     price: '79 💎',
-    img: 'Assets/Dynamike/skins/Boomer.png',
+    img: 'Assets/Gus/skins/Balloon Sally.png',
     desc: '',
   },
   {
-    id: '8', name: 'Decaying Mike',
+    id: '3', name: 'Gruesome Gus',
     rarity: 'super-rare', limited: false, seasonal: true,
     price: '79 💎',
-    img: 'Assets/Dynamike/skins/Decaying.png',
+    img: 'Assets/Gus/skins/Gruesome.png',
     desc: '',
   },
   {
-    id: '9', name: 'Sugar Bomb Mike',
-    rarity: 'super-rare', limited: false, seasonal: true,
-    price: '79 💎',
-    img: 'Assets/Dynamike/skins/Sugar Bomb Mike.png',
-    desc: '',
-  },
-  {
-    id: '10', name: 'Romantic Mike',
-    rarity: 'super-rare', limited: false, seasonal: false,
-    price: '79 💎',
-    img: 'Assets/Dynamike/skins/Romantic.png',
-    desc: '',
-  },
-  {
-    id: '11', name: 'Spicy Mike',
-    rarity: 'epic', limited: false, seasonal: false,
+    id: '4', name: 'World Champion Gus',
+    rarity: 'epic', limited: false, seasonal: true,
     price: '149 💎',
-    img: 'Assets/Dynamike/skins/Spicy Mike.png',
+    img: 'Assets/Gus/skins/World Champion.png',
     desc: '',
   },
   {
-    id: '12', name: 'Coach Mike',
-    rarity: 'epic', limited: false, seasonal: false,
+    id: '5', name: 'Grim Gus',
+    rarity: 'epic', limited: false, seasonal: true,
     price: '149 💎',
-    img: 'Assets/Dynamike/skins/Coach Mike.png',
+    img: 'Assets/Gus/skins/Grim.png',
     desc: '',
   },
   {
-    id: '13', name: 'PSG Mike',
-    rarity: 'epic', limited: false, seasonal: false,
+    id: '6', name: 'Will Gus',
+    rarity: 'epic', limited: true, seasonal: false,
     price: '149 💎',
-    img: 'Assets/Dynamike/skins/PSG Mike.png',
+    img: 'Assets/Gus/skins/Will.png',
     desc: '',
-  },
-  {
-    id: '14', name: 'Tengu Mike',
-    rarity: 'epic', limited: false, seasonal: false,
-    price: '149 💎',
-    img: 'Assets/Dynamike/skins/Tengu Mike.png',
-    desc: '',
-  },
-  {
-    id: '15', name: 'Dynasty Mike',
-    rarity: 'epic', limited: false, seasonal: false,
-    price: '149 💎',
-    img: 'Assets/Dynamike/skins/Dynasty Mike.png',
-    desc: '',
-  },
-  {
-    id: '16', name: 'Moldy Mike',
-    rarity: 'mythic', limited: false, seasonal: false,
-    price: '199 💎',
-    img: 'Assets/Dynamike/skins/Moldy Mike.png',
-    desc: '',
-  },
-  {
-    id: '17', name: 'Robo Mike',
-    rarity: 'legendary', limited: false, seasonal: false,
-    price: '299 💎',
-    img: 'Assets/Dynamike/skins/Robo Mike.png',
-    desc: '',
-  },
-  {
-    id: '18', name: 'Occultist Mike',
-    rarity: 'pro', limited: false, seasonal: false,
-    price: 'Free',
-    img: 'Assets/Dynamike/skins/Occultist.png',
-    desc: 'Free from the Pro Pass',
-  },
-  {
-    id: '19', name: 'Haunted Mike',
-    rarity: 'pro', limited: false, seasonal: false,
-    price: 'Free',
-    img: 'Assets/Dynamike/skins/Haunted.png',
-    desc: 'Free from the Pro Pass',
-  },
-  {
-    id: '20', name: 'Possessed Mike',
-    rarity: 'pro', limited: false, seasonal: false,
-    price: 'Free',
-    img: 'Assets/Dynamike/skins/Possessed.png',
-    desc: 'Pro Pass Exclusive',
-  },
-  {
-    id: '21', name: 'Ghastly Mike',
-    rarity: 'pro', limited: false, seasonal: false,
-    price: 'Free',
-    img: 'Assets/Dynamike/skins/Ghastly.png',
-    desc: 'Pro Pass Exclusive',
-  },
-  {
-    id: '22', name: 'Ghoulish Mike',
-    rarity: 'pro', limited: false, seasonal: false,
-    price: 'Free',
-    img: 'Assets/Dynamike/skins/Ghoulish.png',
-    desc: 'Pro Pass Exclusive',
   },
 ];
 
@@ -678,7 +559,7 @@ function buildSkins() {
     card.dataset.limited = skin.limited;
     card.onclick = () => openSkinModal(skin);
 
-    card.innerHTML = `
+card.innerHTML = `
   <div class="skin-img-wrap">
     ${skin.limited ? '<div class="skin-limited-badge">LIMITED</div>' : ''}
     ${skin.seasonal ? '<div class="skin-seasonal-badge">SEASONAL</div>' : ''}

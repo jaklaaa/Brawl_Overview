@@ -228,12 +228,12 @@
           <div class="ic-name" style="font-size:11px">Gadget CD</div>
         </div>
       </div>
-      <div class="collapsed-panel" id="ag-spd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Speed Gear</div>+15% movement speed in bushes.</div></div>
+    <div class="collapsed-panel" id="ag-spd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Speed Gear</div>+15% movement speed in bushes.</div></div>
       <div class="collapsed-panel" id="ag-vis" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Vision Gear</div>Reveals enemies in bushes for 2s after hitting them.</div></div>
-      <div class="collapsed-panel" id="ag-hp"  style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Health Gear</div>+900 max HP in bushes. Strong for Shelly in bushy maps.</div></div>
+      <div class="collapsed-panel" id="ag-hp"  style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Health Gear</div>Recover health 50% more effectively.</div></div>
       <div class="collapsed-panel" id="ag-shd" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Shield Gear</div>+900 shield that regenerates out of combat.</div></div>
-      <div class="collapsed-panel" id="ag-dmg" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Damage Gear</div>+15% damage below 50% HP. Core pick for the Band-Aid combo.</div></div>
-      <div class="collapsed-panel" id="ag-gcd" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Gadget Cooldown Gear</div>Reduces gadget cooldown. More useful with Fast Forward.</div></div>
+      <div class="collapsed-panel" id="ag-dmg" style="margin-bottom:6px"><div class="item-detail-panel"><div class="idp-name">Damage Gear</div>+15% damage below 50% HP. </div></div>
+      <div class="collapsed-panel" id="ag-gcd" style="margin-bottom:14px"><div class="item-detail-panel"><div class="idp-name">Gadget Cooldown Gear</div>Reduces gadget cooldown. </div></div>
     </div>
 <!-- ═══ MATCHUPS ═══ -->
     <div class="tab-pane" id="tab-matchups">
@@ -272,14 +272,14 @@
     <div class="section-title">META RANKING</div>
     <div class="meta-rank-card">
       <div class="meta-tier-display">
-        <div class="meta-tier-letter mt-D">D</div>
+        <div class="meta-tier-letter mt-C">C</div>
         <div>
           <div class="mti-label">CURRENT TIER</div>
-          <div class="mti-name">D TIER</div>
+          <div class="mti-name">C TIER</div>
           <div class="mti-sub">Last Pick Only</div>
         </div>
       </div>
-      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:36%"></div></div>
+      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:40%"></div></div>
       <div class="meta-bar-label"><span>F</span><span>D</span><span>C</span><span>B</span><span>A</span><span>S</span></div>
     </div>
 
@@ -317,25 +317,35 @@ document.getElementById('brawler-name-overlay').innerHTML = `<em>${brawlerParam.
 document.title = `BRAWL STATS SSS — ${brawlerParam}`;
 
 const GAMEMODES = [
-  { label: 'Bounty',    color: '#f44336', stars: 1 },
-  { label: 'Brawl Ball',color: '#4caf50', stars: 1 },
-  { label: 'Gem Grab',  color: '#9c27b0', stars: 1 },
-  { label: 'Heist',     color: '#ff9800', stars: 1 },
-  { label: 'Hot Zone',  color: '#f06292', stars: 1 },
-  { label: 'Knockout',  color: '#29b6f6', stars: 3 },
+  { label: 'Bounty',     color: '#f44336', tier: 'NP' },
+  { label: 'Brawl Ball', color: '#4caf50', tier: 'NP' },
+  { label: 'Gem Grab',   color: '#9c27b0', tier: 'NP' },
+  { label: 'Heist',      color: '#ff9800', tier: 'F' },
+  { label: 'Hot Zone',   color: '#f06292', tier: 'NP' },
+  { label: 'Knockout',   color: '#29b6f6', tier: 'D' },
+  { label: 'Showdown',   color: '#1b6305', tier: 'B' },
+  { label: 'Arena',      color: '#03fcdb', tier: 'NP' },
 ];
+
+const TIER_LABELS = {
+  S:  'S — Meta pick',
+  A:  'A — Strong',
+  B:  'B — Viable',
+  C:  'C — Situational',
+  D:  'D — Weak',
+  F:  'F — Barely viable',
+  NP: 'Never play',
+};
 
 const gmContainer = document.getElementById('gm-ratings');
 [...GAMEMODES].sort((a,b) => a.label.localeCompare(b.label)).forEach(gm => {
   const row = document.createElement('div');
   row.className = 'gm-row';
-  let stars = '';
-  for (let i = 1; i <= 5; i++) stars += `<div class="star${i <= gm.stars ? ' filled' : ''}"></div>`;
+  const isNP = gm.tier === 'NP';
   row.innerHTML = `
     <div class="gm-dot" style="background:${gm.color}"></div>
     <div class="gm-name">${gm.label}</div>
-    <div class="gm-stars">${stars}</div>
-    <div class="gm-score-text">${gm.stars}/5</div>`;
+    <div class="gm-tier-badge gmt-${gm.tier}" title="${TIER_LABELS[gm.tier]}">${isNP ? 'N/P' : gm.tier}</div>`;
   gmContainer.appendChild(row);
 });
 
