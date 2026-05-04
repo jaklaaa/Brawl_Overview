@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BRAWL STATS SSS — Squad Overview</title>
+<title>BRAWL STATS SSS — Meta Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -37,55 +37,96 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 }
 .last-updated span { color: var(--accent2); }
 
-/* ── PRIMARY NAV ── */
-.primary-nav {
-  display: flex; background: #060810;
-  border-bottom: 2px solid var(--border);
-  padding: 0 24px;
-  position: sticky; top: 58px; z-index: 150;
-}
-.primary-tab {
-  padding: 11px 30px; cursor: pointer;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 700; font-size: 15px; letter-spacing: 2px;
-  color: var(--muted); border-bottom: 3px solid transparent;
-  transition: all 0.2s; white-space: nowrap;
-  margin-bottom: -2px;
-}
-.primary-tab:hover { color: var(--text); }
-.primary-tab.active[data-primary="meta"]  { color: var(--accent);  border-bottom-color: var(--accent); }
-.primary-tab.active[data-primary="users"] { color: var(--accent2); border-bottom-color: var(--accent2); }
-
-/* ── SECONDARY NAV ── */
-.secondary-nav {
-  display: none; background: #0a0c18;
+/* ── META NAV (pill-style card tabs) ── */
+.meta-nav {
+  display: flex; gap: 10px; padding: 14px 24px;
+  background: #080b15;
   border-bottom: 1px solid var(--border);
-  padding: 0 32px; overflow-x: auto;
-  position: sticky; top: 103px; z-index: 140;
+  position: sticky; top: 58px; z-index: 150;
+  overflow-x: auto;
 }
-.secondary-nav.visible { display: flex; }
-.secondary-tab {
-  padding: 8px 16px; cursor: pointer;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 700; font-size: 12px; letter-spacing: 1.5px;
-  color: var(--muted); border-bottom: 2px solid transparent;
-  transition: all 0.2s; white-space: nowrap;
-  display: flex; align-items: center; gap: 6px;
+.meta-nav::-webkit-scrollbar { height: 0; }
+
+.meta-tab {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 20px; cursor: pointer;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: rgba(255,255,255,0.025);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  user-select: none;
+  flex-shrink: 0;
 }
-.secondary-tab:hover { color: var(--text); }
-.secondary-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-.secondary-tab[data-sub="jasper"].active  { color: #ff6ec7; border-bottom-color: #ff6ec7; }
-.secondary-tab[data-sub="daniel"].active  { color: #64b5f6; border-bottom-color: #64b5f6; }
-.secondary-tab[data-sub="wolf"].active    { color: #ffb74d; border-bottom-color: #ffb74d; }
-.secondary-tab[data-sub="tykoro"].active  { color: #81c784; border-bottom-color: #81c784; }
-.secondary-tab[data-sub="sirito"].active  { color: #ce93d8; border-bottom-color: #ce93d8; }
-.secondary-tab[data-sub="longterm"].active   { color: #a78bfa; border-bottom-color: #a78bfa; }
-.secondary-tab[data-sub="gamemodes"].active  { color: #fb923c; border-bottom-color: #fb923c; }
-.tab-pip { width: 7px; height: 7px; border-radius: 2px; flex-shrink: 0; }
+.meta-tab:hover { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.05); }
+
+.meta-tab .mt-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+.meta-tab .mt-label {
+  font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--muted); text-transform: uppercase;
+  transition: color 0.2s;
+}
+.meta-tab .mt-sub {
+  font-size: 10px; font-family: 'Share Tech Mono', monospace;
+  color: #3a4060; margin-top: 1px;
+  transition: color 0.2s;
+}
+
+.meta-tab.active[data-tab="pro"] {
+  background: rgba(247,201,72,0.08);
+  border-color: rgba(247,201,72,0.45);
+}
+.meta-tab.active[data-tab="pro"] .mt-label { color: var(--accent); }
+.meta-tab.active[data-tab="pro"] .mt-sub   { color: rgba(247,201,72,0.5); }
+
+.meta-tab.active[data-tab="longterm"] {
+  background: rgba(167,139,250,0.08);
+  border-color: rgba(167,139,250,0.45);
+}
+.meta-tab.active[data-tab="longterm"] .mt-label { color: #a78bfa; }
+.meta-tab.active[data-tab="longterm"] .mt-sub   { color: rgba(167,139,250,0.5); }
+
+.meta-tab.active[data-tab="gamemodes"] {
+  background: rgba(251,146,60,0.08);
+  border-color: rgba(251,146,60,0.45);
+}
+.meta-tab.active[data-tab="gamemodes"] .mt-label { color: #fb923c; }
+.meta-tab.active[data-tab="gamemodes"] .mt-sub   { color: rgba(251,146,60,0.5); }
 
 /* ── PAGES ── */
 .page { display: none; padding: 24px; }
 .page.active { display: block; }
+
+/* ── PRO STATS BANNER ── */
+.pro-stats-banner {
+  display: flex; align-items: center; gap: 20px;
+  padding: 14px 20px; margin-bottom: 20px;
+  background: linear-gradient(135deg, rgba(247,201,72,0.06), rgba(59,240,196,0.03));
+  border: 1px solid rgba(247,201,72,0.2);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+.psb-stat {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 90px; padding: 0 12px;
+  border-right: 1px solid var(--border);
+}
+.psb-stat:last-child { border-right: none; }
+.psb-val {
+  font-size: 28px; font-weight: 700;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--accent);
+  text-shadow: 0 0 12px rgba(247,201,72,0.3);
+}
+.psb-label {
+  font-size: 10px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--muted);
+  margin-top: 2px;
+}
+.psb-divider { flex: 1; }
 
 /* ── GAMEMODE SWITCHER BAR ── */
 .gm-switcher {
@@ -97,29 +138,20 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 .gm-switch-btn {
   display: flex;
   align-items: center;
-  justify-content: center; /* center icon */
-  padding: 6px; /* smaller padding */
+  justify-content: center;
+  padding: 6px;
   cursor: pointer;
-
   background: rgba(255,255,255,0.03);
   border: 1px solid var(--border);
   border-radius: 6px;
-
-  /* remove text styling impact */
-  font-size: 0; /* prevents spacing issues */
-  gap: 0; /* remove gap since no label */
+  font-size: 0;
+  transition: all 0.15s;
 }
-.gm-switch-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
-.gm-switch-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.gm-switch-btn:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); }
+.gm-switch-btn.active { box-shadow: 0 0 12px rgba(255,255,255,0.05); }
 .gm-switch-icon img {
-  width: 60px;   /* smaller size */
-  height: 60px;
-  object-fit: contain;
-  display: block;
+  width: 56px; height: 56px;
+  object-fit: contain; display: block;
 }
 .gm-tier-section { display: none; }
 .gm-tier-section.active { display: block; }
@@ -157,133 +189,54 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 
 /* ── BRAWLER CARDS ── */
 .brawler-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 70px;
-  cursor: pointer;
-  position: relative;
-  overflow: visible;
-  transition: transform 0.15s;
+  display: flex; flex-direction: column; align-items: center;
+  width: 70px; cursor: pointer; position: relative;
+  overflow: visible; transition: transform 0.15s; text-decoration: none;
 }
-
-.brawler-card:hover {
-  transform: translateY(-4px);
-}
-
+.brawler-card:hover { transform: translateY(-4px); }
 .brawler-card img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 2px solid rgba(255,255,255,0.1);
+  width: 60px; height: 60px; object-fit: cover;
+  border-radius: 8px; border: 2px solid rgba(255,255,255,0.1);
   background: #1a1f3a;
 }
-
 .bc-name {
-  font-size: 9px;
-  font-family: 'Share Tech Mono', monospace;
-  color: var(--muted);
-  text-align: center;
-  margin-top: 3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
+  font-size: 9px; font-family: 'Share Tech Mono', monospace;
+  color: var(--muted); text-align: center; margin-top: 3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
 }
-
 .bc-score {
-  font-size: 8px;
-  font-family: 'Share Tech Mono', monospace;
-  color: var(--accent2);
-  text-align: center;
+  font-size: 8px; font-family: 'Share Tech Mono', monospace;
+  color: var(--accent2); text-align: center;
 }
 
 /* ── TOOLTIP ── */
-.brawler-card .bc-tooltip {
-  display: none !important;
-}
-
+.brawler-card .bc-tooltip { display: none !important; }
 .bc-tooltip {
-  display: none;
-  position: fixed;
-  background: #1a1f3a;
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  padding: 8px 12px;
-  white-space: nowrap;
-  font-size: 11px;
-  font-family: 'Share Tech Mono', monospace;
-  color: var(--text);
-   z-index: 999999 !important;
-  pointer-events: none;
-  min-width: 180px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  display: none; position: fixed;
+  background: #1a1f3a; border: 1px solid var(--accent);
+  border-radius: 6px; padding: 8px 12px;
+  white-space: nowrap; font-size: 11px;
+  font-family: 'Share Tech Mono', monospace; color: var(--text);
+  z-index: 999999 !important; pointer-events: none;
+  min-width: 180px; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
 }
-
-.tt-name {
-  color: var(--accent);
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.tt-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 2px;
-}
-
+.tt-name { color: var(--accent); font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+.tt-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2px; }
 .tt-label { color: var(--muted); }
 .tt-val { color: var(--accent2); }
 
 /* ── MOVEMENT BADGES ── */
 .bc-badge {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 4px;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 8px;
-  font-weight: 700;
-  line-height: 1;
-  padding: 2px 3px;
-
-  pointer-events: none;
-  z-index: 2; /* lower than tooltip */
+  position: absolute; top: 2px; right: 2px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px; font-family: 'Share Tech Mono', monospace;
+  font-size: 8px; font-weight: 700; line-height: 1; padding: 2px 3px;
+  pointer-events: none; z-index: 2;
 }
-
-.bc-badge-up {
-  background: rgba(0,200,100,0.20);
-  border: 1px solid rgba(0,200,100,0.5);
-  color: #2ddb8a;
-}
-
-.bc-badge-down {
-  background: rgba(239,83,80,0.20);
-  border: 1px solid rgba(239,83,80,0.5);
-  color: #ef6e6b;
-}
-
-.bc-badge-new {
-  background: rgba(247,201,72,0.20);
-  border: 1px solid rgba(247,201,72,0.5);
-  color: #f7c948;
-  font-size: 7px;
-  letter-spacing: 0.5px;
-}
-
-.badge-arrow {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-}
+.bc-badge-up   { background: rgba(0,200,100,0.20); border: 1px solid rgba(0,200,100,0.5); color: #2ddb8a; }
+.bc-badge-down { background: rgba(239,83,80,0.20); border: 1px solid rgba(239,83,80,0.5); color: #ef6e6b; }
+.bc-badge-new  { background: rgba(247,201,72,0.20); border: 1px solid rgba(247,201,72,0.5); color: #f7c948; font-size: 7px; letter-spacing: 0.5px; }
+.badge-arrow   { display: inline-block; width: 8px; height: 8px; }
 
 /* ── LONGTERM ── */
 .longterm-header {
@@ -301,54 +254,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
 .lt-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: 'Share Tech Mono', monospace; color: var(--muted); }
 .lt-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
 
-/* ── PLAYER PAGES ── */
-.player-header {
-  border-radius: 10px; padding: 18px 22px; margin-bottom: 22px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid var(--border);
-}
-.player-header h2 { font-size: 26px; font-weight: 700; letter-spacing: 2px; margin-bottom: 12px; }
-.player-stats-row { display: flex; gap: 12px; flex-wrap: wrap; }
-.pstat { background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px; padding: 8px 16px; text-align: center; min-width: 80px; }
-.pstat .ps-val   { font-size: 20px; font-weight: 700; font-family: 'Share Tech Mono', monospace; color: var(--accent2); }
-.pstat .ps-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
-.section-header  { font-size: 11px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin: 28px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
-
-/* ── ACCORDIONS ── */
-.gm-accordion { margin-bottom: 6px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-.gm-accordion-header { display: flex; align-items: center; gap: 12px; padding: 11px 16px; background: rgba(255,255,255,0.03); cursor: pointer; user-select: none; transition: background 0.15s; }
-.gm-accordion-header:hover { background: rgba(255,255,255,0.06); }
-.gm-dot       { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
-.gm-acc-title { font-size: 15px; font-weight: 700; letter-spacing: 1px; flex: 1; }
-.gm-acc-meta  { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--muted); display: flex; gap: 14px; }
-.gm-acc-wr    { font-family: 'Share Tech Mono', monospace; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(0,0,0,0.3); min-width: 42px; text-align: center; }
-.gm-acc-arrow { font-size: 11px; color: var(--muted); transition: transform 0.2s; margin-left: 6px; }
-.gm-accordion.open .gm-acc-arrow { transform: rotate(90deg); }
-.gm-accordion-body { display: none; border-top: 1px solid var(--border); }
-.gm-accordion.open .gm-accordion-body { display: block; }
-.map-group { border-bottom: 1px solid rgba(255,255,255,0.04); }
-.map-group:last-child { border-bottom: none; }
-.map-group-header { display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 38px; background: rgba(0,0,0,0.2); cursor: pointer; user-select: none; transition: background 0.15s; }
-.map-group-header:hover { background: rgba(255,255,255,0.04); }
-.map-group-name   { flex: 1; color: var(--text); font-size: 13px; font-weight: 600; }
-.map-group-record { font-family: 'Share Tech Mono', monospace; font-size: 11px; display: flex; gap: 6px; align-items: center; }
-.map-group-arrow  { font-size: 10px; color: var(--muted); transition: transform 0.2s; margin-left: 8px; }
-.map-group.open .map-group-arrow { transform: rotate(90deg); }
-.map-group-body { display: none; }
-.map-group.open .map-group-body { display: block; }
-.brawler-result-row { display: flex; align-items: center; gap: 10px; padding: 7px 16px 7px 52px; border-top: 1px solid rgba(255,255,255,0.03); font-size: 13px; transition: background 0.1s; }
-.brawler-result-row:hover { background: rgba(255,255,255,0.03); }
-.brr-img  { width: 26px; height: 26px; border-radius: 4px; object-fit: cover; background: #1a1f3a; flex-shrink: 0; }
-.brr-name { font-weight: 700; flex: 1; }
-.brr-record { font-family: 'Share Tech Mono', monospace; font-size: 12px; }
-.brr-win  { color: #4caf50; }
-.brr-loss { color: #ef5350; }
-.brr-wr   { font-family: 'Share Tech Mono', monospace; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(0,0,0,0.3); min-width: 42px; text-align: center; }
-.wr-high { color: #4caf50; }
-.wr-mid  { color: var(--accent); }
-.wr-low  { color: #ef5350; }
-.gm-empty { padding: 10px 16px; font-size: 12px; color: var(--muted); font-family: 'Share Tech Mono', monospace; }
-
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -361,148 +266,950 @@ body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-
   <div class="last-updated">LAST UPDATED <span id="last-updated-date">—</span></div>
 </div>
 
-<!-- PRIMARY NAV -->
-<div class="primary-nav">
-  <div class="primary-tab active" data-primary="meta"  onclick="switchPrimary('meta')">⚡ META</div>
-  <div class="primary-tab"        data-primary="users" onclick="switchPrimary('users')">👥 USERS</div>
-</div>
-
-<!-- SECONDARY NAV — META -->
-<div class="secondary-nav visible" id="secondary-meta">
-  <div class="secondary-tab active" data-sub="pro"        onclick="switchSub('meta','pro')">
-    <div class="tab-pip" style="background:#f7c948"></div>PRO META
+<!-- META NAV (pill tabs) -->
+<div class="meta-nav">
+  <div class="meta-tab active" data-tab="pro" onclick="switchTab('pro')">
+    <div class="mt-icon">⚡</div>
+    <div class="mt-body">
+      <div class="mt-label">Pro Meta</div>
+      <div class="mt-sub">Current patch tier list</div>
+    </div>
   </div>
-  <div class="secondary-tab"        data-sub="longterm"   onclick="switchSub('meta','longterm')">
-    <div class="tab-pip" style="background:#a78bfa"></div>PAST 6 MONTHS
+  <div class="meta-tab" data-tab="longterm" onclick="switchTab('longterm')">
+    <div class="mt-icon">📈</div>
+    <div class="mt-body">
+      <div class="mt-label">Past 6 Months</div>
+      <div class="mt-sub">Long-term consistency</div>
+    </div>
   </div>
-  <div class="secondary-tab"        data-sub="gamemodes"  onclick="switchSub('meta','gamemodes')">
-    <div class="tab-pip" style="background:#fb923c"></div>GAME MODES
+  <div class="meta-tab" data-tab="gamemodes" onclick="switchTab('gamemodes')">
+    <div class="mt-icon">🎮</div>
+    <div class="mt-body">
+      <div class="mt-label">Game Modes</div>
+      <div class="mt-sub">Per-mode tier lists</div>
+    </div>
   </div>
-</div>
-
-<!-- SECONDARY NAV — USERS -->
-<div class="secondary-nav" id="secondary-users">
-  <div class="secondary-tab" data-sub="jasper" onclick="switchSub('users','jasper')"><div class="tab-pip" style="background:#ff6ec7"></div>JASPER</div>
-  <div class="secondary-tab" data-sub="daniel" onclick="switchSub('users','daniel')"><div class="tab-pip" style="background:#64b5f6"></div>DANIEL</div>
-  <div class="secondary-tab" data-sub="wolf"   onclick="switchSub('users','wolf')"  ><div class="tab-pip" style="background:#ffb74d"></div>WOLF</div>
-  <div class="secondary-tab" data-sub="tykoro" onclick="switchSub('users','tykoro')"><div class="tab-pip" style="background:#81c784"></div>TYKORO</div>
-  <div class="secondary-tab" data-sub="sirito" onclick="switchSub('users','sirito')"><div class="tab-pip" style="background:#ce93d8"></div>SIRITO</div>
 </div>
 
 <!-- PAGES -->
 <div class="page active" id="page-pro"><div id="pro-tier-list"></div></div>
 <div class="page" id="page-longterm"><div id="longterm-content"></div></div>
 <div class="page" id="page-gamemodes"><div id="gamemodes-content"></div></div>
-<div class="page" id="page-jasper"><div id="jasper-content"></div></div>
-<div class="page" id="page-daniel"><div id="daniel-content"></div></div>
-<div class="page" id="page-wolf"><div id="wolf-content"></div></div>
-<div class="page" id="page-tykoro"><div id="tykoro-content"></div></div>
-<div class="page" id="page-sirito"><div id="sirito-content"></div></div>
 
 <script>
 const LAST_UPDATED = '2026-04-11: 17:52';
 
 // ─── NAV ─────────────────────────────────────────────────────────────────────
-let currentPrimary = 'meta';
-const primaryDefaults = { meta: 'pro', users: 'jasper' };
-
-function switchPrimary(primary) {
-  currentPrimary = primary;
-  document.querySelectorAll('.primary-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`[data-primary="${primary}"]`).classList.add('active');
-  document.getElementById('secondary-meta').classList.toggle('visible', primary === 'meta');
-  document.getElementById('secondary-users').classList.toggle('visible', primary === 'users');
-  switchSub(primary, primaryDefaults[primary]);
-}
-
-function switchSub(primary, sub) {
-  primaryDefaults[primary] = sub;
-  document.querySelectorAll('.secondary-tab').forEach(t => t.classList.remove('active'));
-  const btn = document.querySelector(`[data-sub="${sub}"]`);
-  if (btn) btn.classList.add('active');
+function switchTab(tab) {
+  document.querySelectorAll('.meta-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + sub).classList.add('active');
+  document.getElementById('page-' + tab).classList.add('active');
 }
+
+// ─── STARTING DATA ────────────────────────────────────────────────────────────
+const STARTING_DATA = [
+  { brawler: '8-BIT', gamemode: 'heist', map: "Bridge Too Far", wins: 3, losses: 3 },
+  { brawler: '8-BIT', gamemode: 'heist', map: "Safe Zone", wins: 2, losses: 1 },
+  { brawler: '8-BIT', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 0 },
+  { brawler: '8-BIT', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
+  { brawler: 'ALLI', gamemode: 'bounty', map: "Layer Cake", wins: 5, losses: 3 },
+  { brawler: 'ALLI', gamemode: 'bounty', map: "Shooting Star", wins: 0, losses: 1 },
+  { brawler: 'ALLI', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 2, losses: 3 },
+  { brawler: 'ALLI', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 2, losses: 3 },
+  { brawler: 'ALLI', gamemode: 'brawlBall', map: "Super Beach", wins: 3, losses: 0 },
+  { brawler: 'ALLI', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 2, losses: 1 },
+  { brawler: 'ALLI', gamemode: 'gemGrab', map: "Double Swoosh", wins: 4, losses: 5 },
+  { brawler: 'ALLI', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 2 },
+  { brawler: 'ALLI', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
+  { brawler: 'ALLI', gamemode: 'heist', map: "Bridge Too Far", wins: 6, losses: 0 },
+  { brawler: 'ALLI', gamemode: 'heist', map: "Kaboom Canyon", wins: 1, losses: 0 },
+  { brawler: 'ALLI', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 1 },
+  { brawler: 'AMBER', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 0, losses: 1 },
+  { brawler: 'AMBER', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 3 },
+  { brawler: 'AMBER', gamemode: 'heist', map: "Bridge Too Far", wins: 2, losses: 0 },
+  { brawler: 'AMBER', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 1 },
+  { brawler: 'AMBER', gamemode: 'heist', map: "Kaboom Canyon", wins: 1, losses: 0 },
+  { brawler: 'AMBER', gamemode: 'hotZone', map: "Dueling Beetles", wins: 2, losses: 0 },
+  { brawler: 'AMBER', gamemode: 'hotZone', map: "Ring of Fire", wins: 2, losses: 1 },
+  { brawler: 'ANGELO', gamemode: 'bounty', map: "Hideout", wins: 0, losses: 1 },
+  { brawler: 'ANGELO', gamemode: 'bounty', map: "Shooting Star", wins: 8, losses: 5 },
+  { brawler: 'ANGELO', gamemode: 'heist', map: "Bridge Too Far", wins: 4, losses: 2 },
+  { brawler: 'ANGELO', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 2 },
+  { brawler: 'ANGELO', gamemode: 'knockout', map: "Belle's Rock", wins: 3, losses: 6 },
+  { brawler: 'ANGELO', gamemode: 'knockout', map: "Goldarm Gulch", wins: 8, losses: 5 },
+  { brawler: 'ANGELO', gamemode: 'knockout', map: "Out in the Open", wins: 4, losses: 7 },
+  { brawler: 'ASH', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 1 },
+  { brawler: 'ASH', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 0 },
+  { brawler: 'ASH', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 0 },
+  { brawler: 'BARLEY', gamemode: 'brawlBall', map: "Triple Dribble", wins: 0, losses: 1 },
+  { brawler: 'BARLEY', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'BARLEY', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 1 },
+  { brawler: 'BEA', gamemode: 'brawlBall', map: "Super Beach", wins: 0, losses: 1 },
+  { brawler: 'BEA', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
+  { brawler: 'BEA', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 1 },
+  { brawler: 'BEA', gamemode: 'hotZone', map: "Ring of Fire", wins: 0, losses: 1 },
+  { brawler: 'BELLE', gamemode: 'bounty', map: "Dry Season", wins: 1, losses: 2 },
+  { brawler: 'BELLE', gamemode: 'bounty', map: "Hideout", wins: 8, losses: 6 },
+  { brawler: 'BELLE', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 0 },
+  { brawler: 'BELLE', gamemode: 'bounty', map: "Shooting Star", wins: 6, losses: 2 },
+  { brawler: 'BELLE', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 0 },
+  { brawler: 'BELLE', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 1 },
+  { brawler: 'BELLE', gamemode: 'heist', map: "Safe Zone", wins: 3, losses: 1 },
+  { brawler: 'BELLE', gamemode: 'knockout', map: "Belle's Rock", wins: 4, losses: 2 },
+  { brawler: 'BELLE', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 5 },
+  { brawler: 'BELLE', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
+  { brawler: 'BERRY', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 0 },
+  { brawler: 'BERRY', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
+  { brawler: 'BERRY', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 1 },
+  { brawler: 'BERRY', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 3 },
+  { brawler: 'BERRY', gamemode: 'hotZone', map: "Dueling Beetles", wins: 3, losses: 0 },
+  { brawler: 'BERRY', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
+  { brawler: 'BIBI', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'BIBI', gamemode: 'heist', map: "Hot Potato", wins: 2, losses: 3 },
+  { brawler: 'BIBI', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'BIBI', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
+  { brawler: 'BO', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 0, losses: 1 },
+  { brawler: 'BO', gamemode: 'gemGrab', map: "Double Swoosh", wins: 2, losses: 0 },
+  { brawler: 'BO', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 0, losses: 1 },
+  { brawler: 'BO', gamemode: 'heist', map: "Hot Potato", wins: 0, losses: 1 },
+  { brawler: 'BO', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 0 },
+  { brawler: 'BO', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 2 },
+  { brawler: 'BONNIE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 0, losses: 1 },
+  { brawler: 'BONNIE', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 2 },
+  { brawler: 'BONNIE', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 1 },
+  { brawler: 'BROCK', gamemode: 'bounty', map: "Hideout", wins: 8, losses: 3 },
+  { brawler: 'BROCK', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 1 },
+  { brawler: 'BROCK', gamemode: 'heist', map: "Safe Zone", wins: 0, losses: 1 },
+  { brawler: 'BROCK', gamemode: 'knockout', map: "Belle's Rock", wins: 3, losses: 1 },
+  { brawler: 'BROCK', gamemode: 'knockout', map: "Goldarm Gulch", wins: 4, losses: 4 },
+  { brawler: 'BROCK', gamemode: 'knockout', map: "Out in the Open", wins: 3, losses: 4 },
+  { brawler: 'BULL', gamemode: 'bounty', map: "Hideout", wins: 0, losses: 2 },
+  { brawler: 'BULL', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 0 },
+  { brawler: 'BULL', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 1, losses: 1 },
+  { brawler: 'BULL', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 3, losses: 6 },
+  { brawler: 'BULL', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 0 },
+  { brawler: 'BULL', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 8, losses: 3 },
+  { brawler: 'BULL', gamemode: 'gemGrab', map: "Undermine", wins: 0, losses: 1 },
+  { brawler: 'BULL', gamemode: 'heist', map: "Bridge Too Far", wins: 2, losses: 3 },
+  { brawler: 'BULL', gamemode: 'heist', map: "Hot Potato", wins: 6, losses: 3 },
+  { brawler: 'BULL', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'BULL', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 1 },
+  { brawler: 'BUSTER', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 0 },
+  { brawler: 'BUSTER', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 1 },
+  { brawler: 'BUSTER', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
+  { brawler: 'BUSTER', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 0 },
+  { brawler: 'BUSTER', gamemode: 'knockout', map: "Goldarm Gulch", wins: 3, losses: 2 },
+  { brawler: 'BUSTER', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 1 },
+  { brawler: 'BUZZ', gamemode: 'brawlBall', map: "Center Stage", wins: 0, losses: 1 },
+  { brawler: 'BUZZ', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'BUZZ', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 0 },
+  { brawler: 'BUZZ', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 0 },
+  { brawler: 'BUZZ', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
+  { brawler: 'BYRON', gamemode: 'bounty', map: "Hideout", wins: 4, losses: 5 },
+  { brawler: 'BYRON', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 0 },
+  { brawler: 'BYRON', gamemode: 'bounty', map: "Shooting Star", wins: 6, losses: 11 },
+  { brawler: 'BYRON', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 0, losses: 1 },
+  { brawler: 'BYRON', gamemode: 'gemGrab', map: "Double Swoosh", wins: 0, losses: 1 },
+  { brawler: 'BYRON', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 2 },
+  { brawler: 'BYRON', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 2 },
+  { brawler: 'BYRON', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'BYRON', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
+  { brawler: 'BYRON', gamemode: 'hotZone', map: "Ring of Fire", wins: 0, losses: 1 },
+  { brawler: 'BYRON', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 3 },
+  { brawler: 'BYRON', gamemode: 'knockout', map: "Goldarm Gulch", wins: 4, losses: 2 },
+  { brawler: 'BYRON', gamemode: 'knockout', map: "Out in the Open", wins: 9, losses: 6 },
+  { brawler: 'CARL', gamemode: 'bounty', map: "Shooting Star", wins: 0, losses: 1 },
+  { brawler: 'CARL', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'CARL', gamemode: 'heist', map: "Hot Potato", wins: 2, losses: 3 },
+  { brawler: 'CARL', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 1 },
+  { brawler: 'CHARLIE', gamemode: 'bounty', map: "Hideout", wins: 2, losses: 2 },
+  { brawler: 'CHARLIE', gamemode: 'bounty', map: "Layer Cake", wins: 4, losses: 2 },
+  { brawler: 'CHARLIE', gamemode: 'bounty', map: "Shooting Star", wins: 0, losses: 1 },
+  { brawler: 'CHARLIE', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 0, losses: 3 },
+  { brawler: 'CHARLIE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 3, losses: 2 },
+  { brawler: 'CHARLIE', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 3 },
+  { brawler: 'CHARLIE', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 3, losses: 1 },
+  { brawler: 'CHARLIE', gamemode: 'gemGrab', map: "Undermine", wins: 0, losses: 1 },
+  { brawler: 'CHARLIE', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 0 },
+  { brawler: 'CHARLIE', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 3 },
+  { brawler: 'CHARLIE', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 2 },
+  { brawler: 'CHARLIE', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 2 },
+  { brawler: 'CHARLIE', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 1 },
+  { brawler: 'CHARLIE', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 1 },
+  { brawler: 'CHESTER', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 6 },
+  { brawler: 'CHESTER', gamemode: 'brawlBall', map: "Pinball Dreams", wins: 0, losses: 1 },
+  { brawler: 'CHESTER', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 5, losses: 5 },
+  { brawler: 'CHESTER', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 3, losses: 8 },
+  { brawler: 'CHESTER', gamemode: 'brawlBall', map: "Super Beach", wins: 4, losses: 4 },
+  { brawler: 'CHESTER', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 3 },
+  { brawler: 'CHESTER', gamemode: 'gemGrab', map: "Crystal Arcade", wins: 1, losses: 0 },
+  { brawler: 'CHESTER', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 4, losses: 9 },
+  { brawler: 'CHESTER', gamemode: 'gemGrab', map: "Double Swoosh", wins: 8, losses: 14 },
+  { brawler: 'CHESTER', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 1 },
+  { brawler: 'CHESTER', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 7, losses: 7 },
+  { brawler: 'CHESTER', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 1 },
+  { brawler: 'CHESTER', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
+  { brawler: 'CHESTER', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 0 },
+  { brawler: 'CHESTER', gamemode: 'hotZone', map: "Dueling Beetles", wins: 3, losses: 2 },
+  { brawler: 'CHESTER', gamemode: 'hotZone', map: "Open Business", wins: 6, losses: 3 },
+  { brawler: 'CHESTER', gamemode: 'hotZone', map: "Ring of Fire", wins: 3, losses: 3 },
+  { brawler: 'CHUCK', gamemode: 'heist', map: "Bridge Too Far", wins: 2, losses: 4 },
+  { brawler: 'CHUCK', gamemode: 'heist', map: "Hot Potato", wins: 6, losses: 2 },
+  { brawler: 'CHUCK', gamemode: 'heist', map: "Safe Zone", wins: 0, losses: 1 },
+  { brawler: 'CLANCY', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 1, losses: 0 },
+  { brawler: 'CLANCY', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'CLANCY', gamemode: 'brawlBall', map: "Super Beach", wins: 2, losses: 0 },
+  { brawler: 'CLANCY', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 0, losses: 2 },
+  { brawler: 'CLANCY', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 4 },
+  { brawler: 'CLANCY', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 1 },
+  { brawler: 'CLANCY', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 1 },
+  { brawler: 'CLANCY', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 2 },
+  { brawler: 'CLANCY', gamemode: 'heist', map: "Safe Zone", wins: 0, losses: 1 },
+  { brawler: 'CLANCY', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 1 },
+  { brawler: 'CLANCY', gamemode: 'hotZone', map: "Open Business", wins: 2, losses: 1 },
+  { brawler: 'CLANCY', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 0 },
+  { brawler: 'COLETTE', gamemode: 'bounty', map: "Dry Season", wins: 1, losses: 1 },
+  { brawler: 'COLETTE', gamemode: 'bounty', map: "Hideout", wins: 7, losses: 4 },
+  { brawler: 'COLETTE', gamemode: 'bounty', map: "Layer Cake", wins: 6, losses: 2 },
+  { brawler: 'COLETTE', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 1 },
+  { brawler: 'COLETTE', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 7, losses: 3 },
+  { brawler: 'COLETTE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 4 },
+  { brawler: 'COLETTE', gamemode: 'brawlBall', map: "Super Beach", wins: 9, losses: 5 },
+  { brawler: 'COLETTE', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 0 },
+  { brawler: 'COLETTE', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 4, losses: 4 },
+  { brawler: 'COLETTE', gamemode: 'gemGrab', map: "Double Swoosh", wins: 6, losses: 2 },
+  { brawler: 'COLETTE', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 2, losses: 5 },
+  { brawler: 'COLETTE', gamemode: 'heist', map: "Bridge Too Far", wins: 6, losses: 5 },
+  { brawler: 'COLETTE', gamemode: 'heist', map: "Hot Potato", wins: 0, losses: 1 },
+  { brawler: 'COLETTE', gamemode: 'heist', map: "Safe Zone", wins: 3, losses: 3 },
+  { brawler: 'COLETTE', gamemode: 'hotZone', map: "Dueling Beetles", wins: 3, losses: 2 },
+  { brawler: 'COLETTE', gamemode: 'hotZone', map: "Open Business", wins: 3, losses: 0 },
+  { brawler: 'COLETTE', gamemode: 'hotZone', map: "Ring of Fire", wins: 4, losses: 3 },
+  { brawler: 'COLETTE', gamemode: 'knockout', map: "Belle's Rock", wins: 6, losses: 4 },
+  { brawler: 'COLETTE', gamemode: 'knockout', map: "Goldarm Gulch", wins: 3, losses: 5 },
+  { brawler: 'COLETTE', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 1 },
+  { brawler: 'COLT', gamemode: 'bounty', map: "Hideout", wins: 0, losses: 1 },
+  { brawler: 'COLT', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 0 },
+  { brawler: 'COLT', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 2 },
+  { brawler: 'COLT', gamemode: 'brawlBall', map: "Super Beach", wins: 2, losses: 1 },
+  { brawler: 'COLT', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 2, losses: 0 },
+  { brawler: 'COLT', gamemode: 'heist', map: "Bridge Too Far", wins: 4, losses: 3 },
+  { brawler: 'COLT', gamemode: 'heist', map: "Hot Potato", wins: 10, losses: 5 },
+  { brawler: 'COLT', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 0 },
+  { brawler: 'COLT', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
+  { brawler: 'COLT', gamemode: 'knockout', map: "Belle's Rock", wins: 0, losses: 3 },
+  { brawler: 'COLT', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 3 },
+  { brawler: 'COLT', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 1 },
+  { brawler: 'CORDELIUS', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 1, losses: 0 },
+  { brawler: 'CORDELIUS', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'CORDELIUS', gamemode: 'brawlBall', map: "Super Beach", wins: 7, losses: 7 },
+  { brawler: 'CORDELIUS', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 0 },
+  { brawler: 'CORDELIUS', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 0, losses: 1 },
+  { brawler: 'CORDELIUS', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
+  { brawler: 'CORDELIUS', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 0 },
+  { brawler: 'CORDELIUS', gamemode: 'heist', map: "Hot Potato", wins: 3, losses: 2 },
+  { brawler: 'CORDELIUS', gamemode: 'heist', map: "Safe Zone", wins: 0, losses: 1 },
+  { brawler: 'CORDELIUS', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 0 },
+  { brawler: 'CORDELIUS', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 1 },
+  { brawler: 'CORDELIUS', gamemode: 'knockout', map: "Belle's Rock", wins: 2, losses: 0 },
+  { brawler: 'CROW', gamemode: 'bounty', map: "Hideout", wins: 5, losses: 2 },
+  { brawler: 'CROW', gamemode: 'bounty', map: "Layer Cake", wins: 4, losses: 2 },
+  { brawler: 'CROW', gamemode: 'bounty', map: "Shooting Star", wins: 3, losses: 1 },
+  { brawler: 'CROW', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 0, losses: 2 },
+  { brawler: 'CROW', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 3 },
+  { brawler: 'CROW', gamemode: 'brawlBall', map: "Super Beach", wins: 6, losses: 4 },
+  { brawler: 'CROW', gamemode: 'brawlBall', map: "Triple Dribble", wins: 2, losses: 1 },
+  { brawler: 'CROW', gamemode: 'gemGrab', map: "Crystal Arcade", wins: 1, losses: 0 },
+  { brawler: 'CROW', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 2, losses: 3 },
+  { brawler: 'CROW', gamemode: 'gemGrab', map: "Double Swoosh", wins: 2, losses: 1 },
+  { brawler: 'CROW', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 5 },
+  { brawler: 'CROW', gamemode: 'heist', map: "Bridge Too Far", wins: 5, losses: 1 },
+  { brawler: 'CROW', gamemode: 'heist', map: "Hot Potato", wins: 5, losses: 2 },
+  { brawler: 'CROW', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 4 },
+  { brawler: 'CROW', gamemode: 'hotZone', map: "Dueling Beetles", wins: 5, losses: 4 },
+  { brawler: 'CROW', gamemode: 'hotZone', map: "Open Business", wins: 3, losses: 5 },
+  { brawler: 'CROW', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 1 },
+  { brawler: 'CROW', gamemode: 'knockout', map: "Goldarm Gulch", wins: 2, losses: 0 },
+  { brawler: 'CROW', gamemode: 'knockout', map: "Out in the Open", wins: 2, losses: 1 },
+  { brawler: 'DARRYL', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'DARRYL', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 0 },
+  { brawler: 'DARRYL', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 0 },
+  { brawler: 'DARRYL', gamemode: 'knockout', map: "Belle's Rock", wins: 0, losses: 1 },
+  { brawler: 'DOUG', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 3 },
+  { brawler: 'DOUG', gamemode: 'gemGrab', map: "Double Swoosh", wins: 0, losses: 3 },
+  { brawler: 'DOUG', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 3 },
+  { brawler: 'DRACO', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'DRACO', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 0, losses: 1 },
+  { brawler: 'DRACO', gamemode: 'heist', map: "Hot Potato", wins: 2, losses: 0 },
+  { brawler: 'DRACO', gamemode: 'hotZone', map: "Open Business", wins: 8, losses: 2 },
+  { brawler: 'DRACO', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 2 },
+  { brawler: 'DYNAMIKE', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 0 },
+  { brawler: 'DYNAMIKE', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
+  { brawler: 'EDGAR', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 1 },
+  { brawler: 'EDGAR', gamemode: 'bounty', map: "Hideout", wins: 2, losses: 1 },
+  { brawler: 'EDGAR', gamemode: 'bounty', map: "Layer Cake", wins: 6, losses: 9 },
+  { brawler: 'EDGAR', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 0 },
+  { brawler: 'EDGAR', gamemode: 'brawlBall', map: "Center Stage", wins: 1, losses: 0 },
+  { brawler: 'EDGAR', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 3, losses: 1 },
+  { brawler: 'EDGAR', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 4, losses: 8 },
+  { brawler: 'EDGAR', gamemode: 'brawlBall', map: "Super Beach", wins: 6, losses: 8 },
+  { brawler: 'EDGAR', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 6, losses: 6 },
+  { brawler: 'EDGAR', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 7 },
+  { brawler: 'EDGAR', gamemode: 'gemGrab', map: "Gem Fort", wins: 0, losses: 2 },
+  { brawler: 'EDGAR', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 5, losses: 6 },
+  { brawler: 'EDGAR', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
+  { brawler: 'EDGAR', gamemode: 'heist', map: "Bridge Too Far", wins: 4, losses: 4 },
+  { brawler: 'EDGAR', gamemode: 'heist', map: "Hot Potato", wins: 2, losses: 7 },
+  { brawler: 'EDGAR', gamemode: 'heist', map: "Safe Zone", wins: 3, losses: 4 },
+  { brawler: 'EDGAR', gamemode: 'hotZone', map: "Dueling Beetles", wins: 7, losses: 3 },
+  { brawler: 'EDGAR', gamemode: 'hotZone', map: "Open Business", wins: 5, losses: 3 },
+  { brawler: 'EDGAR', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 1 },
+  { brawler: 'EDGAR', gamemode: 'knockout', map: "Belle's Rock", wins: 0, losses: 6 },
+  { brawler: 'EDGAR', gamemode: 'knockout', map: "Goldarm Gulch", wins: 5, losses: 0 },
+  { brawler: 'EDGAR', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
+  { brawler: 'EL PRIMO', gamemode: 'brawlBall', map: "Super Beach", wins: 0, losses: 1 },
+  { brawler: 'EMZ', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 1, losses: 1 },
+  { brawler: 'EMZ', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 2, losses: 1 },
+  { brawler: 'EMZ', gamemode: 'brawlBall', map: "Super Beach", wins: 0, losses: 4 },
+  { brawler: 'EMZ', gamemode: 'gemGrab', map: "Double Swoosh", wins: 5, losses: 1 },
+  { brawler: 'EMZ', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 2, losses: 0 },
+  { brawler: 'EMZ', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 4 },
+  { brawler: 'EMZ', gamemode: 'hotZone', map: "Dueling Beetles", wins: 2, losses: 2 },
+  { brawler: 'EMZ', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 4 },
+  { brawler: 'EMZ', gamemode: 'hotZone', map: "Ring of Fire", wins: 2, losses: 2 },
+  { brawler: 'EVE', gamemode: 'heist', map: "Bridge Too Far", wins: 5, losses: 4 },
+  { brawler: 'EVE', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 0 },
+  { brawler: 'EVE', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 4 },
+  { brawler: 'FANG', gamemode: 'bounty', map: "Dry Season", wins: 1, losses: 0 },
+  { brawler: 'FANG', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 4 },
+  { brawler: 'FANG', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 3 },
+  { brawler: 'FANG', gamemode: 'bounty', map: "Shooting Star", wins: 5, losses: 0 },
+  { brawler: 'FANG', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 1 },
+  { brawler: 'FANG', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 2, losses: 2 },
+  { brawler: 'FANG', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 2, losses: 1 },
+  { brawler: 'FANG', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 0 },
+  { brawler: 'FANG', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
+  { brawler: 'FANG', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 1 },
+  { brawler: 'FANG', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 1 },
+  { brawler: 'FANG', gamemode: 'knockout', map: "Out in the Open", wins: 4, losses: 2 },
+  { brawler: 'FINX', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 0, losses: 1 },
+  { brawler: 'FINX', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 4 },
+  { brawler: 'FINX', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
+  { brawler: 'FINX', gamemode: 'gemGrab', map: "Gem Fort", wins: 0, losses: 1 },
+  { brawler: 'FINX', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 3, losses: 1 },
+  { brawler: 'FINX', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 1 },
+  { brawler: 'FINX', gamemode: 'heist', map: "Hot Potato", wins: 0, losses: 1 },
+  { brawler: 'FINX', gamemode: 'heist', map: "Kaboom Canyon", wins: 0, losses: 1 },
+  { brawler: 'FINX', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 0 },
+  { brawler: 'FINX', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 2 },
+  { brawler: 'FINX', gamemode: 'hotZone', map: "Open Business", wins: 5, losses: 6 },
+  { brawler: 'FINX', gamemode: 'hotZone', map: "Ring of Fire", wins: 5, losses: 3 },
+  { brawler: 'FINX', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 1 },
+  { brawler: 'FINX', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
+  { brawler: 'FRANK', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'FRANK', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 0, losses: 1 },
+  { brawler: 'FRANK', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 1 },
+  { brawler: 'GALE', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 1 },
+  { brawler: 'GALE', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 0, losses: 1 },
+  { brawler: 'GALE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 0, losses: 1 },
+  { brawler: 'GALE', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 4 },
+  { brawler: 'GALE', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
+  { brawler: 'GENE', gamemode: 'bounty', map: "Dry Season", wins: 1, losses: 1 },
+  { brawler: 'GENE', gamemode: 'bounty', map: "Hideout", wins: 14, losses: 8 },
+  { brawler: 'GENE', gamemode: 'bounty', map: "Layer Cake", wins: 4, losses: 7 },
+  { brawler: 'GENE', gamemode: 'bounty', map: "Shooting Star", wins: 4, losses: 3 },
+  { brawler: 'GENE', gamemode: 'gemGrab', map: "Double Swoosh", wins: 3, losses: 2 },
+  { brawler: 'GENE', gamemode: 'knockout', map: "Belle's Rock", wins: 5, losses: 5 },
+  { brawler: 'GENE', gamemode: 'knockout', map: "Goldarm Gulch", wins: 6, losses: 3 },
+  { brawler: 'GENE', gamemode: 'knockout', map: "Out in the Open", wins: 2, losses: 2 },
+  { brawler: 'GIGI', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 0 },
+  { brawler: 'GIGI', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 0, losses: 1 },
+  { brawler: 'GIGI', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 0, losses: 1 },
+  { brawler: 'GIGI', gamemode: 'gemGrab', map: "Double Swoosh", wins: 0, losses: 1 },
+  { brawler: 'GIGI', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
+  { brawler: 'GIGI', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 3 },
+  { brawler: 'GIGI', gamemode: 'hotZone', map: "Ring of Fire", wins: 0, losses: 1 },
+  { brawler: 'GIGI', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 1 },
+  { brawler: 'GIGI', gamemode: 'knockout', map: "Out in the Open", wins: 0, losses: 1 },
+  { brawler: 'GLOWY', gamemode: 'bounty', map: "Hideout", wins: 2, losses: 0 },
+  { brawler: 'GLOWY', gamemode: 'bounty', map: "Shooting Star", wins: 0, losses: 1 },
+  { brawler: 'GLOWY', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'GLOWY', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
+  { brawler: 'GLOWY', gamemode: 'heist', map: "Hot Potato", wins: 2, losses: 0 },
+  { brawler: 'GLOWY', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 0 },
+  { brawler: 'GLOWY', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
+  { brawler: 'GLOWY', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 2 },
+  { brawler: 'GLOWY', gamemode: 'knockout', map: "Goldarm Gulch", wins: 2, losses: 1 },
+  { brawler: 'GRAY', gamemode: 'bounty', map: "Dry Season", wins: 1, losses: 0 },
+  { brawler: 'GRAY', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 2 },
+  { brawler: 'GRAY', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 2 },
+  { brawler: 'GRAY', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
+  { brawler: 'GRAY', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 1 },
+  { brawler: 'GRAY', gamemode: 'hotZone', map: "Open Business", wins: 2, losses: 2 },
+  { brawler: 'GRAY', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 2 },
+  { brawler: 'GRAY', gamemode: 'knockout', map: "Belle's Rock", wins: 3, losses: 1 },
+  { brawler: 'GRAY', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 0 },
+  { brawler: 'GRIFF', gamemode: 'bounty', map: "Hideout", wins: 2, losses: 2 },
+  { brawler: 'GRIFF', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 2 },
+  { brawler: 'GRIFF', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 3, losses: 0 },
+  { brawler: 'GRIFF', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 8, losses: 6 },
+  { brawler: 'GRIFF', gamemode: 'brawlBall', map: "Super Beach", wins: 5, losses: 7 },
+  { brawler: 'GRIFF', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 1 },
+  { brawler: 'GRIFF', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 6, losses: 4 },
+  { brawler: 'GRIFF', gamemode: 'gemGrab', map: "Double Swoosh", wins: 7, losses: 4 },
+  { brawler: 'GRIFF', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 1 },
+  { brawler: 'GRIFF', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 4, losses: 3 },
+  { brawler: 'GRIFF', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 0 },
+  { brawler: 'GRIFF', gamemode: 'heist', map: "Hot Potato", wins: 2, losses: 4 },
+  { brawler: 'GRIFF', gamemode: 'heist', map: "Safe Zone", wins: 0, losses: 1 },
+  { brawler: 'GRIFF', gamemode: 'hotZone', map: "Dueling Beetles", wins: 2, losses: 4 },
+  { brawler: 'GRIFF', gamemode: 'hotZone', map: "Open Business", wins: 3, losses: 2 },
+  { brawler: 'GRIFF', gamemode: 'hotZone', map: "Ring of Fire", wins: 2, losses: 6 },
+  { brawler: 'GRIFF', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 0 },
+  { brawler: 'GRIFF', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
+  { brawler: 'GROM', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 1 },
+  { brawler: 'GUS', gamemode: 'bounty', map: "Hideout", wins: 4, losses: 3 },
+  { brawler: 'GUS', gamemode: 'bounty', map: "Shooting Star", wins: 3, losses: 3 },
+  { brawler: 'GUS', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
+  { brawler: 'GUS', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 2, losses: 0 },
+  { brawler: 'GUS', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 2 },
+  { brawler: 'GUS', gamemode: 'knockout', map: "Out in the Open", wins: 2, losses: 4 },
+  { brawler: 'HANK', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 0 },
+  { brawler: 'HANK', gamemode: 'brawlBall', map: "Triple Dribble", wins: 0, losses: 1 },
+  { brawler: 'HANK', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'HANK', gamemode: 'hotZone', map: "Open Business", wins: 2, losses: 0 },
+  { brawler: 'HANK', gamemode: 'knockout', map: "Belle's Rock", wins: 0, losses: 1 },
+  { brawler: 'JACKY', gamemode: 'brawlBall', map: "Super Beach", wins: 0, losses: 1 },
+  { brawler: 'JAE-YONG', gamemode: 'bounty', map: "Hideout", wins: 8, losses: 5 },
+  { brawler: 'JAE-YONG', gamemode: 'bounty', map: "Shooting Star", wins: 2, losses: 4 },
+  { brawler: 'JAE-YONG', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 2 },
+  { brawler: 'JAE-YONG', gamemode: 'knockout', map: "Goldarm Gulch", wins: 6, losses: 7 },
+  { brawler: 'JAE-YONG', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 2 },
+  { brawler: 'JANET', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 0 },
+  { brawler: 'JANET', gamemode: 'gemGrab', map: "Double Swoosh", wins: 5, losses: 3 },
+  { brawler: 'JANET', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
+  { brawler: 'JANET', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 2 },
+  { brawler: 'JANET', gamemode: 'gemGrab', map: "Undermine", wins: 0, losses: 1 },
+  { brawler: 'JUJU', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
+  { brawler: 'KAZE', gamemode: 'bounty', map: "Dry Season", wins: 3, losses: 0 },
+  { brawler: 'KAZE', gamemode: 'bounty', map: "Hideout", wins: 3, losses: 6 },
+  { brawler: 'KAZE', gamemode: 'bounty', map: "Layer Cake", wins: 4, losses: 3 },
+  { brawler: 'KAZE', gamemode: 'bounty', map: "Shooting Star", wins: 4, losses: 2 },
+  { brawler: 'KAZE', gamemode: 'brawlBall', map: "Super Beach", wins: 0, losses: 1 },
+  { brawler: 'KAZE', gamemode: 'heist', map: "Bridge Too Far", wins: 7, losses: 7 },
+  { brawler: 'KAZE', gamemode: 'heist', map: "Hot Potato", wins: 8, losses: 4 },
+  { brawler: 'KAZE', gamemode: 'heist', map: "Kaboom Canyon", wins: 1, losses: 0 },
+  { brawler: 'KAZE', gamemode: 'heist', map: "Safe Zone", wins: 6, losses: 3 },
+  { brawler: 'KAZE', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 5 },
+  { brawler: 'KAZE', gamemode: 'hotZone', map: "Ring of Fire", wins: 4, losses: 1 },
+  { brawler: 'KENJI', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 1 },
+  { brawler: 'KENJI', gamemode: 'bounty', map: "Layer Cake", wins: 3, losses: 0 },
+  { brawler: 'KENJI', gamemode: 'brawlBall', map: "Pinball Dreams", wins: 0, losses: 1 },
+  { brawler: 'KENJI', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 2, losses: 2 },
+  { brawler: 'KENJI', gamemode: 'brawlBall', map: "Super Beach", wins: 2, losses: 1 },
+  { brawler: 'KENJI', gamemode: 'brawlBall', map: "Triple Dribble", wins: 0, losses: 2 },
+  { brawler: 'KENJI', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 0 },
+  { brawler: 'KENJI', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 1 },
+  { brawler: 'KENJI', gamemode: 'gemGrab', map: "Gem Fort", wins: 0, losses: 1 },
+  { brawler: 'KENJI', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 2 },
+  { brawler: 'KENJI', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'KENJI', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 2 },
+  { brawler: 'KENJI', gamemode: 'hotZone', map: "Ring of Fire", wins: 0, losses: 1 },
+  { brawler: 'KIT', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 1 },
+  { brawler: 'KIT', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 2 },
+  { brawler: 'KIT', gamemode: 'bounty', map: "Layer Cake", wins: 3, losses: 2 },
+  { brawler: 'KIT', gamemode: 'brawlBall', map: "Super Beach", wins: 0, losses: 2 },
+  { brawler: 'KIT', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 0, losses: 1 },
+  { brawler: 'KIT', gamemode: 'gemGrab', map: "Double Swoosh", wins: 2, losses: 4 },
+  { brawler: 'KIT', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
+  { brawler: 'KIT', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 6, losses: 5 },
+  { brawler: 'KIT', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 1 },
+  { brawler: 'KIT', gamemode: 'knockout', map: "Belle's Rock", wins: 5, losses: 6 },
+  { brawler: 'KIT', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 1 },
+  { brawler: 'KIT', gamemode: 'knockout', map: "Out in the Open", wins: 0, losses: 1 },
+  { brawler: 'LARRY & LAWRIE', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 1 },
+  { brawler: 'LEON', gamemode: 'bounty', map: "Dry Season", wins: 1, losses: 1 },
+  { brawler: 'LEON', gamemode: 'bounty', map: "Hideout", wins: 4, losses: 5 },
+  { brawler: 'LEON', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 1 },
+  { brawler: 'LEON', gamemode: 'bounty', map: "Shooting Star", wins: 2, losses: 6 },
+  { brawler: 'LEON', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 4, losses: 4 },
+  { brawler: 'LEON', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 2, losses: 4 },
+  { brawler: 'LEON', gamemode: 'brawlBall', map: "Super Beach", wins: 0, losses: 4 },
+  { brawler: 'LEON', gamemode: 'brawlBall', map: "Triple Dribble", wins: 0, losses: 1 },
+  { brawler: 'LEON', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 5, losses: 4 },
+  { brawler: 'LEON', gamemode: 'gemGrab', map: "Double Swoosh", wins: 3, losses: 0 },
+  { brawler: 'LEON', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 2, losses: 4 },
+  { brawler: 'LEON', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
+  { brawler: 'LEON', gamemode: 'hotZone', map: "Dueling Beetles", wins: 2, losses: 4 },
+  { brawler: 'LEON', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 2 },
+  { brawler: 'LEON', gamemode: 'hotZone', map: "Ring of Fire", wins: 2, losses: 3 },
+  { brawler: 'LEON', gamemode: 'knockout', map: "Belle's Rock", wins: 4, losses: 7 },
+  { brawler: 'LEON', gamemode: 'knockout', map: "Goldarm Gulch", wins: 3, losses: 5 },
+  { brawler: 'LEON', gamemode: 'knockout', map: "Out in the Open", wins: 6, losses: 2 },
+  { brawler: 'LILY', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 1 },
+  { brawler: 'LILY', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 0, losses: 1 },
+  { brawler: 'LILY', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 4 },
+  { brawler: 'LILY', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 5 },
+  { brawler: 'LILY', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 1 },
+  { brawler: 'LILY', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 5 },
+  { brawler: 'LILY', gamemode: 'gemGrab', map: "Undermine", wins: 0, losses: 1 },
+  { brawler: 'LILY', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 1 },
+  { brawler: 'LILY', gamemode: 'heist', map: "Hot Potato", wins: 3, losses: 6 },
+  { brawler: 'LILY', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'LILY', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
+  { brawler: 'LOLA', gamemode: 'bounty', map: "Hideout", wins: 0, losses: 1 },
+  { brawler: 'LOLA', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 1 },
+  { brawler: 'LOLA', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 0, losses: 1 },
+  { brawler: 'LOLA', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 0, losses: 1 },
+  { brawler: 'LOLA', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 0 },
+  { brawler: 'LOLA', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 0 },
+  { brawler: 'LOLA', gamemode: 'gemGrab', map: "Double Swoosh", wins: 0, losses: 2 },
+  { brawler: 'LOLA', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 1 },
+  { brawler: 'LOLA', gamemode: 'heist', map: "Bridge Too Far", wins: 4, losses: 5 },
+  { brawler: 'LOLA', gamemode: 'heist', map: "Hot Potato", wins: 0, losses: 1 },
+  { brawler: 'LOLA', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 0 },
+  { brawler: 'LOLA', gamemode: 'hotZone', map: "Dueling Beetles", wins: 2, losses: 2 },
+  { brawler: 'LOLA', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 1 },
+  { brawler: 'LOLA', gamemode: 'hotZone', map: "Ring of Fire", wins: 3, losses: 2 },
+  { brawler: 'LOU', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 2 },
+  { brawler: 'LOU', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 3 },
+  { brawler: 'LOU', gamemode: 'hotZone', map: "Ring of Fire", wins: 2, losses: 1 },
+  { brawler: 'LUMI', gamemode: 'bounty', map: "Hideout", wins: 0, losses: 3 },
+  { brawler: 'LUMI', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 6 },
+  { brawler: 'LUMI', gamemode: 'brawlBall', map: "Center Stage", wins: 1, losses: 0 },
+  { brawler: 'LUMI', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 3, losses: 2 },
+  { brawler: 'LUMI', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 8, losses: 2 },
+  { brawler: 'LUMI', gamemode: 'brawlBall', map: "Super Beach", wins: 3, losses: 7 },
+  { brawler: 'LUMI', gamemode: 'brawlBall', map: "Triple Dribble", wins: 2, losses: 0 },
+  { brawler: 'LUMI', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 4, losses: 1 },
+  { brawler: 'LUMI', gamemode: 'gemGrab', map: "Double Swoosh", wins: 4, losses: 1 },
+  { brawler: 'LUMI', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
+  { brawler: 'LUMI', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 3, losses: 0 },
+  { brawler: 'LUMI', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 2 },
+  { brawler: 'LUMI', gamemode: 'heist', map: "Hot Potato", wins: 6, losses: 9 },
+  { brawler: 'LUMI', gamemode: 'heist', map: "Safe Zone", wins: 2, losses: 1 },
+  { brawler: 'LUMI', gamemode: 'hotZone', map: "Dueling Beetles", wins: 2, losses: 2 },
+  { brawler: 'LUMI', gamemode: 'hotZone', map: "Open Business", wins: 8, losses: 4 },
+  { brawler: 'LUMI', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 4 },
+  { brawler: 'LUMI', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 0 },
+  { brawler: 'MAISIE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 0, losses: 1 },
+  { brawler: 'MAISIE', gamemode: 'gemGrab', map: "Double Swoosh", wins: 0, losses: 1 },
+  { brawler: 'MAISIE', gamemode: 'knockout', map: "Belle's Rock", wins: 2, losses: 0 },
+  { brawler: 'MAX', gamemode: 'bounty', map: "Hideout", wins: 0, losses: 1 },
+  { brawler: 'MAX', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 0 },
+  { brawler: 'MAX', gamemode: 'brawlBall', map: "Pinball Dreams", wins: 1, losses: 0 },
+  { brawler: 'MAX', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 4, losses: 0 },
+  { brawler: 'MAX', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 3 },
+  { brawler: 'MAX', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 4, losses: 0 },
+  { brawler: 'MAX', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
+  { brawler: 'MEEPLE', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 0 },
+  { brawler: 'MEEPLE', gamemode: 'bounty', map: "Layer Cake", wins: 3, losses: 4 },
+  { brawler: 'MEEPLE', gamemode: 'bounty', map: "Shooting Star", wins: 0, losses: 1 },
+  { brawler: 'MEEPLE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 3, losses: 2 },
+  { brawler: 'MEEPLE', gamemode: 'brawlBall', map: "Super Beach", wins: 2, losses: 1 },
+  { brawler: 'MEEPLE', gamemode: 'brawlBall', map: "Triple Dribble", wins: 2, losses: 1 },
+  { brawler: 'MEEPLE', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 2, losses: 4 },
+  { brawler: 'MEEPLE', gamemode: 'gemGrab', map: "Double Swoosh", wins: 5, losses: 3 },
+  { brawler: 'MEEPLE', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 2, losses: 0 },
+  { brawler: 'MEEPLE', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 2 },
+  { brawler: 'MEEPLE', gamemode: 'hotZone', map: "Open Business", wins: 2, losses: 5 },
+  { brawler: 'MEEPLE', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 0 },
+  { brawler: 'MEEPLE', gamemode: 'knockout', map: "Belle's Rock", wins: 3, losses: 0 },
+  { brawler: 'MEEPLE', gamemode: 'knockout', map: "Goldarm Gulch", wins: 3, losses: 1 },
+  { brawler: 'MEEPLE', gamemode: 'knockout', map: "Out in the Open", wins: 4, losses: 5 },
+  { brawler: 'MEG', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 0, losses: 2 },
+  { brawler: 'MELODIE', gamemode: 'bounty', map: "Hideout", wins: 0, losses: 2 },
+  { brawler: 'MELODIE', gamemode: 'heist', map: "Bridge Too Far", wins: 3, losses: 3 },
+  { brawler: 'MELODIE', gamemode: 'heist', map: "Hot Potato", wins: 0, losses: 2 },
+  { brawler: 'MELODIE', gamemode: 'heist', map: "Kaboom Canyon", wins: 0, losses: 1 },
+  { brawler: 'MELODIE', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 2 },
+  { brawler: 'MELODIE', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'MELODIE', gamemode: 'hotZone', map: "Ring of Fire", wins: 0, losses: 1 },
+  { brawler: 'MELODIE', gamemode: 'knockout', map: "Out in the Open", wins: 0, losses: 1 },
+  { brawler: 'MICO', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'MICO', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 0 },
+  { brawler: 'MICO', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 1 },
+  { brawler: 'MICO', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 1 },
+  { brawler: 'MINA', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 1 },
+  { brawler: 'MINA', gamemode: 'bounty', map: "Hideout", wins: 4, losses: 2 },
+  { brawler: 'MINA', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 0 },
+  { brawler: 'MINA', gamemode: 'bounty', map: "Shooting Star", wins: 3, losses: 0 },
+  { brawler: 'MINA', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 0, losses: 2 },
+  { brawler: 'MINA', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'MINA', gamemode: 'brawlBall', map: "Super Beach", wins: 2, losses: 0 },
+  { brawler: 'MINA', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 0 },
+  { brawler: 'MINA', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 2, losses: 0 },
+  { brawler: 'MINA', gamemode: 'gemGrab', map: "Double Swoosh", wins: 0, losses: 1 },
+  { brawler: 'MINA', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
+  { brawler: 'MINA', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 1 },
+  { brawler: 'MINA', gamemode: 'hotZone', map: "Dueling Beetles", wins: 3, losses: 2 },
+  { brawler: 'MINA', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 2 },
+  { brawler: 'MINA', gamemode: 'hotZone', map: "Ring of Fire", wins: 3, losses: 4 },
+  { brawler: 'MINA', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 1 },
+  { brawler: 'MINA', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 0 },
+  { brawler: 'MINA', gamemode: 'knockout', map: "Out in the Open", wins: 4, losses: 2 },
+  { brawler: 'MOE', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 0 },
+  { brawler: 'MOE', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 2, losses: 3 },
+  { brawler: 'MOE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 2, losses: 5 },
+  { brawler: 'MOE', gamemode: 'brawlBall', map: "Super Beach", wins: 3, losses: 2 },
+  { brawler: 'MOE', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 3 },
+  { brawler: 'MOE', gamemode: 'gemGrab', map: "Double Swoosh", wins: 6, losses: 4 },
+  { brawler: 'MOE', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 0 },
+  { brawler: 'MORTIS', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 1 },
+  { brawler: 'MORTIS', gamemode: 'bounty', map: "Hideout", wins: 3, losses: 3 },
+  { brawler: 'MORTIS', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 4 },
+  { brawler: 'MORTIS', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 6 },
+  { brawler: 'MORTIS', gamemode: 'brawlBall', map: "Pinball Dreams", wins: 1, losses: 0 },
+  { brawler: 'MORTIS', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 2, losses: 3 },
+  { brawler: 'MORTIS', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 3, losses: 2 },
+  { brawler: 'MORTIS', gamemode: 'brawlBall', map: "Super Beach", wins: 5, losses: 2 },
+  { brawler: 'MORTIS', gamemode: 'brawlBall', map: "Triple Dribble", wins: 2, losses: 1 },
+  { brawler: 'MORTIS', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 5, losses: 5 },
+  { brawler: 'MORTIS', gamemode: 'gemGrab', map: "Double Swoosh", wins: 5, losses: 3 },
+  { brawler: 'MORTIS', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
+  { brawler: 'MORTIS', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 3, losses: 6 },
+  { brawler: 'MORTIS', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
+  { brawler: 'MORTIS', gamemode: 'hotZone', map: "Dueling Beetles", wins: 2, losses: 1 },
+  { brawler: 'MORTIS', gamemode: 'hotZone', map: "Open Business", wins: 5, losses: 6 },
+  { brawler: 'MORTIS', gamemode: 'hotZone', map: "Ring of Fire", wins: 3, losses: 0 },
+  { brawler: 'MORTIS', gamemode: 'knockout', map: "Belle's Rock", wins: 5, losses: 1 },
+  { brawler: 'MORTIS', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 1 },
+  { brawler: 'NAJIA', gamemode: 'bounty', map: "Hideout", wins: 2, losses: 0 },
+  { brawler: 'NAJIA', gamemode: 'bounty', map: "Layer Cake", wins: 3, losses: 6 },
+  { brawler: 'NAJIA', gamemode: 'bounty', map: "Shooting Star", wins: 2, losses: 3 },
+  { brawler: 'NAJIA', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 2, losses: 2 },
+  { brawler: 'NAJIA', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 4, losses: 6 },
+  { brawler: 'NAJIA', gamemode: 'brawlBall', map: "Super Beach", wins: 4, losses: 4 },
+  { brawler: 'NAJIA', gamemode: 'brawlBall', map: "Triple Dribble", wins: 2, losses: 0 },
+  { brawler: 'NAJIA', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 3 },
+  { brawler: 'NAJIA', gamemode: 'gemGrab', map: "Double Swoosh", wins: 3, losses: 3 },
+  { brawler: 'NAJIA', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 5 },
+  { brawler: 'NAJIA', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 3 },
+  { brawler: 'NAJIA', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 2 },
+  { brawler: 'NAJIA', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 2 },
+  { brawler: 'NAJIA', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 4 },
+  { brawler: 'NAJIA', gamemode: 'hotZone', map: "Open Business", wins: 5, losses: 1 },
+  { brawler: 'NAJIA', gamemode: 'hotZone', map: "Ring of Fire", wins: 2, losses: 2 },
+  { brawler: 'NAJIA', gamemode: 'knockout', map: "Belle's Rock", wins: 0, losses: 1 },
+  { brawler: 'NAJIA', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 2 },
+  { brawler: 'NAJIA', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 2 },
+  { brawler: 'NANI', gamemode: 'bounty', map: "Hideout", wins: 4, losses: 1 },
+  { brawler: 'NANI', gamemode: 'bounty', map: "Shooting Star", wins: 9, losses: 3 },
+  { brawler: 'NANI', gamemode: 'heist', map: "Bridge Too Far", wins: 6, losses: 3 },
+  { brawler: 'NANI', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 0 },
+  { brawler: 'NANI', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 3 },
+  { brawler: 'NANI', gamemode: 'knockout', map: "Out in the Open", wins: 0, losses: 1 },
+  { brawler: 'NITA', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 0, losses: 1 },
+  { brawler: 'NITA', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 2, losses: 4 },
+  { brawler: 'NITA', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 1 },
+  { brawler: 'NITA', gamemode: 'gemGrab', map: "Double Swoosh", wins: 2, losses: 1 },
+  { brawler: 'NITA', gamemode: 'gemGrab', map: "Gem Fort", wins: 0, losses: 1 },
+  { brawler: 'NITA', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 0, losses: 4 },
+  { brawler: 'NITA', gamemode: 'heist', map: "Hot Potato", wins: 3, losses: 2 },
+  { brawler: 'NITA', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 2 },
+  { brawler: 'OLLIE', gamemode: 'bounty', map: "Hideout", wins: 3, losses: 3 },
+  { brawler: 'OLLIE', gamemode: 'knockout', map: "Belle's Rock", wins: 2, losses: 1 },
+  { brawler: 'OLLIE', gamemode: 'knockout', map: "Goldarm Gulch", wins: 4, losses: 5 },
+  { brawler: 'OLLIE', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
+  { brawler: 'OTIS', gamemode: 'bounty', map: "Layer Cake", wins: 3, losses: 0 },
+  { brawler: 'OTIS', gamemode: 'brawlBall', map: "Center Stage", wins: 0, losses: 1 },
+  { brawler: 'OTIS', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 6, losses: 4 },
+  { brawler: 'OTIS', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 5, losses: 9 },
+  { brawler: 'OTIS', gamemode: 'brawlBall', map: "Super Beach", wins: 6, losses: 4 },
+  { brawler: 'OTIS', gamemode: 'brawlBall', map: "Triple Dribble", wins: 2, losses: 3 },
+  { brawler: 'OTIS', gamemode: 'gemGrab', map: "Crystal Arcade", wins: 0, losses: 1 },
+  { brawler: 'OTIS', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 7, losses: 6 },
+  { brawler: 'OTIS', gamemode: 'gemGrab', map: "Double Swoosh", wins: 5, losses: 3 },
+  { brawler: 'OTIS', gamemode: 'gemGrab', map: "Gem Fort", wins: 0, losses: 2 },
+  { brawler: 'OTIS', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 3, losses: 9 },
+  { brawler: 'OTIS', gamemode: 'gemGrab', map: "Undermine", wins: 0, losses: 2 },
+  { brawler: 'OTIS', gamemode: 'heist', map: "Bridge Too Far", wins: 3, losses: 9 },
+  { brawler: 'OTIS', gamemode: 'heist', map: "Hot Potato", wins: 8, losses: 8 },
+  { brawler: 'OTIS', gamemode: 'heist', map: "Safe Zone", wins: 2, losses: 0 },
+  { brawler: 'OTIS', gamemode: 'hotZone', map: "Dueling Beetles", wins: 4, losses: 2 },
+  { brawler: 'OTIS', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 2 },
+  { brawler: 'OTIS', gamemode: 'hotZone', map: "Ring of Fire", wins: 3, losses: 2 },
+  { brawler: 'PAM', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 1 },
+  { brawler: 'PAM', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 0 },
+  { brawler: 'PAM', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 0 },
+  { brawler: 'PAM', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 2 },
+  { brawler: 'PAM', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 1 },
+  { brawler: 'PEARL', gamemode: 'bounty', map: "Hideout", wins: 0, losses: 2 },
+  { brawler: 'PEARL', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 1 },
+  { brawler: 'PEARL', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 6 },
+  { brawler: 'PENNY', gamemode: 'bounty', map: "Dry Season", wins: 2, losses: 0 },
+  { brawler: 'PENNY', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 0 },
+  { brawler: 'PENNY', gamemode: 'bounty', map: "Layer Cake", wins: 3, losses: 2 },
+  { brawler: 'PENNY', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 0 },
+  { brawler: 'PENNY', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 1 },
+  { brawler: 'PENNY', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 3, losses: 1 },
+  { brawler: 'PENNY', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 0 },
+  { brawler: 'PENNY', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 1 },
+  { brawler: 'PENNY', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
+  { brawler: 'PENNY', gamemode: 'heist', map: "Safe Zone", wins: 3, losses: 5 },
+  { brawler: 'PENNY', gamemode: 'hotZone', map: "Dueling Beetles", wins: 5, losses: 2 },
+  { brawler: 'PENNY', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
+  { brawler: 'PENNY', gamemode: 'hotZone', map: "Ring of Fire", wins: 3, losses: 3 },
+  { brawler: 'PIERCE', gamemode: 'bounty', map: "Dry Season", wins: 1, losses: 0 },
+  { brawler: 'PIERCE', gamemode: 'bounty', map: "Hideout", wins: 3, losses: 6 },
+  { brawler: 'PIERCE', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 5 },
+  { brawler: 'PIERCE', gamemode: 'bounty', map: "Shooting Star", wins: 2, losses: 8 },
+  { brawler: 'PIERCE', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 4, losses: 2 },
+  { brawler: 'PIERCE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 6, losses: 1 },
+  { brawler: 'PIERCE', gamemode: 'brawlBall', map: "Super Beach", wins: 5, losses: 4 },
+  { brawler: 'PIERCE', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 4, losses: 4 },
+  { brawler: 'PIERCE', gamemode: 'gemGrab', map: "Double Swoosh", wins: 0, losses: 1 },
+  { brawler: 'PIERCE', gamemode: 'gemGrab', map: "Gem Fort", wins: 0, losses: 1 },
+  { brawler: 'PIERCE', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 2, losses: 1 },
+  { brawler: 'PIERCE', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
+  { brawler: 'PIERCE', gamemode: 'heist', map: "Bridge Too Far", wins: 3, losses: 5 },
+  { brawler: 'PIERCE', gamemode: 'heist', map: "Hot Potato", wins: 3, losses: 2 },
+  { brawler: 'PIERCE', gamemode: 'heist', map: "Kaboom Canyon", wins: 0, losses: 1 },
+  { brawler: 'PIERCE', gamemode: 'heist', map: "Safe Zone", wins: 4, losses: 3 },
+  { brawler: 'PIERCE', gamemode: 'hotZone', map: "Dueling Beetles", wins: 4, losses: 3 },
+  { brawler: 'PIERCE', gamemode: 'hotZone', map: "Open Business", wins: 2, losses: 1 },
+  { brawler: 'PIERCE', gamemode: 'hotZone', map: "Ring of Fire", wins: 6, losses: 2 },
+  { brawler: 'PIERCE', gamemode: 'knockout', map: "Belle's Rock", wins: 6, losses: 1 },
+  { brawler: 'PIERCE', gamemode: 'knockout', map: "Goldarm Gulch", wins: 8, losses: 3 },
+  { brawler: 'PIERCE', gamemode: 'knockout', map: "Out in the Open", wins: 2, losses: 7 },
+  { brawler: 'PIPER', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 1 },
+  { brawler: 'PIPER', gamemode: 'bounty', map: "Shooting Star", wins: 2, losses: 0 },
+  { brawler: 'PIPER', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 1 },
+  { brawler: 'PIPER', gamemode: 'heist', map: "Safe Zone", wins: 0, losses: 1 },
+  { brawler: 'PIPER', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 1 },
+  { brawler: 'PIPER', gamemode: 'knockout', map: "Belle's Rock", wins: 0, losses: 2 },
+  { brawler: 'PIPER', gamemode: 'knockout', map: "Goldarm Gulch", wins: 2, losses: 0 },
+  { brawler: 'PIPER', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
+  { brawler: 'POCO', gamemode: 'brawlBall', map: "Super Beach", wins: 0, losses: 1 },
+  { brawler: 'POCO', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
+  { brawler: 'POCO', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 1 },
+  { brawler: 'POCO', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
+  { brawler: 'POCO', gamemode: 'hotZone', map: "Ring of Fire", wins: 0, losses: 1 },
+  { brawler: 'POCO', gamemode: 'knockout', map: "Belle's Rock", wins: 0, losses: 1 },
+  { brawler: 'R-T', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 2 },
+  { brawler: 'R-T', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 0 },
+  { brawler: 'R-T', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 4 },
+  { brawler: 'R-T', gamemode: 'gemGrab', map: "Double Swoosh", wins: 3, losses: 1 },
+  { brawler: 'R-T', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 1 },
+  { brawler: 'R-T', gamemode: 'hotZone', map: "Ring of Fire", wins: 0, losses: 1 },
+  { brawler: 'R-T', gamemode: 'knockout', map: "Belle's Rock", wins: 6, losses: 3 },
+  { brawler: 'R-T', gamemode: 'knockout', map: "Goldarm Gulch", wins: 3, losses: 2 },
+  { brawler: 'R-T', gamemode: 'knockout', map: "Out in the Open", wins: 5, losses: 1 },
+  { brawler: 'RICO', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 2, losses: 1 },
+  { brawler: 'RICO', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 0, losses: 4 },
+  { brawler: 'RICO', gamemode: 'heist', map: "Hot Potato", wins: 3, losses: 4 },
+  { brawler: 'RICO', gamemode: 'heist', map: "Safe Zone", wins: 0, losses: 1 },
+  { brawler: 'RICO', gamemode: 'knockout', map: "Belle's Rock", wins: 3, losses: 4 },
+  { brawler: 'RICO', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 0 },
+  { brawler: 'ROSA', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'ROSA', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
+  { brawler: 'ROSA', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 0, losses: 1 },
+  { brawler: 'ROSA', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 0 },
+  { brawler: 'ROSA', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 0 },
+  { brawler: 'RUFFS', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 2 },
+  { brawler: 'RUFFS', gamemode: 'bounty', map: "Hideout", wins: 2, losses: 6 },
+  { brawler: 'RUFFS', gamemode: 'bounty', map: "Layer Cake", wins: 5, losses: 2 },
+  { brawler: 'RUFFS', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 2 },
+  { brawler: 'RUFFS', gamemode: 'brawlBall', map: "Center Stage", wins: 0, losses: 1 },
+  { brawler: 'RUFFS', gamemode: 'brawlBall', map: "Pinball Dreams", wins: 0, losses: 1 },
+  { brawler: 'RUFFS', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 2, losses: 1 },
+  { brawler: 'RUFFS', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 4, losses: 2 },
+  { brawler: 'RUFFS', gamemode: 'brawlBall', map: "Super Beach", wins: 4, losses: 2 },
+  { brawler: 'RUFFS', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 0 },
+  { brawler: 'RUFFS', gamemode: 'gemGrab', map: "Crystal Arcade", wins: 0, losses: 1 },
+  { brawler: 'RUFFS', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 2, losses: 6 },
+  { brawler: 'RUFFS', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
+  { brawler: 'RUFFS', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
+  { brawler: 'RUFFS', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 11, losses: 6 },
+  { brawler: 'RUFFS', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
+  { brawler: 'RUFFS', gamemode: 'heist', map: "Hot Potato", wins: 5, losses: 9 },
+  { brawler: 'RUFFS', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 1 },
+  { brawler: 'RUFFS', gamemode: 'hotZone', map: "Dueling Beetles", wins: 3, losses: 4 },
+  { brawler: 'RUFFS', gamemode: 'hotZone', map: "Open Business", wins: 2, losses: 3 },
+  { brawler: 'RUFFS', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 1 },
+  { brawler: 'RUFFS', gamemode: 'knockout', map: "Belle's Rock", wins: 2, losses: 4 },
+  { brawler: 'RUFFS', gamemode: 'knockout', map: "Goldarm Gulch", wins: 3, losses: 7 },
+  { brawler: 'RUFFS', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 2 },
+  { brawler: 'SAM', gamemode: 'brawlBall', map: "Super Beach", wins: 2, losses: 1 },
+  { brawler: 'SAM', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 1 },
+  { brawler: 'SAM', gamemode: 'heist', map: "Hot Potato", wins: 0, losses: 1 },
+  { brawler: 'SANDY', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 9, losses: 4 },
+  { brawler: 'SANDY', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 2 },
+  { brawler: 'SANDY', gamemode: 'gemGrab', map: "Crystal Arcade", wins: 0, losses: 1 },
+  { brawler: 'SANDY', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 4, losses: 0 },
+  { brawler: 'SANDY', gamemode: 'gemGrab', map: "Double Swoosh", wins: 8, losses: 6 },
+  { brawler: 'SANDY', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 5, losses: 2 },
+  { brawler: 'SANDY', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
+  { brawler: 'SHADE', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 6 },
+  { brawler: 'SHADE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 4, losses: 3 },
+  { brawler: 'SHADE', gamemode: 'brawlBall', map: "Super Beach", wins: 4, losses: 8 },
+  { brawler: 'SHADE', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 1 },
+  { brawler: 'SHADE', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 5, losses: 4 },
+  { brawler: 'SHADE', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 0 },
+  { brawler: 'SHADE', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 1 },
+  { brawler: 'SHADE', gamemode: 'heist', map: "Hot Potato", wins: 4, losses: 4 },
+  { brawler: 'SHADE', gamemode: 'hotZone', map: "Open Business", wins: 5, losses: 1 },
+  { brawler: 'SHADE', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 1 },
+  { brawler: 'SHELLY', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
+  { brawler: 'SHELLY', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 1 },
+  { brawler: 'SHELLY', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 0 },
+  { brawler: 'SIRIUS', gamemode: 'bounty', map: "Hideout", wins: 2, losses: 6 },
+  { brawler: 'SIRIUS', gamemode: 'bounty', map: "Layer Cake", wins: 6, losses: 3 },
+  { brawler: 'SIRIUS', gamemode: 'brawlBall', map: "Center Stage", wins: 1, losses: 0 },
+  { brawler: 'SIRIUS', gamemode: 'brawlBall', map: "Pinball Dreams", wins: 1, losses: 0 },
+  { brawler: 'SIRIUS', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 2, losses: 4 },
+  { brawler: 'SIRIUS', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 4 },
+  { brawler: 'SIRIUS', gamemode: 'brawlBall', map: "Super Beach", wins: 4, losses: 2 },
+  { brawler: 'SIRIUS', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 1 },
+  { brawler: 'SIRIUS', gamemode: 'gemGrab', map: "Crystal Arcade", wins: 1, losses: 0 },
+  { brawler: 'SIRIUS', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 4 },
+  { brawler: 'SIRIUS', gamemode: 'gemGrab', map: "Double Swoosh", wins: 0, losses: 8 },
+  { brawler: 'SIRIUS', gamemode: 'gemGrab', map: "Gem Fort", wins: 0, losses: 1 },
+  { brawler: 'SIRIUS', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 3, losses: 5 },
+  { brawler: 'SIRIUS', gamemode: 'gemGrab', map: "Undermine", wins: 0, losses: 1 },
+  { brawler: 'SIRIUS', gamemode: 'heist', map: "Bridge Too Far", wins: 2, losses: 2 },
+  { brawler: 'SIRIUS', gamemode: 'heist', map: "Hot Potato", wins: 4, losses: 3 },
+  { brawler: 'SIRIUS', gamemode: 'hotZone', map: "Dueling Beetles", wins: 5, losses: 5 },
+  { brawler: 'SIRIUS', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 8 },
+  { brawler: 'SIRIUS', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 2 },
+  { brawler: 'SIRIUS', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 2 },
+  { brawler: 'SIRIUS', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 2 },
+  { brawler: 'SIRIUS', gamemode: 'knockout', map: "Out in the Open", wins: 2, losses: 0 },
+  { brawler: 'SPIKE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 2, losses: 3 },
+  { brawler: 'SPIKE', gamemode: 'brawlBall', map: "Super Beach", wins: 0, losses: 2 },
+  { brawler: 'SPIKE', gamemode: 'brawlBall', map: "Triple Dribble", wins: 0, losses: 1 },
+  { brawler: 'SPIKE', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 1 },
+  { brawler: 'SPIKE', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 0 },
+  { brawler: 'SPIKE', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 1 },
+  { brawler: 'SPIKE', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 0 },
+  { brawler: 'SPIKE', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
+  { brawler: 'SPROUT', gamemode: 'bounty', map: "Shooting Star", wins: 2, losses: 0 },
+  { brawler: 'SPROUT', gamemode: 'heist', map: "Safe Zone", wins: 0, losses: 1 },
+  { brawler: 'SPROUT', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'SPROUT', gamemode: 'knockout', map: "Belle's Rock", wins: 0, losses: 2 },
+  { brawler: 'SPROUT', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 0 },
+  { brawler: 'SQUEAK', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 1 },
+  { brawler: 'SQUEAK', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'SQUEAK', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 0 },
+  { brawler: 'STU', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 2 },
+  { brawler: 'STU', gamemode: 'bounty', map: "Shooting Star", wins: 0, losses: 1 },
+  { brawler: 'STU', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 2, losses: 2 },
+  { brawler: 'STU', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 8, losses: 6 },
+  { brawler: 'STU', gamemode: 'brawlBall', map: "Super Beach", wins: 8, losses: 8 },
+  { brawler: 'STU', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 8, losses: 1 },
+  { brawler: 'STU', gamemode: 'gemGrab', map: "Double Swoosh", wins: 4, losses: 4 },
+  { brawler: 'STU', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
+  { brawler: 'STU', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 7, losses: 3 },
+  { brawler: 'STU', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
+  { brawler: 'STU', gamemode: 'hotZone', map: "Dueling Beetles", wins: 4, losses: 3 },
+  { brawler: 'STU', gamemode: 'hotZone', map: "Open Business", wins: 5, losses: 3 },
+  { brawler: 'STU', gamemode: 'hotZone', map: "Ring of Fire", wins: 1, losses: 1 },
+  { brawler: 'SURGE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 2, losses: 1 },
+  { brawler: 'SURGE', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 0 },
+  { brawler: 'SURGE', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 0, losses: 1 },
+  { brawler: 'SURGE', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
+  { brawler: 'SURGE', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 0 },
+  { brawler: 'SURGE', gamemode: 'knockout', map: "Goldarm Gulch", wins: 0, losses: 1 },
+  { brawler: 'TARA', gamemode: 'gemGrab', map: "Deathcap Trap", wins: 1, losses: 1 },
+  { brawler: 'TARA', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 1 },
+  { brawler: 'TICK', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 0 },
+  { brawler: 'TICK', gamemode: 'bounty', map: "Shooting Star", wins: 0, losses: 1 },
+  { brawler: 'TICK', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 0 },
+  { brawler: 'TRUNK', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 1 },
+  { brawler: 'TRUNK', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 4 },
+  { brawler: 'TRUNK', gamemode: 'gemGrab', map: "Undermine", wins: 0, losses: 1 },
+  { brawler: 'WILLOW', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 2 },
+  { brawler: 'WILLOW', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 2, losses: 1 },
+  { brawler: 'WILLOW', gamemode: 'brawlBall', map: "Super Beach", wins: 2, losses: 2 },
+  { brawler: 'WILLOW', gamemode: 'brawlBall', map: "Triple Dribble", wins: 0, losses: 2 },
+  { brawler: 'ZIGGY', gamemode: 'bounty', map: "Hideout", wins: 0, losses: 2 },
+  { brawler: 'ZIGGY', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 2 },
+  { brawler: 'ZIGGY', gamemode: 'brawlBall', map: "Pinhole Punt", wins: 2, losses: 0 },
+  { brawler: 'ZIGGY', gamemode: 'brawlBall', map: "Super Beach", wins: 1, losses: 0 },
+  { brawler: 'ZIGGY', gamemode: 'heist', map: "Hot Potato", wins: 0, losses: 1 },
+  { brawler: 'ZIGGY', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
+  { brawler: 'ZIGGY', gamemode: 'hotZone', map: "Open Business", wins: 0, losses: 1 },
+  { brawler: 'ZIGGY', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 0 },
+  { brawler: 'ZIGGY', gamemode: 'knockout', map: "Goldarm Gulch", wins: 1, losses: 3 },
+];
 
 // ─── TIER DATA ────────────────────────────────────────────────────────────────
-
 const PRO_MANUAL_TIERS = {
+  S:['DAMIAN', 'COLETTE', 'PIERCE', 'EDGAR', 'OTIS', 'RUFFS', 'CROW', 'LUMI', 'MORTIS'],
+  A:['STU', 'CHESTER', 'GRIFF', 'LEON', 'KAZE', 'GENE', 'SIRIUS', 'NAJIA', 'MEEPLE', 'ANGELO', 'SANDY', 'ALLI', 'MINA', 'SHADE', 'BYRON', 'PENNY', 'BELLE', 'BULL', 'COLT', 'FANG', 'R-T'],
+  B:['NANI', 'CORDELIUS', 'KIT', 'BROCK', 'FINX', 'CHARLIE', 'MOE', 'EMZ', 'JAE-YONG', 'LOLA', 'GUS', 'GRAY', 'MAX', 'DRACO', 'KENJI', 'GLOWY', 'CLANCY'],
+  C:['OLLIE', 'NITA', 'AMBER', 'RICO', 'LILY', 'JANET', 'CHUCK', '8-BIT', 'BERRY', 'BUSTER', 'EVE', 'SPIKE', 'PIPER', 'WILLOW', 'SURGE', 'ZIGGY', 'BIBI', 'PAM', 'BUZZ', 'ROSA', 'MELODIE', 'BO', 'CARL', 'MICO', 'GIGI', 'GALE', 'HANK', 'SAM', 'ASH', 'DARRYL', 'SHELLY', 'LOU', 'POCO', 'SPROUT'],
+  D:['MAISIE', 'TARA', 'DYNAMIKE', 'DOUG', 'BONNIE', 'TICK', 'PEARL', 'BEA', 'LARRY & LAWRIE', 'JUJU', 'FRANK', 'SQUEAK', 'TRUNK'],
+  F:['BARLEY', 'MEG', 'EL PRIMO', 'GROM', 'JACKY', 'JESSIE', 'MANDY', 'MR. P'],
+};
+
+const PREV_LIST = {
   S:['NAJIA', 'BULL', 'MORTIS', 'EMZ', 'LEON', 'CLANCY', 'OTIS'],
   A:['CHESTER', 'PIERCE', 'RUFFS', 'KAZE', 'SIRIUS', 'CROW', 'SPIKE', 'CHARLIE', 'BYRON', 'BO', 'NITA', 'STU', 'ANGELO', 'COLT', 'KIT', 'RICO', 'MEEPLE', 'SHADE', 'GENE'],
   B:['BROCK', 'ZIGGY', 'LILY', 'AMBER', 'SANDY', 'BELLE', 'PENNY', 'ALLI', 'FINX', 'R-T', 'JAE-YONG', 'KENJI', 'BIBI', 'CORDELIUS', 'GUS', 'NANI', 'MINA', 'MOE', 'LOU', 'GRAY'],
-  C:['MAX', 'PAM', 'EVE', 'OLLIE', 'POCO', 'WILLOW', '8-BIT', 'GALE', 'SHELLY', 'MELODIE', 'CARL', 'BUSTER', 'JANET', 'PIPER', 'TARA', 'CHUCK', 'LUMI', 'SQUEAK', 'GLOWBERT', 'TICK', 'BARLEY', 'PEARL', 'BERRY', 'ROSA', 'DRACO', 'MEG', 'JUJU', 'DOUG', 'DARRYL'],
+  C:['MAX', 'PAM', 'EVE', 'OLLIE', 'POCO', 'WILLOW', '8-BIT', 'GALE', 'SHELLY', 'MELODIE', 'CARL', 'BUSTER', 'JANET', 'PIPER', 'TARA', 'CHUCK', 'LUMI', 'SQUEAK', 'GLOWY', 'TICK', 'BARLEY', 'PEARL', 'BERRY', 'ROSA', 'DRACO', 'MEG', 'JUJU', 'DOUG', 'DARRYL'],
   D:['BEA', 'FRANK', 'SPROUT', 'ASH', 'LARRY & LAWRIE', 'HANK', 'GRIFF', 'COLETTE', 'TRUNK', 'SURGE', 'EL PRIMO', 'MICO', 'BONNIE', 'MAISIE', 'EDGAR'],
   F:['FANG', 'GIGI', 'BUZZ', 'LOLA', 'JACKY', 'GROM', 'MR. P', 'DYNAMIKE', 'JESSIE', 'MANDY', 'SAM'],
 };
 
-const PREV_LIST = {
-  S: ['SIRIUS', 'CROW', 'BULL', 'BIBI', 'SPIKE', 'EMZ', 'LEON', 'PIERCE', 'GLOWBERT', 'BO'],
-  A: ['FRANK', 'MINA', 'BYRON', 'OTIS', 'RICO', 'MORTIS', 'KAZE', 'ANGELO', 'SHELLY', 'POCO', 'GUS', 'FINX', 'AMBER', 'CHESTER', 'KENJI', 'NITA'],
-  B: ['LILY', 'GENE', 'RUFFS', 'CHARLIE', 'SHADE', 'CORDELIUS', 'COLT', 'MEEPLE', 'GRAY', 'NANI', 'BELLE', 'ALLI', 'MOE', 'R-T', 'JANET', 'JUJU', 'MAX', 'BROCK', 'BEA', 'LOU', 'CARL', 'TARA', 'SQUEAK', 'KIT', 'LUMI', 'SANDY', 'ZIGGY', 'WILLOW', 'JAE-YONG'],
-  C: ['MELODIE', 'STU', 'PAM', 'GALE', 'LARRY & LAWRIE', 'HANK', 'PIPER', 'TRUNK', 'BUSTER', 'PENNY', 'BERRY', '8-BIT', 'MEG', 'BARLEY', 'OLLIE', 'GRIFF', 'MANDY', 'TICK', 'BUZZ', 'MAISIE', 'EVE', 'DRACO', 'LOLA', 'SPROUT', 'ASH', 'DYNAMIKE', 'PEARL'],
-  D: ['DOUG', 'FANG', 'BONNIE', 'COLETTE', 'DARRYL', 'MICO', 'CLANCY', 'GIGI', 'SURGE', 'EL PRIMO', 'CHUCK', 'ROSA', 'JESSIE', 'SAM', 'GROM'],
-  F: ['MR. P', 'EDGAR', 'JACKY'],
-};
-
 const LONGTERM_TIERS = {
-  S: ['OTIS', 'MINA', 'MEEPLE', 'MORTIS', 'CROW'],
-  A: ['SPIKE', 'KAZE', 'SHADE', 'LILY', 'ANGELO', 'RUFFS', 'BYRON', 'GENE', 'FINX', 'EMZ', 'RICO', 'MOE', 'AMBER', 'JUJU', 'CORDELIUS', 'LEON', 'BIBI', 'BULL', 'GRAY', 'GUS', 'PAM', 'CHESTER', 'SHELLY', 'KENJI', 'CHARLIE', 'BELLE', 'LARRY & LAWRIE', 'MAX'],
-  B: ['COLT', 'FRANK', 'ALLI', 'KIT', 'SQUEAK', 'STU', 'LOU', 'SANDY', 'TARA', 'BROCK', 'JAE-YONG', 'MELODIE', 'BUSTER', 'ASH', 'TRUNK', 'OLLIE', 'BERRY', 'WILLOW', 'JANET', 'NANI', 'CARL', 'PENNY', 'PIPER', 'BARLEY', 'ZIGGY', 'R-T', 'BO', 'LUMI', 'DRACO', 'HANK', 'GRIFF', 'GALE', 'BEA', 'TICK', 'POCO', 'SPROUT'],
-  C: ['8-BIT', 'NITA', 'PEARL', 'DOUG', 'MEG', 'FANG', 'MANDY', 'EVE', 'SURGE', 'DARRYL', 'CLANCY', 'MAISIE', 'BONNIE', 'LOLA', 'BUZZ', 'DYNAMIKE'],
-  D: ['COLETTE', 'JACKY', 'MR. P', 'SAM', 'GROM', 'MICO', 'ROSA', 'CHUCK', 'EDGAR', 'EL PRIMO'],
-  F: ['JESSIE'],
+  S: ['OTIS'],
+  A: ['MEEPLE', 'CROW', 'MINA', 'RUFFS', 'KAZE', 'GENE', 'BYRON', 'ANGELO', 'SHADE', 'MORTIS'],
+  B: ['CORDELIUS', 'ALLI', 'GRAY', 'GUS', 'CHARLIE', 'EMZ', 'BULL', 'LILY', 'FINX', 'R-T', 'BROCK', 'SPIKE', 'COLT', 'KIT', 'STU', 'CHESTER', 'LEON', 'JAE-YONG', 'BERRY', 'NANI', 'HANK', 'JUJU', 'SQUEAK', 'MOE', 'MAX', 'SANDY', 'FRANK', 'SHELLY'],
+  C: ['PAM', 'ZIGGY', 'AMBER', 'NITA', 'KENJI', 'PENNY', 'LUMI', 'BO', 'OLLIE', 'TARA', 'WILLOW', 'CARL', 'BUSTER', 'RICO', 'BIBI', 'GRIFF', 'CHUCK', 'DRACO', 'MELODIE', 'LOU', 'PIPER', 'JANET', 'BEA', 'COLETTE', 'EVE', 'CLANCY', 'DOUG', 'ASH', 'POCO', 'DARRYL', 'GALE', 'EDGAR'],
+  D: ['TICK', 'MICO', '8-BIT', 'FANG', 'BARLEY', 'MEG', 'LOLA', 'PEARL', 'SPROUT', 'BUZZ', 'LARRY & LAWRIE', 'TRUNK', 'ROSA', 'EL PRIMO', 'DYNAMIKE', 'SAM', 'MANDY', 'GIGI', 'BONNIE', 'SURGE', 'MAISIE'],
+  F: ['MR. P', 'GROM', 'JESSIE', 'JACKY'],
 };
 
-// ─── GAME MODE TIER LISTS ─────────────────────────────────────────────────────
 const GAMEMODE_TIERS = {
   bounty:       { label:'Bounty',        color:'#f44336', icon: 'Assets/Bounty.png',
-    S:['NAJIA', 'BYRON', 'GENE', 'BELLE', 'PIERCE', 'KAZE', ],
-    A:['MORTIS', 'LEON', 'RUFFS', 'NANI', 'GUS', 'CROW', 'JAE-YONG',],
-    B:['BROCK', 'SPIKE', 'GRAY', 'ZIGGY', 'MEEPLE', 'PENNY', 'R-T', 'KIT', 'ANGELO', 'MINA', 'CHARLIE'],
-    C:['CLANCY', 'OLLIE', 'MAX', 'BULL', 'ALLI', 'PIPER', 'SIRIUS', 'BO'],
-    D:['8-BIT', 'PEARL', 'MELODIE', 'WILLOW', 'GLOWBERT', 'CHESTER', 'KENJI'],
-    F:['CORDELIUS', 'BUSTER', 'CARL', 'SHADE'],
+    S:['GENE', 'BELLE', 'COLETTE', 'KAZE',],
+    A:['BYRON', 'NANI', 'CROW', 'JAE-YONG', 'PIERCE', 'RUFFS'],
+    B:['EDGAR', 'LEON', 'MORTIS', 'FANG', 'SIRIUS', 'NAJIA', 'MINA', 'ANGELO', 'BROCK', 'GUS', 'CHARLIE'],
+    C:['PENNY', 'GRAY', 'ALLI', 'R-T', 'KIT', 'MEEPLE', 'LUMI', 'OLLIE', 'CHESTER', 'SHADE', 'GRIFF'],
+    D:['KENJI', 'PIPER', 'OTIS', 'BULL', 'WILLOW', 'GLOWY'],
+    F:['DOUG', 'STU', 'LOLA', 'BUSTER', 'ZIGGY'],
   },
   brawlBall:    { label:'Brawl Ball',    color:'#4caf50', icon: 'Assets/Brawl Ball.png',
-    S:['SHADE', 'EMZ', 'OTIS', 'CLANCY', 'SPIKE', 'LEON', 'BULL', 'CHESTER'],
-    A:['NAJIA', 'ALLI', 'WILLOW', 'MORTIS', 'RICO', 'RUFFS', 'MOE', 'CHARLIE', 'NITA'],
-    B:['MEEPLE', 'BIBI', 'PIERCE', 'SIRIUS', 'CROW', 'CORDELIUS', 'ZIGGY', 'STU', 'KENJI', 'MAX'],
-    C:['SANDY', 'GALE', 'POCO', 'AMBER', 'SHELLY', 'COLT', 'FRANK', 'LUMI', 'ROSA'],
-    D:['MEG', 'HANK', 'ASH', 'LARRY & LAWRIE', 'JUJU', 'SURGE', 'KIT', 'JACKY'],
-    F:['BARLEY', 'EL PRIMO', 'MINA', 'FINX'],
+    S:['OTIS', 'STU', 'GRIFF', 'COLETTE'],
+    A:['EDGAR', 'LUMI', 'CHESTER', 'PIERCE', 'NAJIA', 'SHADE'],
+    B:['MORTIS', 'SIRIUS', 'RUFFS', 'CROW', 'CORDELIUS', 'SANDY', 'LEON', 'MOE', 'ALLI', 'MEEPLE'],
+    C:['CHARLIE', 'BULL', 'WILLOW', 'SPIKE', 'EMZ', 'NITA', 'MINA', 'MAX', 'COLT'],
+    D:['CLANCY', 'SURGE', 'ZIGGY', 'ASH', 'RICO', 'SAM'],
+    F:['SHELLY','TRUNK', 'LOLA', 'LOU', 'KIT'],
   },
   gemGrab:      { label:'Gem Grab',      color:'#9c27b0', icon: 'Assets/Gem Grab.png',
-    S:['NAJIA', 'LEON', 'SANDY', 'OTIS', 'LILY', 'CLANCY', 'CHESTER'],
-    A:['BULL', 'EMZ', 'STU', 'MORTIS', 'RUFFS', 'KIT', 'JANET', 'SIRIUS'],
-    B:['CHARLIE', 'NITA', 'SPIKE', 'MOE', 'RICO', 'CROW', 'BO', 'PAM', 'TARA'],
-    C:['MAX', 'GALE', 'AMBER', 'ROSA', 'MEEPLE', 'KENJI', 'ALLI', 'PENNY', 'SHADE', 'GENE'],
-    D:['SHELLY', 'SQUEAK', 'PIERCE', 'BIBI', 'CORDELIUS', 'ZIGGY', 'PEARL', 'BUSTER'],
-    F:['GUS', 'BYRON', 'GRAY', 'MINA', 'SURGE', 'DOUG', 'TRUNK'],
+    S:['CHESTER', 'STU', 'OTIS', 'GRIFF'],
+    A:['RUFFS', 'SANDY', 'EDGAR', 'MORTIS', 'COLETTE', 'LEON', 'KIT'],
+    B:['BULL', 'LUMI', 'SIRIUS', 'ALLI', 'MOE', 'MEEPLE', 'CROW', 'JANET', 'NAJIA', 'PIERCE', 'LILY', 'FINX'],
+    C:['SHADE', 'FANG', 'MAX', 'MINA', 'EMZ', 'CHARLIE', 'KENJI', 'PENNY', 'R-T', 'CLANCY', 'NITA'],
+    D:['TARA', 'GENE', 'GALE', 'LOLA', 'GUS', 'SURGE', 'BO'],
+    F:['CORDELIUS', 'PAM', 'AMBER', 'DOUG', 'RICO'],
   },
   heist:        { label:'Heist',         color:'#ff9800', icon: 'Assets/Heist.png',
-    S:['BULL', 'OTIS', 'KAZE', 'CLANCY', 'COLT'],
-    A:['EVE', 'PIERCE', 'PENNY', 'CROW', 'MELODIE', '8-BIT', 'CHUCK'],
-    B:['BO', 'BROCK', 'LILY', 'CARL', 'SIRIUS', 'NANI', 'AMBER', 'BELLE', 'RUFFS', 'ANGELO', 'BIBI'],
-    C:['CHARLIE', 'SHADE', 'ALLI', 'RICO', 'NITA', 'EMZ', 'BYRON', 'CORDELIUS', 'LEON'],
-    D:['KIT', 'SPIKE', 'BONNIE', 'LUMI', 'JUJU', 'FINX', 'PIPER', 'CHESTER'],
-    F:['DARRYL', 'BERRY', 'ZIGGY', 'COLETTE', 'LOLA', 'MICO'],
-   
+    S:['KAZE', 'OTIS', 'COLT', 'EDGAR'],
+    A:['LUMI', 'PIERCE', 'CROW', 'COLETTE', 'BULL', 'CHUCK'],
+    B:['SIRIUS', 'RUFFS', 'NANI', 'PENNY', 'EVE', 'MELODIE', 'LILY', 'ANGELO', 'SHADE', 'LOLA'],
+    C:['RICO', 'ALLI', '8-BIT', 'NAJIA', 'CARL', 'CORDELIUS', 'GRIFF', 'AMBER', 'NITA', 'BELLE'],
+    D:['BONNIE', 'BIBI', 'BYRON', 'CLANCY', 'MICO', 'BO'],
+    F:['BERRY', 'EMZ', 'FINX', 'BROCK'],
   },
   hotZone:      { label:'Hot Zone',      color:'#f06292', icon: 'Assets/Hot Zone.png',
-    S:['CLANCY', 'LEON', 'MORTIS', 'CHESTER', 'FINX', 'RUFFS', 'PIERCE'],
-    A:['ZIGGY', 'BULL', 'EMZ', 'LOU', 'NAJIA', 'SPIKE', 'OTIS', 'KENJI', 'STU'],
-    B:['BO', 'KAZE', 'POCO', 'SIRIUS', 'PAM', 'PENNY', 'CHARLIE', 'GRAY', 'MEEPLE', 'CROW'],
-    C:['MINA', 'NITA', 'DRACO', 'AMBER', 'BARLEY', 'CORDELIUS', 'LUMI', 'SHADE', 'JAE-YONG'],
-    D:['BYRON', 'GRIFF', 'BIBI', 'COLT', 'BEA', 'LILY', 'ALLI', 'GLOWBERT'],
-    F:['BERRY', 'MEG', 'JUJU', 'HANK', 'GALE']
+    S:['EDGAR', 'CHESTER', 'FINX', 'LUMI'],
+    A:['PIERCE', 'COLETTE', 'STU', 'MORTIS', 'SIRIUS', 'CROW'],
+    B:['PENNY', 'GRIFF', 'DRACO', 'NAJIA', 'RUFFS', 'MINA', 'OTIS', 'LEON', 'MEEPLE', 'KAZE'],
+    C:['EMZ', 'LOLA', 'SHADE', 'GRAY', 'CLANCY', 'CHARLIE', 'AMBER', 'LOU', 'GLOWY', 'BERRY'],
+    D:['KENJI', 'PAM', 'POCO', 'CORDELIUS', 'HANK', 'BULL'],
+    F:['BYRON', 'NITA', 'MELODIE', 'GIGI']
   },
   knockout:     { label:'Knockout',      color:'#29b6f6', icon: 'Assets/Knockout.png',
-    S:['NAJIA', 'ANGELO', 'BROCK', 'R-T', 'PIERCE', 'BYRON', ],
-    A:['GENE', 'BO', 'JAE-YONG', 'LEON', 'MORTIS', 'KIT', 'OLLIE', 'GUS'],
-    B:['PIPER', 'BUSTER', 'NANI', 'TICK', 'RUFFS', 'CHARLIE', 'SIRIUS', 'MINA'],
-    C:['RICO', 'BELLE', 'CROW', 'MEEPLE', 'EVE', 'GRAY', 'DOUG', 'ZIGGY'],
-    D:['MAX', 'SQUEAK', 'DARRYL', 'COLT', 'PEARL', 'ALLI', 'SPIKE'],
-    F:['SHELLY', 'FINX', 'ROSA', 'SPROUT', 'CORDELIUS'],
+    S:['ANGELO', 'PIERCE', 'BYRON'],
+    A:['LEON', 'COLETTE', 'GENE', 'R-T', 'BROCK', 'JAE-YONG'],
+    B:['MEEPLE', 'RUFFS', 'OLLIE', 'EDGAR', 'BELLE', 'KIT', 'FANG', 'MINA', 'CROW'],
+    C:['MORTIS', 'RICO', 'BUSTER', 'NAJIA', 'COLT', 'GUS', 'SIRIUS', 'GRAY', 'PIPER'],
+    D:['SPIKE', 'ZIGGY', 'PEARL', 'CHARLIE', 'GLOWY', 'EVE'],
+    F:['DOUG', 'BO', 'SPROUT', 'NANI'],
   },
   soloShowdown: { label:'Solo Showdown', color:'#ec4899', icon: 'Assets/Showdown.png',
     S:['SIRIUS', 'BULL', 'KIT', 'SHELLY', 'BIBI', 'LILY', 'LEON', 'MORTIS'],
@@ -511,359 +1218,65 @@ const GAMEMODE_TIERS = {
     C:['DOUG', 'CLANCY', 'TRUNK', 'DRACO', 'TARA', 'ASH', 'EMZ', 'SPIKE', 'MELODIE', 'JACKY', 'SANDY'],
     D:['MEG', 'MINA', 'MAISIE', 'GLOWBERT', 'SAM', 'EL PRIMO', 'CARL', 'RICO', 'DYNAMIKE'],
     F:['BO', 'JANET', 'PIERCE', 'WILLOW', 'HANK', 'GIGI', 'CROW', 'COLT'],
-    },
+  },
   brawlArena:   { label:'Brawl Arena',   color:'#8b5cf6', icon: 'Assets/Arena.png',
-    S:['PIERCE', 'BULL', 'COLT', 'MORTIS'],
+    S:['8-BIT', 'DAMIAN','PIERCE', 'BULL', 'COLT', 'MORTIS'],
     A:['EMZ', 'TICK', 'PIPER', 'LEON', 'POCO', 'BIBI', 'CROW'],
-    B:['CORDELIUS', 'GENE', 'MEEPLE', 'KIT', 'CHESTER', 'BO', 'DARRYL', 'GIGI', '8-BIT', 'KENJI', 'RICO', 'SHADE'],
+    B:['CORDELIUS', 'GENE', 'MEEPLE', 'KIT', 'CHESTER', 'BO', 'DARRYL', 'GIGI', 'KENJI', 'RICO', 'SHADE'],
     C:['BROCK', 'KAZE', 'LILY', 'SIRIUS', 'SURGE', 'BYRON', 'GRAY', 'STU', 'FANG', 'SPIKE', 'ALLI', 'JESSIE', 'PENNY'],
     D:['SHELLY', 'TRUNK', 'MINA', 'BUZZ', 'BELLE', 'LUMI', 'MANDY', 'JANET'],
-    F:['OTIS', 'NAJIA', 'NANI', 'BONNIE', 'COLETTE', 'NITA']
-
+    F:['OTIS', 'NAJIA', 'NANI', 'BONNIE', 'COLETTE', 'NITA'],
   },
 };
+
 const GM_SWITCHER_ORDER = ['bounty','brawlBall','gemGrab','heist','hotZone','knockout','soloShowdown','brawlArena'];
-
-const PRO_DATA = [
-  { brawler: '8-BIT',                   bounty: [7,6], brawlBall: null, gemGrab: [4,0], heist: [79,38], hotZone: [3,2], knockout: [3,2] },
-  { brawler: 'ALLI',                    bounty: [13,5], brawlBall: [57,34], gemGrab: [35,17], heist: [37,18], hotZone: [16,9], knockout: [17,6] },
-  { brawler: 'AMBER',                   bounty: [2,2], brawlBall: [22,13], gemGrab: [26,14], heist: [55,29], hotZone: [36,18], knockout: [2,2] },
-  { brawler: 'ANGELO',                  bounty: [39,14], brawlBall: null, gemGrab: null, heist: [57,22], hotZone: null, knockout: [110,64] },
-  { brawler: 'ASH',                     bounty: null, brawlBall: [11,7], gemGrab: [1,1], heist: null, hotZone: [3,2], knockout: null },
-  { brawler: 'BARLEY',                  bounty: null, brawlBall: [9,8], gemGrab: null, heist: [1,0], hotZone: [25,13], knockout: [1,0] },
-  { brawler: 'BEA',                     bounty: [1,0], brawlBall: [4,4], gemGrab: null, heist: [9,5], hotZone: [9,5], knockout: null },
-  { brawler: 'BELLE',                   bounty: [76,40], brawlBall: null, gemGrab: null, heist: [66,35], hotZone: [2,1], knockout: [47,21] },
-  { brawler: 'BERRY',                   bounty: [1,1], brawlBall: [3,2], gemGrab: [4,1], heist: [21,10], hotZone: [20,10], knockout: [3,1] },
-  { brawler: 'BIBI',                    bounty: [3,2], brawlBall: [35,17], gemGrab: [16,9], heist: [45,17], hotZone: [18,10], knockout: null },
-  { brawler: 'BO',                      bounty: [11,3], brawlBall: [4,2], gemGrab: [49,23], heist: [40,26], hotZone: [51,28], knockout: [61,32] },
-  { brawler: 'BONNIE',                  bounty: [1,0], brawlBall: null, gemGrab: null, heist: [16,9], hotZone: null, knockout: [3,1] },
-  { brawler: 'BROCK',                   bounty: [16,13], brawlBall: null, gemGrab: [1,1], heist: [46,27], hotZone: [3,1], knockout: [109,58] },
-  { brawler: 'BULL',                    bounty: [13,5], brawlBall: [95,44], gemGrab: [65,38], heist: [84,48], hotZone: [77,44], knockout: [6,2] },
-  { brawler: 'BUSTER',                  bounty: [5,4], brawlBall: [5,1], gemGrab: [19,10], heist: [1,1], hotZone: [4,1], knockout: [31,17] },
-  { brawler: 'BUZZ',                    bounty: null, brawlBall: [3,1], gemGrab: [1,0], heist: [3,1], hotZone: [2,0], knockout: null },
-  { brawler: 'BYRON',                   bounty: [68,37], brawlBall: [3,3], gemGrab: [11,5], heist: [36,16], hotZone: [12,9], knockout: [90,44] },
-  { brawler: 'CARL',                    bounty: [5,4], brawlBall: [3,1], gemGrab: [3,0], heist: [51,27], hotZone: [1,0], knockout: [3,1] },
-  { brawler: 'CHARLIE',                 bounty: [26,8], brawlBall: [72,33], gemGrab: [53,31], heist: [24,15], hotZone: [51,22], knockout: [43,21] },
-  { brawler: 'CHESTER',                 bounty: [7,4], brawlBall: [156,69], gemGrab: [173,78], heist: [16,8], hotZone: [178,86], knockout: [6,3] },
-  { brawler: 'CHUCK',                   bounty: null, brawlBall: null, gemGrab: [1,0], heist: [70,30], hotZone: [3,2], knockout: null },
-  { brawler: 'CLANCY',                  bounty: [15,8], brawlBall: [81,42], gemGrab: [112,55], heist: [98,44], hotZone: [131,74], knockout: [3,1] },
-  { brawler: 'COLETTE',                 bounty: null, brawlBall: null, gemGrab: null, heist: [18,6], hotZone: null, knockout: [1,1] },
-  { brawler: 'COLT',                    bounty: [3,2], brawlBall: [23,11], gemGrab: [1,1], heist: [140,65], hotZone: [10,6], knockout: [18,7] },
-  { brawler: 'CORDELIUS',               bounty: [5,4], brawlBall: [48,22], gemGrab: [14,6], heist: [36,14], hotZone: [23,12], knockout: [9,3] },
-  { brawler: 'CROW',                    bounty: [45,22], brawlBall: [50,23], gemGrab: [44,20], heist: [61,29], hotZone: [57,21], knockout: [41,19] },
-  { brawler: 'DARRYL',                  bounty: null, brawlBall: null, gemGrab: [2,0], heist: [11,5], hotZone: null, knockout: [29,12] },
-  { brawler: 'DOUG',                    bounty: [5,1], brawlBall: [3,1], gemGrab: [10,4], heist: [1,1], hotZone: [4,1], knockout: [19,10] },
-  { brawler: 'DRACO',                   bounty: null, brawlBall: [2,2], gemGrab: [4,2], heist: [2,2], hotZone: [27,14], knockout: null },
-  { brawler: 'DYNAMIKE',                bounty: null, brawlBall: [2,1], gemGrab: null, heist: [1,1], hotZone: null, knockout: null },
-  { brawler: 'EDGAR',                   bounty: null, brawlBall: [5,2], gemGrab: [5,2], heist: [7,3], hotZone: [1,0], knockout: null },
-  { brawler: 'EL PRIMO',                bounty: null, brawlBall: [8,7], gemGrab: null, heist: null, hotZone: null, knockout: null },
-  { brawler: 'EMZ',                     bounty: null, brawlBall: [109,56], gemGrab: [88,46], heist: [32,15], hotZone: [92,50], knockout: null },
-  { brawler: 'EVE',                     bounty: [3,1], brawlBall: null, gemGrab: null, heist: [73,40], hotZone: null, knockout: [51,22] },
-  { brawler: 'FANG',                    bounty: [5,2], brawlBall: [1,1], gemGrab: [1,0], heist: [1,0], hotZone: [2,0], knockout: [2,0] },
-  { brawler: 'FINX',                    bounty: null, brawlBall: [10,4], gemGrab: [6,1], heist: [10,5], hotZone: [120,56], knockout: [10,6] },
-  { brawler: 'FRANK',                   bounty: null, brawlBall: [19,7], gemGrab: [4,3], heist: [2,0], hotZone: [6,3], knockout: [1,0] },
-  { brawler: 'GALE',                    bounty: null, brawlBall: [24,16], gemGrab: [28,18], heist: null, hotZone: [11,4], knockout: [1,1] },
-  { brawler: 'GENE',                    bounty: [82,42], brawlBall: [1,1], gemGrab: [25,11], heist: null, hotZone: null, knockout: [74,42] },
-  { brawler: 'GIGI',                    bounty: [2,1], brawlBall: [1,0], gemGrab: [2,2], heist: [2,0], hotZone: null, knockout: [2,0] },
-  { brawler: 'GLOWBERT',                bounty: [8,5], brawlBall: [1,1], gemGrab: [5,1], heist: [6,2], hotZone: [21,11], knockout: [6,4] },
-  { brawler: 'GRAY',                    bounty: [20,11], brawlBall: [1,1], gemGrab: [12,6], heist: [1,1], hotZone: [45,20], knockout: [23,13] },
-  { brawler: 'GRIFF',                   bounty: null, brawlBall: [3,2], gemGrab: [1,1], heist: [5,0], hotZone: [8,5], knockout: [1,1] },
-  { brawler: 'GROM',                    bounty: null, brawlBall: null, gemGrab: [1,1], heist: [1,0], hotZone: null, knockout: [3,3] },
-  { brawler: 'GUS',                     bounty: [40,20], brawlBall: [1,1], gemGrab: [16,7], heist: null, hotZone: null, knockout: [69,25] },
-  { brawler: 'HANK',                    bounty: null, brawlBall: [12,8], gemGrab: [2,0], heist: null, hotZone: [14,4], knockout: [2,1] },
-  { brawler: 'JACKY',                   bounty: [1,1], brawlBall: [11,3], gemGrab: [1,1], heist: null, hotZone: null, knockout: null },
-  { brawler: 'JAE-YONG',                bounty: [45,21], brawlBall: [4,2], gemGrab: [1,1], heist: [6,1], hotZone: [15,11], knockout: [78,40] },
-  { brawler: 'JANET',                   bounty: null, brawlBall: null, gemGrab: [68,30], heist: null, hotZone: null, knockout: [4,2] },
-  { brawler: 'JESSIE',                  bounty: null, brawlBall: null, gemGrab: [1,0], heist: null, hotZone: null, knockout: null },
-  { brawler: 'JUJU',                    bounty: [4,2], brawlBall: [11,4], gemGrab: [1,0], heist: [9,6], hotZone: [14,5], knockout: [1,0] },
-  { brawler: 'KAZE',                    bounty: [76,36], brawlBall: [1,1], gemGrab: [4,2], heist: [155,75], hotZone: [52,27], knockout: [6,3] },
-  { brawler: 'KENJI',                   bounty: [6,3], brawlBall: [42,19], gemGrab: [22,11], heist: null, hotZone: [83,38], knockout: [2,1] },
-  { brawler: 'KIT',                     bounty: [35,15], brawlBall: [13,4], gemGrab: [64,30], heist: [16,12], hotZone: [6,4], knockout: [65,30] },
-  { brawler: 'LARRY & LAWRIE',          bounty: null, brawlBall: [13,7], gemGrab: [1,1], heist: null, hotZone: [3,1], knockout: null },
-  { brawler: 'LEON',                    bounty: [41,24], brawlBall: [116,53], gemGrab: [109,60], heist: [28,10], hotZone: [145,83], knockout: [57,28] },
-  { brawler: 'LILY',                    bounty: [4,3], brawlBall: [8,4], gemGrab: [107,51], heist: [42,24], hotZone: [9,5], knockout: [5,1] },
-  { brawler: 'LOLA',                    bounty: [1,1], brawlBall: null, gemGrab: [1,1], heist: [10,4], hotZone: null, knockout: [1,1] },
-  { brawler: 'LOU',                     bounty: [2,1], brawlBall: [4,3], gemGrab: [1,1], heist: [5,0], hotZone: [95,45], knockout: [3,2] },
-  { brawler: 'LUMI',                    bounty: [1,0], brawlBall: [18,6], gemGrab: [2,0], heist: [14,8], hotZone: [23,10], knockout: null },
-  { brawler: 'MAISIE',                  bounty: null, brawlBall: [6,2], gemGrab: [5,2], heist: [2,0], hotZone: [4,3], knockout: null },
-  { brawler: 'MANDY',                   bounty: null, brawlBall: null, gemGrab: [1,1], heist: null, hotZone: null, knockout: [1,0] },
-  { brawler: 'MAX',                     bounty: [18,7], brawlBall: [40,14], gemGrab: [26,17], heist: [2,2], hotZone: [3,1], knockout: [21,9] },
-  { brawler: 'MEEPLE',                  bounty: [20,10], brawlBall: [41,25], gemGrab: [23,12], heist: [6,4], hotZone: [54,23], knockout: [42,19] },
-  { brawler: 'MEG',                     bounty: [1,1], brawlBall: [10,7], gemGrab: [5,2], heist: [1,0], hotZone: [16,7], knockout: [5,1] },
-  { brawler: 'MELODIE',                 bounty: [8,6], brawlBall: null, gemGrab: [1,1], heist: [64,31], hotZone: [5,1], knockout: null },
-  { brawler: 'MICO',                    bounty: [5,2], brawlBall: null, gemGrab: null, heist: [9,5], hotZone: null, knockout: [2,2] },
-  { brawler: 'MINA',                    bounty: [20,7], brawlBall: [6,5], gemGrab: [10,4], heist: [3,2], hotZone: [37,21], knockout: [43,23] },
-  { brawler: 'MOE',                     bounty: [1,1], brawlBall: [63,30], gemGrab: [42,21], heist: [1,1], hotZone: [4,1], knockout: [3,2] },
-  { brawler: 'MORTIS',                  bounty: [56,25], brawlBall: [71,37], gemGrab: [104,53], heist: [1,0], hotZone: [129,74], knockout: [55,25] },
-  { brawler: 'MR. P',                   bounty: [1,0], brawlBall: null, gemGrab: [4,2], heist: null, hotZone: [1,1], knockout: null },
-  { brawler: 'NAJIA',                   bounty: [7,5], brawlBall: [4,1], gemGrab: [5,3], heist: null, hotZone: [3,0], knockout: [8,3] },
-  { brawler: 'NANI',                    bounty: [35,18], brawlBall: null, gemGrab: null, heist: [44,24], hotZone: null, knockout: [49,27] },
-  { brawler: 'NITA',                    bounty: [1,1], brawlBall: [75,33], gemGrab: [58,30], heist: [27,13], hotZone: [34,17], knockout: null },
-  { brawler: 'OLLIE',                   bounty: [11,5], brawlBall: [3,2], gemGrab: [3,1], heist: null, hotZone: null, knockout: [78,35] },
-  { brawler: 'OTIS',                    bounty: [5,1], brawlBall: [155,81], gemGrab: [110,59], heist: [125,63], hotZone: [69,33], knockout: [5,2] },
-  { brawler: 'PAM',                     bounty: [4,0], brawlBall: [1,1], gemGrab: [43,20], heist: null, hotZone: [54,25], knockout: null },
-  { brawler: 'PEARL',                   bounty: [8,6], brawlBall: null, gemGrab: [9,5], heist: [2,0], hotZone: null, knockout: [22,8] },
-  { brawler: 'PENNY',                   bounty: [21,10], brawlBall: null, gemGrab: [35,16], heist: [70,37], hotZone: [54,24], knockout: [1,0] },
-  { brawler: 'PIERCE',                  bounty: [73,36], brawlBall: [59,31], gemGrab: [20,12], heist: [72,39], hotZone: [138,55], knockout: [94,50] },
-  { brawler: 'PIPER',                   bounty: [11,4], brawlBall: null, gemGrab: null, heist: [10,5], hotZone: null, knockout: [39,23] },
-  { brawler: 'POCO',                    bounty: null, brawlBall: [23,14], gemGrab: [4,3], heist: null, hotZone: [50,25], knockout: [2,2] },
-  { brawler: 'R-T',                     bounty: [24,10], brawlBall: [1,1], gemGrab: [6,4], heist: [2,1], hotZone: [3,3], knockout: [117,58] },
-  { brawler: 'RICO',                    bounty: [1,1], brawlBall: [70,36], gemGrab: [41,20], heist: [31,15], hotZone: null, knockout: [43,23] },
-  { brawler: 'ROSA',                    bounty: null, brawlBall: [20,6], gemGrab: [31,17], heist: null, hotZone: [6,2], knockout: [12,6] },
-  { brawler: 'RUFFS',                   bounty: [36,20], brawlBall: [62,32], gemGrab: [91,46], heist: [57,28], hotZone: [126,59], knockout: [45,24] },
-  { brawler: 'SAM',                     bounty: null, brawlBall: null, gemGrab: [1,1], heist: [1,0], hotZone: null, knockout: null },
-  { brawler: 'SANDY',                   bounty: null, brawlBall: [27,18], gemGrab: [125,65], heist: null, hotZone: [4,1], knockout: [1,0] },
-  { brawler: 'SHADE',                   bounty: [5,3], brawlBall: [87,49], gemGrab: [33,14], heist: [39,22], hotZone: [23,18], knockout: [1,0] },
-  { brawler: 'SHELLY',                  bounty: null, brawlBall: [25,15], gemGrab: [10,7], heist: null, hotZone: [3,2], knockout: [7,5] },
-  { brawler: 'SIRIUS',                  bounty: [16,5], brawlBall: [57,28], gemGrab: [71,35], heist: [47,26], hotZone: [52,24], knockout: [32,17] },
-  { brawler: 'SPIKE',                   bounty: [19,13], brawlBall: [87,42], gemGrab: [50,25], heist: [12,7], hotZone: [69,34], knockout: [20,7] },
-  { brawler: 'SPROUT',                  bounty: [3,1], brawlBall: [3,0], gemGrab: null, heist: [2,1], hotZone: [6,2], knockout: [13,6] },
-  { brawler: 'SQUEAK',                  bounty: [1,1], brawlBall: [5,2], gemGrab: [14,9], heist: [2,2], hotZone: [4,1], knockout: [20,9] },
-  { brawler: 'STU',                     bounty: [2,1], brawlBall: [53,24], gemGrab: [78,39], heist: null, hotZone: [68,31], knockout: [1,1] },
-  { brawler: 'SURGE',                   bounty: null, brawlBall: [12,4], gemGrab: [15,5], heist: null, hotZone: [2,1], knockout: null },
-  { brawler: 'TARA',                    bounty: null, brawlBall: [4,1], gemGrab: [56,24], heist: [1,1], hotZone: [3,2], knockout: null },
-  { brawler: 'TICK',                    bounty: [4,1], brawlBall: null, gemGrab: null, heist: null, hotZone: null, knockout: [35,19] },
-  { brawler: 'TRUNK',                   bounty: [1,1], brawlBall: [5,0], gemGrab: [18,5], heist: null, hotZone: [3,3], knockout: null },
-  { brawler: 'WILLOW',                  bounty: [8,5], brawlBall: [71,39], gemGrab: null, heist: null, hotZone: [2,0], knockout: null },
-  { brawler: 'ZIGGY',                   bounty: [19,10], brawlBall: [54,24], gemGrab: [12,7], heist: [19,8], hotZone: [56,35], knockout: [23,12] },
-];
-
-const PLAYERS = {
-  jasper: { name:'JASPER', color:'#ff6ec7', matches:[
-  { brawler: 'ANGELO', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 0 },
-  { brawler: 'BROCK', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 1 },
-  { brawler: 'BROCK', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 0 },
-  { brawler: 'BROCK', gamemode: 'brawlBall', map: "Pinball Dreams", wins: 1, losses: 0 },
-  { brawler: 'BROCK', gamemode: 'heist', map: "Kaboom Canyon", wins: 0, losses: 1 },
-  { brawler: 'BROCK', gamemode: 'knockout', map: "Out in the Open", wins: 0, losses: 1 },
-  { brawler: 'BULL', gamemode: 'brawlBall', map: "Center Stage", wins: 0, losses: 1 },
-  { brawler: 'BULL', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
-  { brawler: 'CARL', gamemode: 'hotZone', map: "Ring of Fire", wins: 0, losses: 1 },
-  { brawler: 'CHARLIE', gamemode: 'brawlBall', map: "Pinball Dreams", wins: 0, losses: 1 },
-  { brawler: 'CHARLIE', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 0, losses: 1 },
-  { brawler: 'CHARLIE', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 0 },
-  { brawler: 'CHARLIE', gamemode: 'knockout', map: "Flaring Phoenix", wins: 0, losses: 1 },
-  { brawler: 'COLT', gamemode: 'bounty', map: "Hideout", wins: 1, losses: 0 },
-  { brawler: 'COLT', gamemode: 'brawlBall', map: "Center Stage", wins: 0, losses: 2 },
-  { brawler: 'CORDELIUS', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
-  { brawler: 'CORDELIUS', gamemode: 'brawlBall', map: "Spiraling Out", wins: 0, losses: 1 },
-  { brawler: 'CORDELIUS', gamemode: 'gemGrab', map: "Double Swoosh", wins: 1, losses: 0 },
-  { brawler: 'CORDELIUS', gamemode: 'knockout', map: "Out in the Open", wins: 0, losses: 1 },
-  { brawler: 'CROW', gamemode: 'brawlBall', map: "Center Stage", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'brawlBall', map: "Pinball Dreams", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'gemGrab', map: "Gem Fort", wins: 2, losses: 0 },
-  { brawler: 'CROW', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 1 },
-  { brawler: 'CROW', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 1 },
-  { brawler: 'CROW', gamemode: 'knockout', map: "Flaring Phoenix", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
-  { brawler: 'EDGAR', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 1 },
-  { brawler: 'EDGAR', gamemode: 'brawlBall', map: "Beach Ball", wins: 0, losses: 1 },
-  { brawler: 'EMZ', gamemode: 'brawlBall', map: "Center Stage", wins: 0, losses: 1 },
-  { brawler: 'EMZ', gamemode: 'brawlBall', map: "Triple Dribble", wins: 0, losses: 1 },
-  { brawler: 'EMZ', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
-  { brawler: 'FANG', gamemode: 'knockout', map: "Belle's Rock", wins: 0, losses: 1 },
-  { brawler: 'FRANK', gamemode: 'brawlBall', map: "Center Stage", wins: 1, losses: 0 },
-  { brawler: 'GALE', gamemode: 'gemGrab', map: "Gem Fort", wins: 1, losses: 0 },
-  { brawler: 'GENE', gamemode: 'gemGrab', map: "Double Swoosh", wins: 0, losses: 1 },
-  { brawler: 'GRAY', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 1 },
-  { brawler: 'GRIFF', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 1 },
-  { brawler: 'GRIFF', gamemode: 'brawlBall', map: "Beach Ball", wins: 1, losses: 0 },
-  { brawler: 'GRIFF', gamemode: 'brawlBall', map: "Center Stage", wins: 1, losses: 0 },
-  { brawler: 'GUS', gamemode: 'bounty', map: "Dry Season", wins: 1, losses: 0 },
-  { brawler: 'GUS', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 0 },
-  { brawler: 'GUS', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
-  { brawler: 'GUS', gamemode: 'heist', map: "Kaboom Canyon", wins: 1, losses: 0 },
-  { brawler: 'JANET', gamemode: 'gemGrab', map: "Undermine", wins: 1, losses: 0 },
-  { brawler: 'JUJU', gamemode: 'heist', map: "Safe Zone", wins: 1, losses: 0 },
-  { brawler: 'JUJU', gamemode: 'hotZone', map: "Parallel Plays", wins: 1, losses: 0 },
-  { brawler: 'LEON', gamemode: 'brawlBall', map: "Spiraling Out", wins: 1, losses: 0 },
-  { brawler: 'LEON', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 1, losses: 1 },
-  { brawler: 'LEON', gamemode: 'hotZone', map: "Dueling Beetles", wins: 1, losses: 0 },
-  { brawler: 'LEON', gamemode: 'knockout', map: "Belle's Rock", wins: 1, losses: 0 },
-  { brawler: 'LILY', gamemode: 'knockout', map: "New Horizons", wins: 0, losses: 1 },
-  { brawler: 'MEEPLE', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 1 },
-  { brawler: 'MEEPLE', gamemode: 'gemGrab', map: "Hard Rock Mine", wins: 0, losses: 1 },
-  { brawler: 'MEEPLE', gamemode: 'hotZone', map: "Parallel Plays", wins: 1, losses: 0 },
-  { brawler: 'MICO', gamemode: 'heist', map: "Bridge Too Far", wins: 1, losses: 0 },
-  { brawler: 'MICO', gamemode: 'heist', map: "Hot Potato", wins: 1, losses: 0 },
-  { brawler: 'MICO', gamemode: 'knockout', map: "Out in the Open", wins: 0, losses: 1 },
-  { brawler: 'MORTIS', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 1 },
-  { brawler: 'MORTIS', gamemode: 'bounty', map: "Layer Cake", wins: 0, losses: 1 },
-  { brawler: 'NAJIA', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 1 },
-  { brawler: 'NITA', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 0, losses: 1 },
-  { brawler: 'PIPER', gamemode: 'bounty', map: "Shooting Star", wins: 1, losses: 0 },
-  { brawler: 'R-T', gamemode: 'heist', map: "Hot Potato", wins: 0, losses: 1 },
-  { brawler: 'RICO', gamemode: 'hotZone', map: "Ring of Fire", wins: 0, losses: 1 },
-  { brawler: 'SHADE', gamemode: 'brawlBall', map: "Sneaky Fields", wins: 1, losses: 0 },
-  { brawler: 'SHADE', gamemode: 'brawlBall', map: "Triple Dribble", wins: 0, losses: 1 },
-  { brawler: 'SHADE', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
-  { brawler: 'SIRIUS', gamemode: 'bounty', map: "Layer Cake", wins: 1, losses: 0 },
-  { brawler: 'SIRIUS', gamemode: 'brawlBall', map: "Beach Ball", wins: 0, losses: 1 },
-  { brawler: 'SIRIUS', gamemode: 'brawlBall', map: "Triple Dribble", wins: 1, losses: 0 },
-  { brawler: 'SIRIUS', gamemode: 'heist', map: "Bridge Too Far", wins: 0, losses: 1 },
-  { brawler: 'SIRIUS', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
-  { brawler: 'SPIKE', gamemode: 'bounty', map: "Layer Cake", wins: 2, losses: 0 },
-  { brawler: 'SPIKE', gamemode: 'hotZone', map: "Open Business", wins: 1, losses: 0 },
-  { brawler: 'SPIKE', gamemode: 'knockout', map: "Out in the Open", wins: 1, losses: 0 },
-  { brawler: 'SPROUT', gamemode: 'hotZone', map: "Dueling Beetles", wins: 0, losses: 1 },
-  { brawler: 'TARA', gamemode: 'knockout', map: "Flaring Phoenix", wins: 0, losses: 1 },
-  { brawler: 'TICK', gamemode: 'bounty', map: "Dry Season", wins: 0, losses: 1 },
-]},
-  daniel: { name:'DANIEL', color:'#64b5f6', matches:[
-  { brawler: 'BIBI', gamemode: 'gemGrab', map: "Gem Fort::::", wins: 2, losses: 0 },
-  { brawler: 'BIBI', gamemode: 'gemGrab', map: "Hard Rock Mine::::", wins: 0, losses: 1 },
-  { brawler: 'BIBI', gamemode: 'gemGrab', map: "Undermine::::", wins: 1, losses: 1 },
-  { brawler: 'BIBI', gamemode: 'hotZone', map: "Dueling Beetles::::", wins: 0, losses: 1 },
-  { brawler: 'BIBI', gamemode: 'hotZone', map: "Parallel Plays::::", wins: 1, losses: 0 },
-  { brawler: 'BO', gamemode: 'gemGrab', map: "Hard Rock Mine::::", wins: 0, losses: 1 },
-  { brawler: 'BO', gamemode: 'heist', map: "Bridge Too Far::::", wins: 0, losses: 1 },
-  { brawler: 'BO', gamemode: 'heist', map: "Kaboom Canyon::::", wins: 0, losses: 1 },
-  { brawler: 'BO', gamemode: 'hotZone', map: "Dueling Beetles::::", wins: 1, losses: 0 },
-  { brawler: 'BO', gamemode: 'hotZone', map: "Ring of Fire::::", wins: 1, losses: 0 },
-  { brawler: 'COLT', gamemode: 'brawlBall', map: "Beach Ball::::", wins: 0, losses: 1 },
-  { brawler: 'COLT', gamemode: 'brawlBall', map: "Center Stage::::", wins: 1, losses: 0 },
-  { brawler: 'COLT', gamemode: 'heist', map: "Hot Potato::", wins: 0, losses: 1 },
-  { brawler: 'COLT', gamemode: 'heist', map: "Hot Potato:::", wins: 0, losses: 1 },
-  { brawler: 'COLT', gamemode: 'knockout', map: "Out in the Open::::", wins: 0, losses: 1 },
-  { brawler: 'CORDELIUS', gamemode: 'bounty', map: "Layer Cake::::", wins: 0, losses: 1 },
-  { brawler: 'CORDELIUS', gamemode: 'brawlBall', map: "Center Stage::", wins: 0, losses: 1 },
-  { brawler: 'CORDELIUS', gamemode: 'brawlBall', map: "Center Stage:::", wins: 0, losses: 1 },
-  { brawler: 'CORDELIUS', gamemode: 'brawlBall', map: "Center Stage::::", wins: 0, losses: 1 },
-  { brawler: 'CORDELIUS', gamemode: 'brawlBall', map: "Spiraling Out::::", wins: 1, losses: 0 },
-  { brawler: 'CORDELIUS', gamemode: 'gemGrab', map: "Double Swoosh::::", wins: 0, losses: 2 },
-  { brawler: 'CROW', gamemode: 'bounty', map: "Dry Season::", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'bounty', map: "Dry Season::::", wins: 2, losses: 2 },
-  { brawler: 'CROW', gamemode: 'bounty', map: "Hideout::::", wins: 1, losses: 1 },
-  { brawler: 'CROW', gamemode: 'bounty', map: "Shooting Star::::", wins: 1, losses: 1 },
-  { brawler: 'CROW', gamemode: 'brawlBall', map: "Center Stage::::", wins: 0, losses: 1 },
-  { brawler: 'CROW', gamemode: 'brawlBall', map: "Pinball Dreams::::", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'brawlBall', map: "Triple Dribble::", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'brawlBall', map: "Triple Dribble:::", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'brawlBall', map: "Triple Dribble::::", wins: 1, losses: 1 },
-  { brawler: 'CROW', gamemode: 'gemGrab', map: "Double Swoosh::::", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'gemGrab', map: "Hard Rock Mine::::", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'heist', map: "Kaboom Canyon::::", wins: 0, losses: 1 },
-  { brawler: 'CROW', gamemode: 'hotZone', map: "Open Business::::", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'hotZone', map: "Parallel Plays::::", wins: 0, losses: 1 },
-  { brawler: 'CROW', gamemode: 'knockout', map: "Belle's Rock:", wins: 0, losses: 1 },
-  { brawler: 'CROW', gamemode: 'knockout', map: "Flaring Phoenix::::", wins: 0, losses: 2 },
-  { brawler: 'CROW', gamemode: 'knockout', map: "New Horizons::", wins: 1, losses: 0 },
-  { brawler: 'CROW', gamemode: 'knockout', map: "New Horizons::::", wins: 0, losses: 1 },
-  { brawler: 'CROW', gamemode: 'knockout', map: "Out in the Open::::", wins: 0, losses: 1 },
-  { brawler: 'DOUG', gamemode: 'brawlBall', map: "Triple Dribble::::", wins: 1, losses: 0 },
-  { brawler: 'DYNAMIKE', gamemode: 'bounty', map: "Layer Cake::", wins: 0, losses: 1 },
-  { brawler: 'FINX', gamemode: 'gemGrab', map: "Double Swoosh::::", wins: 0, losses: 1 },
-  { brawler: 'FINX', gamemode: 'gemGrab', map: "Gem Fort::::", wins: 0, losses: 1 },
-  { brawler: 'FINX', gamemode: 'gemGrab', map: "Hard Rock Mine::::", wins: 0, losses: 1 },
-  { brawler: 'FINX', gamemode: 'gemGrab', map: "Undermine::::", wins: 0, losses: 2 },
-  { brawler: 'FINX', gamemode: 'heist', map: "Bridge Too Far::::", wins: 1, losses: 0 },
-  { brawler: 'FINX', gamemode: 'hotZone', map: "Dueling Beetles::::", wins: 1, losses: 0 },
-  { brawler: 'FINX', gamemode: 'hotZone', map: "Ring of Fire::::", wins: 0, losses: 1 },
-  { brawler: 'FRANK', gamemode: 'brawlBall', map: "Triple Dribble::::", wins: 0, losses: 1 },
-  { brawler: 'FRANK', gamemode: 'hotZone', map: "Dueling Beetles::::", wins: 0, losses: 1 },
-  { brawler: 'MANDY', gamemode: 'bounty', map: "Kaboom Canyon::::", wins: 1, losses: 0 },
-  { brawler: 'MANDY', gamemode: 'heist', map: "Kaboom Canyon::::", wins: 1, losses: 0 },
-  { brawler: 'MANDY', gamemode: 'knockout', map: "Belle's Rock::::", wins: 0, losses: 1 },
-  { brawler: 'MANDY', gamemode: 'knockout', map: "Out in the Open::", wins: 0, losses: 1 },
-  { brawler: 'NAJIA', gamemode: 'bounty', map: "Layer Cake::::", wins: 1, losses: 1 },
-  { brawler: 'NAJIA', gamemode: 'bounty', map: "Shooting Star::::", wins: 0, losses: 1 },
-  { brawler: 'NAJIA', gamemode: 'brawlBall', map: "Center Stage::::", wins: 0, losses: 1 },
-  { brawler: 'NAJIA', gamemode: 'brawlBall', map: "Sneaky Fields:", wins: 0, losses: 1 },
-  { brawler: 'NAJIA', gamemode: 'brawlBall', map: "Spiraling Out::::", wins: 0, losses: 1 },
-  { brawler: 'NAJIA', gamemode: 'brawlBall', map: "Triple Dribble::::", wins: 1, losses: 0 },
-  { brawler: 'NAJIA', gamemode: 'gemGrab', map: "Double Swoosh::::", wins: 0, losses: 1 },
-  { brawler: 'NAJIA', gamemode: 'gemGrab', map: "Undermine:", wins: 0, losses: 1 },
-  { brawler: 'NAJIA', gamemode: 'gemGrab', map: "Undermine::::", wins: 1, losses: 0 },
-  { brawler: 'NAJIA', gamemode: 'hotZone', map: "Dueling Beetles:", wins: 1, losses: 0 },
-  { brawler: 'NAJIA', gamemode: 'knockout', map: "Belle's Rock::::", wins: 0, losses: 1 },
-  { brawler: 'NITA', gamemode: 'brawlBall', map: "Center Stage::::", wins: 1, losses: 0 },
-  { brawler: 'POCO', gamemode: 'knockout', map: "Out in the Open::", wins: 0, losses: 1 },
-  { brawler: 'RICO', gamemode: 'bounty', map: "Layer Cake:::", wins: 1, losses: 0 },
-  { brawler: 'RICO', gamemode: 'bounty', map: "Layer Cake::::", wins: 1, losses: 1 },
-  { brawler: 'RICO', gamemode: 'brawlBall', map: "Triple Dribble::", wins: 0, losses: 1 },
-  { brawler: 'RICO', gamemode: 'brawlBall', map: "Triple Dribble::::", wins: 0, losses: 1 },
-  { brawler: 'RICO', gamemode: 'gemGrab', map: "Double Swoosh::::", wins: 1, losses: 0 },
-  { brawler: 'RICO', gamemode: 'gemGrab', map: "Gem Fort::::", wins: 0, losses: 3 },
-  { brawler: 'RICO', gamemode: 'heist', map: "Hot Potato::::", wins: 1, losses: 0 },
-  { brawler: 'RICO', gamemode: 'hotZone', map: "Dueling Beetles::::", wins: 1, losses: 0 },
-  { brawler: 'RICO', gamemode: 'hotZone', map: "Parallel Plays::::", wins: 0, losses: 1 },
-  { brawler: 'RICO', gamemode: 'hotZone', map: "Ring of Fire::::", wins: 0, losses: 1 },
-  { brawler: 'RICO', gamemode: 'knockout', map: "Flaring Phoenix::::", wins: 2, losses: 2 },
-  { brawler: 'RICO', gamemode: 'knockout', map: "New Horizons::::", wins: 1, losses: 0 },
-  { brawler: 'TARA', gamemode: 'brawlBall', map: "Beach Ball::::", wins: 0, losses: 1 },
-  { brawler: 'TARA', gamemode: 'brawlBall', map: "Center Stage::::", wins: 0, losses: 1 },
-  { brawler: 'TARA', gamemode: 'brawlBall', map: "Sneaky Fields::::", wins: 1, losses: 0 },
-  { brawler: 'TARA', gamemode: 'gemGrab', map: "Double Swoosh::::", wins: 2, losses: 0 },
-]},
-  wolf:   { name:'WOLF',   color:'#ffb74d', matches:[] },
-  tykoro: { name:'TYKORO', color:'#81c784', matches:[
-    {brawler:'BARLEY',gamemode:'heist',map:'Safe Zone',wins:0,losses:1},
-    {brawler:'CROW',gamemode:'brawlBall',map:'Center Stage',wins:0,losses:1},
-    {brawler:'TARA',gamemode:'brawlBall',map:'Triple Dribble',wins:1,losses:0},
-    {brawler:'CROW',gamemode:'brawlBall',map:'Spiraling Out',wins:1,losses:1},
-  ]},
-  sirito: { name:'SIRITO', color:'#ce93d8', matches:[
-  { brawler: 'BEA', gamemode: 'heist', map: "Kaboom Canyon:::", wins: 0, losses: 1 },
-  { brawler: 'BO', gamemode: 'brawlBall', map: "Center Stage:::", wins: 0, losses: 1 },
-  { brawler: 'BO', gamemode: 'gemGrab', map: "Double Swoosh:::", wins: 1, losses: 0 },
-  { brawler: 'BROCK', gamemode: 'heist', map: "Bridge Too Far:::", wins: 0, losses: 1 },
-  { brawler: 'BULL', gamemode: 'hotZone', map: "Parallel Plays:::", wins: 1, losses: 0 },
-  { brawler: 'BULL', gamemode: 'hotZone', map: "Ring of Fire:::", wins: 0, losses: 1 },
-  { brawler: 'CARL', gamemode: 'bounty', map: "Dry Season:::", wins: 1, losses: 0 },
-  { brawler: 'CHESTER', gamemode: 'brawlBall', map: "Spiraling Out:::", wins: 1, losses: 0 },
-  { brawler: 'CHESTER', gamemode: 'brawlBall', map: "Triple Dribble:::", wins: 0, losses: 1 },
-  { brawler: 'CHESTER', gamemode: 'hotZone', map: "Dueling Beetles:::", wins: 1, losses: 0 },
-  { brawler: 'COLT', gamemode: 'bounty', map: "Dry Season:::", wins: 1, losses: 0 },
-  { brawler: 'COLT', gamemode: 'brawlBall', map: "Spiraling Out:::", wins: 0, losses: 1 },
-  { brawler: 'COLT', gamemode: 'heist', map: "Bridge Too Far:::", wins: 2, losses: 2 },
-  { brawler: 'COLT', gamemode: 'heist', map: "Kaboom Canyon:::", wins: 1, losses: 0 },
-  { brawler: 'COLT', gamemode: 'heist', map: "Safe Zone:::", wins: 1, losses: 0 },
-  { brawler: 'CORDELIUS', gamemode: 'hotZone', map: "Parallel Plays:::", wins: 0, losses: 1 },
-  { brawler: 'EMZ', gamemode: 'brawlBall', map: "Beach Ball:::", wins: 0, losses: 1 },
-  { brawler: 'EMZ', gamemode: 'brawlBall', map: "Center Stage:::", wins: 0, losses: 1 },
-  { brawler: 'GRIFF', gamemode: 'hotZone', map: "Open Business:::", wins: 1, losses: 0 },
-  { brawler: 'JANET', gamemode: 'knockout', map: "New Horizons:::", wins: 0, losses: 1 },
-  { brawler: 'KENJI', gamemode: 'brawlBall', map: "Triple Dribble:::", wins: 1, losses: 0 },
-  { brawler: 'LARRY & LAWRIE', gamemode: 'hotZone', map: "Open Business:::", wins: 1, losses: 0 },
-  { brawler: 'LARRY & LAWRIE', gamemode: 'hotZone', map: "Parallel Plays:::", wins: 1, losses: 0 },
-  { brawler: 'LARRY & LAWRIE', gamemode: 'knockout', map: "Flaring Phoenix:::", wins: 0, losses: 1 },
-  { brawler: 'LEON', gamemode: 'brawlBall', map: "Sneaky Fields:::", wins: 0, losses: 1 },
-  { brawler: 'LEON', gamemode: 'knockout', map: "Out in the Open:::", wins: 1, losses: 0 },
-  { brawler: 'NITA', gamemode: 'brawlBall', map: "Center Stage:::", wins: 1, losses: 0 },
-  { brawler: 'PIERCE', gamemode: 'hotZone', map: "Dueling Beetles:::", wins: 1, losses: 0 },
-  { brawler: 'PIERCE', gamemode: 'hotZone', map: "Ring of Fire:::", wins: 1, losses: 1 },
-  { brawler: 'PIERCE', gamemode: 'knockout', map: "Belle's Rock:::", wins: 0, losses: 1 },
-  { brawler: 'RICO', gamemode: 'brawlBall', map: "Pinball Dreams:::", wins: 0, losses: 1 },
-  { brawler: 'RICO', gamemode: 'knockout', map: "Flaring Phoenix:::", wins: 0, losses: 1 },
-  { brawler: 'SHELLY', gamemode: 'brawlBall', map: "Triple Dribble:::", wins: 0, losses: 1 },
-  { brawler: 'SPIKE', gamemode: 'heist', map: "Kaboom Canyon:::", wins: 0, losses: 1 },
-  { brawler: 'SQUEAK', gamemode: 'bounty', map: "Layer Cake:", wins: 1, losses: 0 },
-  { brawler: 'SQUEAK', gamemode: 'bounty', map: "Layer Cake::", wins: 1, losses: 0 },
-  { brawler: 'SQUEAK', gamemode: 'hotZone', map: "Dueling Beetles:::", wins: 1, losses: 0 },
-]},
-};
-
-const GM_COLORS = {bounty:'#f44336',brawlBall:'#4caf50',gemGrab:'#9c27b0',heist:'#ff9800',hotZone:'#f06292',knockout:'#29b6f6'};
-const GM_LABELS = {bounty:'Bounty',brawlBall:'Brawl Ball',gemGrab:'Gem Grab',heist:'Heist',hotZone:'Hot Zone',knockout:'Knockout'};
-const GM_ORDER  = ['bounty','brawlBall','gemGrab','heist','hotZone','knockout'];
-const TIER_KEYS = ['S','A','B','C','D','F'];
+const TIER_KEYS  = ['S','A','B','C','D','F'];
 const TIER_ORDER = ['S','A','B','C','D','F'];
+const GM_ORDER   = ['bounty','brawlBall','gemGrab','heist','hotZone','knockout'];
 
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
 function portraitUrl(n) { return 'portraits/' + n.toLowerCase() + '_portrait.jpg'; }
 function wrClass(r) { return r >= 0.55 ? 'wr-high' : r >= 0.45 ? 'wr-mid' : 'wr-low'; }
-function score(sets, wins) { if (sets < 1 || wins === 0) return sets < 1 ? null : 0; return Math.pow(sets,0.7)*Math.pow(wins/sets,0.3); }
+
+function buildStatsMapFromStarting() {
+  // Aggregate per brawler: total sets (wins+losses), total wins
+  const m = new Map();
+  for (const row of STARTING_DATA) {
+    const key = row.brawler;
+    if (!m.has(key)) m.set(key, { sets: 0, wins: 0 });
+    const d = m.get(key);
+    d.sets += row.wins + row.losses;
+    d.wins += row.wins;
+  }
+  return m;
+}
+
+function buildStatsMapForGamemode(gm) {
+  const m = new Map();
+  for (const row of STARTING_DATA) {
+    if (row.gamemode !== gm) continue;
+    const key = row.brawler;
+    if (!m.has(key)) m.set(key, { sets: 0, wins: 0 });
+    const d = m.get(key);
+    d.sets += row.wins + row.losses;
+    d.wins += row.wins;
+  }
+  return m;
+}
 
 function buildTierMap(tiers) {
   const m = {};
   for (const [t,ns] of Object.entries(tiers)) for (const n of ns) m[n] = t;
   return m;
 }
+
 function getMovement(name, currentTier) {
   const prev = buildTierMap(PREV_LIST);
   if (!prev[name]) return 'new';
   if (prev[name] === currentTier) return null;
   return TIER_ORDER.indexOf(currentTier) < TIER_ORDER.indexOf(prev[name]) ? 'up' : 'down';
 }
+
 function badgeHTML(mv) {
   if (!mv) return '';
   if (mv==='up')   return `<div class="bc-badge bc-badge-up"><svg class="badge-arrow" viewBox="0 0 8 8" fill="none"><path d="M4 7V1M4 1L1.5 3.5M4 1L6.5 3.5" stroke="#2ddb8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
@@ -872,22 +1285,13 @@ function badgeHTML(mv) {
   return '';
 }
 
-function buildProStatsMap() {
-  const m = new Map();
-  for (const b of PRO_DATA) {
-    let sets=0,wins=0;
-    for (const gm of GM_ORDER) { if (b[gm]) { sets+=b[gm][0]; wins+=b[gm][1]; } }
-    m.set(b.brawler, {sets, wins});
-  }
-  return m;
-}
-
 function renderTierRows(container, tiersObj, opts={}) {
-  const {badges=false, longTermTrend=false, gamemodeKey=null} = opts;
-  const stats = buildProStatsMap();
-  const prevMap = buildTierMap(PREV_LIST);
-  const currMap = buildTierMap(PRO_MANUAL_TIERS);
-  const noData = gamemodeKey && (gamemodeKey === 'soloShowdown' || gamemodeKey === 'brawlArena');
+  const { badges=false, longTermTrend=false, gamemodeKey=null } = opts;
+  const overallStats  = buildStatsMapFromStarting();
+  const prevMap       = buildTierMap(PREV_LIST);
+  const currMap       = buildTierMap(PRO_MANUAL_TIERS);
+  const noData        = gamemodeKey && (gamemodeKey === 'soloShowdown' || gamemodeKey === 'brawlArena');
+  const gmStats       = (!noData && gamemodeKey) ? buildStatsMapForGamemode(gamemodeKey) : null;
 
   for (const tk of TIER_KEYS) {
     const names = tiersObj[tk] || [];
@@ -900,19 +1304,18 @@ function renderTierRows(container, tiersObj, opts={}) {
     else {
       for (const name of names) {
         let wrStr = '—', setsStr = '—';
-        if (!noData && gamemodeKey) {
-          const row = PRO_DATA.find(b => b.brawler === name);
-          const gd = row && row[gamemodeKey];
-          if (gd) { setsStr = gd[0]; wrStr = (gd[1]/gd[0]*100).toFixed(1)+'%'; }
+        if (!noData && gamemodeKey && gmStats) {
+          const gd = gmStats.get(name);
+          if (gd && gd.sets > 0) { setsStr = gd.sets; wrStr = (gd.wins/gd.sets*100).toFixed(1)+'%'; }
         } else if (!gamemodeKey) {
-          const s = stats.get(name) || {sets:0,wins:0};
+          const s = overallStats.get(name) || { sets:0, wins:0 };
           setsStr = s.sets;
-          wrStr = s.sets > 0 ? (s.wins/s.sets*100).toFixed(1)+'%' : '—';
+          wrStr   = s.sets > 0 ? (s.wins/s.sets*100).toFixed(1)+'%' : '—';
         }
         const mv = badges ? getMovement(name, tk) : null;
         let extra = '';
         if (badges) {
-          const prev = prevMap[name]||'—';
+          const prev  = prevMap[name]||'—';
           const label = mv==='up' ? `↑ Up from ${prev}` : mv==='down' ? `↓ Down from ${prev}` : mv==='new' ? '✦ New' : 'Stable';
           extra = `<div class="tt-row"><span class="tt-label">Change</span><span class="tt-val">${label}</span></div>`;
         }
@@ -946,38 +1349,69 @@ function renderTierRows(container, tiersObj, opts={}) {
   }
 }
 
-// ── PRO TIER LIST ──
+// ─── TOTAL SETS BANNER ───────────────────────────────────────────────────────
+function computeTotalSets() {
+  let rawSets = 0;
+  for (const row of STARTING_DATA) rawSets += row.wins + row.losses;
+  return Math.round(rawSets / 6);
+}
+
+function computeTotalWins() {
+  let wins = 0, losses = 0;
+  for (const row of STARTING_DATA) { wins += row.wins; losses += row.losses; }
+  return { wins, losses, sets: Math.round((wins + losses) / 6) };
+}
+
+// ─── PRO TIER LIST ───────────────────────────────────────────────────────────
 function buildProTierList() {
-  const stats = buildProStatsMap();
   const container = document.getElementById('pro-tier-list');
   container.innerHTML = '';
-  renderTierRows(container, PRO_MANUAL_TIERS, {badges: true});
-  // unranked
-  const placed = new Set(Object.values(PRO_MANUAL_TIERS).flat());
-  const unranked = PRO_DATA.filter(b => !placed.has(b.brawler));
+
+  // Stats banner
+  const { wins, losses, sets } = computeTotalWins();
+  const wr = ((wins / (wins + losses)) * 100).toFixed(1);
+  const banner = document.createElement('div');
+  banner.className = 'pro-stats-banner';
+  banner.innerHTML = `
+    <div class="psb-stat">
+      <div class="psb-val">${sets.toLocaleString()}</div>
+      <div class="psb-label">Total Sets</div>
+    </div>
+    
+   <div class="psb-stat">
+  <div class="psb-val" style="color: #00FF00;">${LAST_UPDATED}</div>
+  <div class="psb-label">Last Updated</div>
+</div>
+  `;
+  container.appendChild(banner);
+
+  const overallStats = buildStatsMapFromStarting();
+  renderTierRows(container, PRO_MANUAL_TIERS, { badges: true });
+
+  // Unranked
+  const placed   = new Set(Object.values(PRO_MANUAL_TIERS).flat());
+  const allNames = [...new Set(STARTING_DATA.map(r => r.brawler))];
+  const unranked = allNames.filter(n => !placed.has(n));
   if (unranked.length) {
-    const urow = document.createElement('div');
-    urow.className = 'tier-row';
-    const ul = document.createElement('div');
-    ul.className = 'tier-label tier-unranked';
-    ul.innerHTML = 'UNRANKED<br>/NO DATA';
+    const urow = document.createElement('div'); urow.className = 'tier-row';
+    const ul   = document.createElement('div'); ul.className = 'tier-label tier-unranked'; ul.innerHTML = 'UNRANKED<br>/NO DATA';
     urow.appendChild(ul);
-    const ui = document.createElement('div'); ui.className = 'tier-brawlers';
-    for (const b of unranked) {
-      const s = stats.get(b.brawler)||{sets:0,wins:0};
-      const wr = s.sets>0?(s.wins/s.sets*100).toFixed(1)+'%':'—';
-      ui.innerHTML += `<a class="brawler-card" href="pages/${b.brawler.toLowerCase()}.html" style="text-decoration:none;opacity:0.45">
-        <img src="${portraitUrl(b.brawler)}" alt="${b.brawler}" onerror="this.style.background='#1a1f3a'">
-        <div class="bc-name">${b.brawler}</div>
-        <div class="bc-tooltip"><div class="tt-name">${b.brawler}</div>
-          <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}</span></div></div>
+    const ui   = document.createElement('div'); ui.className = 'tier-brawlers';
+    for (const name of unranked) {
+      const s  = overallStats.get(name) || { sets:0, wins:0 };
+      const wr2 = s.sets > 0 ? (s.wins/s.sets*100).toFixed(1)+'%' : '—';
+      ui.innerHTML += `<a class="brawler-card" href="pages/${name.toLowerCase()}.html" style="text-decoration:none;opacity:0.45">
+        <img src="${portraitUrl(name)}" alt="${name}" onerror="this.style.background='#1a1f3a'">
+        <div class="bc-name">${name}</div>
+        <div class="bc-tooltip"><div class="tt-name">${name}</div>
+          <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr2}</span></div></div>
       </a>`;
     }
     urow.appendChild(ui); container.appendChild(urow);
   }
 }
 
-// ── LONGTERM ──
+// ─── LONGTERM PAGE ────────────────────────────────────────────────────────────
 function buildLongtermPage() {
   const c = document.getElementById('longterm-content');
   c.innerHTML = `<div class="longterm-header"><h2>PAST 6 MONTHS — META OVERVIEW</h2>
@@ -991,43 +1425,39 @@ function buildLongtermPage() {
       <div class="lt-legend-item"><div class="lt-dot" style="background:#9e9e9e"></div>F — Not viable</div>
     </div>`;
   const wrap = document.createElement('div');
-  renderTierRows(wrap, LONGTERM_TIERS, {longTermTrend: true});
+  renderTierRows(wrap, LONGTERM_TIERS, { longTermTrend: true });
   c.appendChild(wrap);
 }
 
-// ── GAMEMODES ──
+// ─── GAMEMODES PAGE ───────────────────────────────────────────────────────────
 function buildGamemodesPage() {
   const c = document.getElementById('gamemodes-content');
-c.innerHTML = `<div class="longterm-header"><h2>GAMEMODES — META OVERVIEW</h2>
-<p>This list highlights the strongest brawlers for each gamemode. It doesn’t include every brawler. Only the ones that are consistently viable. Brawlers shown here significantly outperform those not listed, so picking outside this list is generally not recommended.</p></div>
+  c.innerHTML = `<div class="longterm-header"><h2>GAMEMODES — META OVERVIEW</h2>
+    <p>This list highlights the strongest brawlers for each gamemode. It doesn't include every brawler. Only the ones that are consistently viable. Brawlers shown here significantly outperform those not listed, so picking outside this list is generally not recommended.</p></div>
+    <div class="lt-legend">
+      <div class="lt-legend-item"><div class="lt-dot" style="background:#ff4e50"></div>S — Overpowered</div>
+      <div class="lt-legend-item"><div class="lt-dot" style="background:#ff9800"></div>A — Top Tier</div>
+      <div class="lt-legend-item"><div class="lt-dot" style="background:#ffeb3b"></div>B — Strong Picks</div>
+      <div class="lt-legend-item"><div class="lt-dot" style="background:#8bc34a"></div>C — Solid</div>
+      <div class="lt-legend-item"><div class="lt-dot" style="background:#29b6f6"></div>D — Niche</div>
+      <div class="lt-legend-item"><div class="lt-dot" style="background:#9e9e9e"></div>F — Very Niche</div>
+    </div>`;
 
-<div class="lt-legend">
-  <div class="lt-legend-item"><div class="lt-dot" style="background:#ff4e50"></div>S — Overpowered</div>
-  <div class="lt-legend-item"><div class="lt-dot" style="background:#ff9800"></div>A — Top Tier</div>
-  <div class="lt-legend-item"><div class="lt-dot" style="background:#ffeb3b"></div>B — Strong Picks</div>
-  <div class="lt-legend-item"><div class="lt-dot" style="background:#8bc34a"></div>C — Solid</div>
-  <div class="lt-legend-item"><div class="lt-dot" style="background:#29b6f6"></div>D — Niche</div>
-  <div class="lt-legend-item"><div class="lt-dot" style="background:#9e9e9e"></div>F — Very Niche</div>
-</div>`;
   const bar = document.createElement('div');
   bar.className = 'gm-switcher';
 
   GM_SWITCHER_ORDER.forEach((key, i) => {
-    const gm = GAMEMODE_TIERS[key];
+    const gm  = GAMEMODE_TIERS[key];
     const btn = document.createElement('div');
     btn.className = 'gm-switch-btn' + (i===0?' active':'');
-    if (i===0) { btn.style.background=gm.color+'22'; btn.style.borderColor=gm.color+'66'; btn.style.color=gm.color; }
-    btn.innerHTML = `
-  <span class="gm-switch-icon">
-    <img src="${gm.icon}" alt="${gm.label}" />
-  </span>
-`;
+    if (i===0) { btn.style.background = gm.color+'22'; btn.style.borderColor = gm.color+'66'; }
+    btn.innerHTML = `<span class="gm-switch-icon"><img src="${gm.icon}" alt="${gm.label}" /></span>`;
+    btn.title = gm.label;
     btn.onclick = () => {
-      document.querySelectorAll('.gm-switch-btn').forEach(b => { b.classList.remove('active'); b.style.background=''; b.style.borderColor=''; b.style.color=''; });
+      document.querySelectorAll('.gm-switch-btn').forEach(b => { b.classList.remove('active'); b.style.background=''; b.style.borderColor=''; });
       btn.classList.add('active');
-      btn.style.background = gm.color+'22';
-      btn.style.borderColor = gm.color+'66';
-      btn.style.color = gm.color;
+      btn.style.background   = gm.color+'22';
+      btn.style.borderColor  = gm.color+'66';
       document.querySelectorAll('.gm-tier-section').forEach(s => s.classList.remove('active'));
       document.getElementById('gms-'+key).classList.add('active');
     };
@@ -1036,142 +1466,26 @@ c.innerHTML = `<div class="longterm-header"><h2>GAMEMODES — META OVERVIEW</h2>
   c.appendChild(bar);
 
   GM_SWITCHER_ORDER.forEach((key, i) => {
-    const gm = GAMEMODE_TIERS[key];
+    const gm  = GAMEMODE_TIERS[key];
     const sec = document.createElement('div');
-    sec.className = 'gm-tier-section'+(i===0?' active':'');
-    sec.id = 'gms-'+key;
+    sec.className = 'gm-tier-section' + (i===0?' active':'');
+    sec.id = 'gms-' + key;
     const hdr = document.createElement('div');
     hdr.className = 'gm-section-header';
     hdr.innerHTML = `<div class="gm-section-dot" style="background:${gm.color}"></div>${gm.label.toUpperCase()} TIER LIST`;
     sec.appendChild(hdr);
-    renderTierRows(sec, gm, {gamemodeKey: key});
+    renderTierRows(sec, gm, { gamemodeKey: key });
     c.appendChild(sec);
   });
 }
 
-// ── PLAYER PAGES ──
-function buildPlayerPage(id) {
-  const p = PLAYERS[id];
-  const c = document.getElementById(id+'-content');
-  c.innerHTML = '';
-  const tw = p.matches.reduce((s,m)=>s+m.wins,0);
-  const tl = p.matches.reduce((s,m)=>s+m.losses,0);
-  const ts = tw+tl;
-  const wr = ts>0?(tw/ts*100).toFixed(1):'—';
-  const wrc = ts>0?wrClass(tw/ts):'';
-  const hdr = document.createElement('div');
-  hdr.className='player-header'; hdr.style.borderColor=p.color+'44';
-  hdr.innerHTML=`<h2 style="color:${p.color}">${p.name}</h2>
-    <div class="player-stats-row">
-      <div class="pstat"><div class="ps-val" style="color:${p.color}">${ts}</div><div class="ps-label">Total Sets</div></div>
-      <div class="pstat"><div class="ps-val">${tw}</div><div class="ps-label">Wins</div></div>
-      <div class="pstat"><div class="ps-val" style="color:#ef5350">${tl}</div><div class="ps-label">Losses</div></div>
-      <div class="pstat"><div class="ps-val ${wrc}">${wr}${ts>0?'%':''}</div><div class="ps-label">Win Rate</div></div>
-    </div>`;
-  c.appendChild(hdr);
-
-  const gh = document.createElement('div'); gh.className='section-header'; gh.textContent='Results by Game Mode & Map'; c.appendChild(gh);
-
-  for (const gm of GM_ORDER) {
-    const gms = p.matches.filter(m=>m.gamemode===gm);
-    const gw=gms.reduce((s,m)=>s+m.wins,0), gl=gms.reduce((s,m)=>s+m.losses,0), gs=gw+gl;
-    const gr=gs>0?gw/gs:null;
-    const acc=document.createElement('div'); acc.className='gm-accordion';
-    acc.innerHTML=`<div class="gm-accordion-header" onclick="toggleAcc(this)">
-        <div class="gm-dot" style="background:${GM_COLORS[gm]}"></div>
-        <div class="gm-acc-title">${GM_LABELS[gm]}</div>
-        <div class="gm-acc-meta"><span>${gs} sets</span><span>${gw}W / ${gl}L</span></div>
-        <div class="gm-acc-wr ${gr!==null?wrClass(gr):''}">${gr!==null?(gr*100).toFixed(0)+'%':'—'}</div>
-        <div class="gm-acc-arrow">▶</div>
-      </div><div class="gm-accordion-body"></div>`;
-    const body=acc.querySelector('.gm-accordion-body');
-    if (!gms.length) { body.innerHTML='<div class="gm-empty">No games in this mode yet.</div>'; }
-    else {
-      const byMap={};
-      for (const m of gms) (byMap[m.map]=byMap[m.map]||[]).push(m);
-      for (const [mapName, rows] of Object.entries(byMap)) {
-        const mw=rows.reduce((s,m)=>s+m.wins,0), ml=rows.reduce((s,m)=>s+m.losses,0), ms=mw+ml;
-        const mr=ms>0?mw/ms:null;
-        const mg=document.createElement('div'); mg.className='map-group';
-        mg.innerHTML=`<div class="map-group-header" onclick="toggleMap(this)">
-            <div class="map-group-name">${mapName}</div>
-            <div class="map-group-record"><span style="color:#4caf50">${mw}W</span><span style="color:#ef5350">${ml}L</span><span style="color:var(--border)">·</span><span class="${mr?wrClass(mr):''}">${mr?(mr*100).toFixed(0)+'%':'—'}</span></div>
-            <div class="map-group-arrow">▶</div>
-          </div><div class="map-group-body"></div>`;
-        const mgb=mg.querySelector('.map-group-body');
-        for (const m of rows) {
-          const s2=m.wins+m.losses, r2=s2>0?m.wins/s2:null;
-          mgb.innerHTML+=`<div class="brawler-result-row">
-            <img class="brr-img" src="${portraitUrl(m.brawler)}" alt="${m.brawler}" onerror="this.style.background='#1a1f3a'">
-            <div class="brr-name">${m.brawler}</div>
-            <div class="brr-record"><span class="brr-win">${m.wins}W</span> <span class="brr-loss">${m.losses}L</span></div>
-            <div class="brr-wr ${r2?wrClass(r2):''}">${r2?(r2*100).toFixed(0)+'%':'—'}</div>
-          </div>`;
-        }
-        body.appendChild(mg);
-      }
-    }
-    c.appendChild(acc);
-  }
-
-  const th=document.createElement('div'); th.className='section-header'; th.textContent='Brawler Performance Tier List'; c.appendChild(th);
-  const bAgg={};
-  for (const m of p.matches) { if(!bAgg[m.brawler]) bAgg[m.brawler]={wins:0,losses:0}; bAgg[m.brawler].wins+=m.wins; bAgg[m.brawler].losses+=m.losses; }
-  const scored=[], unr=[];
-  for (const [name,d] of Object.entries(bAgg)) {
-    const sets=d.wins+d.losses, sc=sets>=3?score(sets,d.wins):null;
-    if(sc!==null) scored.push({name,sets,wins:d.wins,score:sc});
-    else unr.push({name,sets,wins:d.wins,score:0});
-  }
-  const tdefs=[{key:'S',pct:.10},{key:'A',pct:.25},{key:'B',pct:.50},{key:'C',pct:.75},{key:'D',pct:.90},{key:'F',pct:1}];
-  const bkts={}; for(const t of tdefs) bkts[t.key]=[];
-  scored.sort((a,b)=>b.score-a.score);
-  scored.forEach((b,i)=>{ const pct=(i+1)/scored.length; bkts[tdefs.find(t=>pct<=t.pct).key].push(b); });
-  const wrap=document.createElement('div');
-  for(const t of tdefs) {
-    const row=document.createElement('div'); row.className='tier-row';
-    row.innerHTML=`<div class="tier-label tier-${t.key}">${t.key}</div>`;
-    const inner=document.createElement('div'); inner.className='tier-brawlers';
-    if(!bkts[t.key].length){inner.innerHTML='<span class="empty-tier">—</span>';}
-    else for(const b of bkts[t.key]) {
-      const wr=(b.wins/b.sets*100).toFixed(1);
-      inner.innerHTML+=`<div class="brawler-card"><img src="${portraitUrl(b.name)}" alt="${b.name}" onerror="this.style.background='#1a1f3a'">
-        <div class="bc-name">${b.name}</div><div class="bc-score">${b.score.toFixed(2)}</div>
-        <div class="bc-tooltip"><div class="tt-name">${b.name}</div>
-          <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}%</span></div>
-          <div class="tt-row"><span class="tt-label">Sets</span><span class="tt-val">${b.sets}</span></div>
-          <div class="tt-row"><span class="tt-label">Score</span><span class="tt-val">${b.score.toFixed(2)}</span></div>
-        </div></div>`;
-    }
-    row.appendChild(inner); wrap.appendChild(row);
-  }
-  if(unr.length){
-    const urow=document.createElement('div'); urow.className='tier-row';
-    const ul=document.createElement('div'); ul.className='tier-label tier-unranked'; ul.innerHTML='UNRANKED<br>/NO DATA';
-    urow.appendChild(ul);
-    const ui=document.createElement('div'); ui.className='tier-brawlers';
-    for(const b of unr){
-      const wr=b.sets>0?(b.wins/b.sets*100).toFixed(1)+'%':'—';
-      ui.innerHTML+=`<div class="brawler-card" style="opacity:0.45"><img src="${portraitUrl(b.name)}" alt="${b.name}" onerror="this.style.background='#1a1f3a'">
-        <div class="bc-name">${b.name}</div><div class="bc-score">${b.sets>0?b.sets+'s':'—'}</div>
-        <div class="bc-tooltip"><div class="tt-name">${b.name}</div>
-          <div class="tt-row"><span class="tt-label">Win Rate</span><span class="tt-val">${wr}</span></div>
-          <div class="tt-row"><span class="tt-label">Sets</span><span class="tt-val">${b.sets} (min 3)</span></div>
-        </div></div>`;
-    }
-    urow.appendChild(ui); wrap.appendChild(urow);
-  }
-  c.appendChild(wrap);
-}
-
-function toggleAcc(h) { h.closest('.gm-accordion').classList.toggle('open'); }
-function toggleMap(h) { h.closest('.map-group').classList.toggle('open'); }
-
+// ─── INIT ─────────────────────────────────────────────────────────────────────
 document.getElementById('last-updated-date').textContent = LAST_UPDATED;
 buildProTierList();
 buildLongtermPage();
 buildGamemodesPage();
-for (const id of Object.keys(PLAYERS)) buildPlayerPage(id);
+
+// ─── FLOATING TOOLTIP ────────────────────────────────────────────────────────
 const floatingTip = document.createElement('div');
 floatingTip.className = 'bc-tooltip';
 floatingTip.style.display = 'none';
@@ -1187,24 +1501,17 @@ document.addEventListener('mouseover', e => {
   floatingTip.style.display = 'block';
   positionTip(e, floatingTip);
 });
-
 document.addEventListener('mouseout', e => {
   const card = e.target.closest('.brawler-card');
   if (!card) return;
-  if (!e.relatedTarget || !e.relatedTarget.closest('.brawler-card')) {
-    floatingTip.style.display = 'none';
-  }
+  if (!e.relatedTarget || !e.relatedTarget.closest('.brawler-card')) floatingTip.style.display = 'none';
 });
-
 document.addEventListener('mousemove', e => {
   if (floatingTip.style.display === 'block') positionTip(e, floatingTip);
 });
-
 function positionTip(e, tip) {
-  const tw = tip.offsetWidth;
-  const th = tip.offsetHeight;
-  let left = e.clientX + 12;
-  let top  = e.clientY + 12;
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let left = e.clientX + 12, top = e.clientY + 12;
   if (left + tw > window.innerWidth)  left = e.clientX - tw - 8;
   if (top  + th > window.innerHeight) top  = e.clientY - th - 8;
   tip.style.left = left + 'px';

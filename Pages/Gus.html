@@ -284,8 +284,7 @@
       <div class="meta-bar-label"><span>F</span><span>D</span><span>C</span><span>B</span><span>A</span><span>S</span></div>
     </div>
 
-    <div class="section-title">GAMEMODE RATINGS</div>
-    <div class="gm-ratings-card" id="gm-ratings"></div>
+
   </div>
 
 </div>
@@ -316,39 +315,6 @@ document.getElementById('hero-model-img').src = `Assets/Gus/model.png`;
 document.getElementById('hero-model-img').alt = brawlerParam;
 document.getElementById('brawler-name-overlay').innerHTML = `<em>${brawlerParam.toUpperCase()}</em>`;
 document.title = `BRAWL STATS SSS — ${brawlerParam}`;
-
-const GAMEMODES = [
-  { label: 'Bounty',     color: '#f44336', tier: 'A' },
-  { label: 'Brawl Ball', color: '#4caf50', tier: 'NP' },
-  { label: 'Gem Grab',   color: '#9c27b0', tier: 'F' },
-  { label: 'Heist',      color: '#ff9800', tier: 'NP' },
-  { label: 'Hot Zone',   color: '#f06292', tier: 'NP' },
-  { label: 'Knockout',   color: '#29b6f6', tier: 'A' },
-  { label: 'Showdown',   color: '#1b6305', tier: 'NP' },
-  { label: 'Arena',      color: '#03fcdb', tier: 'NP' },
-];
-
-const TIER_LABELS = {
-  S:  'S — Meta pick',
-  A:  'A — Strong',
-  B:  'B — Viable',
-  C:  'C — Situational',
-  D:  'D — Weak',
-  F:  'F — Barely viable',
-  NP: 'Never play',
-};
-
-const gmContainer = document.getElementById('gm-ratings');
-[...GAMEMODES].sort((a,b) => a.label.localeCompare(b.label)).forEach(gm => {
-  const row = document.createElement('div');
-  row.className = 'gm-row';
-  const isNP = gm.tier === 'NP';
-  row.innerHTML = `
-    <div class="gm-dot" style="background:${gm.color}"></div>
-    <div class="gm-name">${gm.label}</div>
-    <div class="gm-tier-badge gmt-${gm.tier}" title="${TIER_LABELS[gm.tier]}">${isNP ? 'N/P' : gm.tier}</div>`;
-  gmContainer.appendChild(row);
-});
 
 const NOTE_KEY = "buildNoteDismissedAt";
 const NOTE_COOLDOWN = 24 * 60 * 60 * 1000; 
@@ -509,6 +475,13 @@ const SKINS = [
     rarity: 'epic', limited: true, seasonal: false,
     price: '149 💎',
     img: 'Assets/Gus/skins/Will.png',
+    desc: '',
+  },
+  {
+    id: '7', name: 'Tomura Shigaraki Gus',
+    rarity: 'mythic', limited: true, seasonal: false,
+    price: '199 💎',
+    img: 'Assets/Gus/skins/Tomura Shigaraki.png',
     desc: '',
   },
 ];

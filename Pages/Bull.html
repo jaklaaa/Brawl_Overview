@@ -272,19 +272,18 @@
     <div class="section-title">META RANKING</div>
     <div class="meta-rank-card">
       <div class="meta-tier-display">
-        <div class="meta-tier-letter mt-S">S</div>
+        <div class="meta-tier-letter mt-A">A</div>
         <div>
           <div class="mti-label">CURRENT TIER</div>
-          <div class="mti-name">S TIER</div>
-          <div class="mti-sub">Overpowered Pick</div>
+          <div class="mti-name">A TIER</div>
+          <div class="mti-sub">Very Good Pick</div>
         </div>
       </div>
-      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:100%"></div></div>
+      <div class="meta-bar-wrap"><div class="meta-bar-fill" style="width:84%"></div></div>
       <div class="meta-bar-label"><span>F</span><span>D</span><span>C</span><span>B</span><span>A</span><span>S</span></div>
     </div>
 
-    <div class="section-title">GAMEMODE RATINGS</div>
-    <div class="gm-ratings-card" id="gm-ratings"></div>
+
   </div>
 
 </div>
@@ -309,45 +308,12 @@
 </div>
 <script>
 const urlParams = new URLSearchParams(window.location.search);
-const brawlerParam = urlParams.get('name') || 'Shelly';
+const brawlerParam = urlParams.get('name') || 'BULL';
 
 document.getElementById('hero-model-img').src = `Assets/Bull/model.png`;
 document.getElementById('hero-model-img').alt = brawlerParam;
 document.getElementById('brawler-name-overlay').innerHTML = `<em>${brawlerParam.toUpperCase()}</em>`;
 document.title = `BRAWL STATS SSS — ${brawlerParam}`;
-
-const GAMEMODES = [
-  { label: 'Bounty',     color: '#f44336', tier: 'C' },
-  { label: 'Brawl Ball', color: '#4caf50', tier: 'S' },
-  { label: 'Gem Grab',   color: '#9c27b0', tier: 'A' },
-  { label: 'Heist',      color: '#ff9800', tier: 'S' },
-  { label: 'Hot Zone',   color: '#f06292', tier: 'A' },
-  { label: 'Knockout',   color: '#29b6f6', tier: 'NP' },
-  { label: 'Showdown',   color: '#1b6305', tier: 'S' },
-  { label: 'Arena',      color: '#03fcdb', tier: 'S' },
-];
-
-const TIER_LABELS = {
-  S:  'S — Meta pick',
-  A:  'A — Strong',
-  B:  'B — Viable',
-  C:  'C — Situational',
-  D:  'D — Weak',
-  F:  'F — Barely viable',
-  NP: 'Never play',
-};
-
-const gmContainer = document.getElementById('gm-ratings');
-[...GAMEMODES].sort((a,b) => a.label.localeCompare(b.label)).forEach(gm => {
-  const row = document.createElement('div');
-  row.className = 'gm-row';
-  const isNP = gm.tier === 'NP';
-  row.innerHTML = `
-    <div class="gm-dot" style="background:${gm.color}"></div>
-    <div class="gm-name">${gm.label}</div>
-    <div class="gm-tier-badge gmt-${gm.tier}" title="${TIER_LABELS[gm.tier]}">${isNP ? 'N/P' : gm.tier}</div>`;
-  gmContainer.appendChild(row);
-});
 
 const NOTE_KEY = "buildNoteDismissedAt";
 const NOTE_COOLDOWN = 24 * 60 * 60 * 1000; 
